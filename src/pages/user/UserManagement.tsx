@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import {Breadcrumbs, Button, Grid, InputAdornment, LinearProgress, TextField, Typography} from "@mui/material";
 import Link from "@mui/material/Link";
 import DialogBox, {DialogBoxMode} from "../../components/common/DialogBox";
+import colorConfigs from "../../configs/colorConfigs";
 
 type UserDataGridPageModel = {
     page: number,
@@ -263,8 +264,8 @@ const UserManagement = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5} >
-                    <Box padding={2} style={{ backgroundColor: "white", borderRadius: 5 }}>
-                        <Box bgcolor={"white"} sx={{ height: 400, width: '100%' }}>
+                    <Box padding={2} style={{ backgroundColor: colorConfigs.secondBg, borderRadius: 5 }}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{ height: 400, width: '100%' }}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}

@@ -11,7 +11,8 @@ const colorConfigs = {
         inactiveFontColor: "#ffffff",
         activeFontColor: "#000000",
     },
-    mainBg: "#E5E9F1"
+    mainBg: "#E5E9F1",
+    secondBg: "#ffffff"
 }
 
 export default colorConfigs;
