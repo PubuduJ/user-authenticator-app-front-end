@@ -315,6 +315,7 @@ const UserManagement = () => {
                     marginTop={"64px"}
                     height={"calc(100vh - 64px)"}
                     role={"presentation"}
+                    bgcolor={colorConfigs.mainBg}
                 >
                     <CreateEditViewUser
                         user={selectedUser}
@@ -339,6 +340,7 @@ const UserManagement = () => {
                     marginTop={"64px"}
                     height={"calc(100vh - 64px)"}
                     role={"presentation"}
+                    bgcolor={colorConfigs.mainBg}
                 >
                     <CreateEditViewUser
                         user={selectedUser}
@@ -363,6 +365,7 @@ const UserManagement = () => {
                     marginTop={"64px"}
                     height={"calc(100vh - 64px)"}
                     role={"presentation"}
+                    bgcolor={colorConfigs.mainBg}
                 >
                     <CreateEditViewUser
                         user={selectedUser}
