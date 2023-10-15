@@ -26,7 +26,7 @@ const TopBar = ({ handleDrawerOpen } : Props) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography pl={1} fontWeight={"bold"} variant={"h5"}>Responsive Dashboard</Typography>
+                <Typography pl={1} fontWeight={"bold"} variant={"h5"}>Authenticator App</Typography>
             </Toolbar>
         </AppBar>
     );
