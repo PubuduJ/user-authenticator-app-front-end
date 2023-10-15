@@ -7,7 +7,7 @@ const colorConfigs = {
         bg: "#4c6c8d",
         color: "#ffffff",
         hoverBg: "#F5DEB333",
-        activeBg: "#bbd8f5",
+        activeBg: "#69a4e5",
         inactiveFontColor: "#ffffff",
         activeFontColor: "#000000",
     },
