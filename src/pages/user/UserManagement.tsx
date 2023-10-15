@@ -12,6 +12,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from "@mui/material/Tooltip";
 import {Breadcrumbs, Button, Grid, InputAdornment, LinearProgress, TextField, Typography} from "@mui/material";
 import Link from "@mui/material/Link";
+import DialogBox, {DialogBoxMode} from "../../components/common/DialogBox";
 
 type UserDataGridPageModel = {
     page: number,
@@ -28,8 +29,14 @@ export type User = {
     roleIds: number[];
 }
 
+const userArray: User[] = [
+    {id: 1, img: "Image 001", firstName: "Pubudu", lastName: "Janith", email: "pubudujanith@gmail.com", mobile: "0771234567", roleIds: [1,2,3]},
+    {id: 2, img: "Image 002", firstName: "Sahan", lastName: "Nuwan", email: "sahannuwan@gmail.com", mobile: "0711234567", roleIds: [1,2,3]},
+    {id: 3, img: "Image 003", firstName: "Kasun", lastName: "Sampath", email: "kasunsampath@gmail.com", mobile: "0721234567", roleIds: [1,2,3]},
+];
+
 const UserManagement = () => {
-    const [users, setUsers] = useState<User[]>([]);
+    const [users, setUsers] = useState<User[]>(userArray);
     const [selectedUser, setSelectedUser] = useState<User>({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []})
     const [openNewUser, setOpenNewUser] = useState<boolean>(false);
     const [openEditUser, setOpenEditUser] = useState<boolean>(false);
@@ -56,6 +63,18 @@ const UserManagement = () => {
         {
             field: 'lastName',
             headerName: 'Last name',
+            type: 'string',
+            flex: 1,
+            minWidth: 200,
+            renderHeader: (params) => {
+                return <strong>{params.colDef.headerName}</strong>
+            },
+            sortable: true,
+            disableColumnMenu: true
+        },
+        {
+            field: 'mobile',
+            headerName: 'Mobile',
             type: 'string',
             flex: 1,
             minWidth: 200,
@@ -239,7 +258,7 @@ const UserManagement = () => {
                             sx={{ height: "50px" }}
                             variant="contained"
                         >
-                            New User
+                            Add New User
                         </Button>
                     </Box>
                 </Grid>
@@ -280,6 +299,46 @@ const UserManagement = () => {
                     </Box>
                 </Grid>
             </Grid>
+            <DialogBox
+                data={{
+                    open: openDeleteUserBox,
+                    dialogTitle: "Delete User",
+                    dialogContext: "User email:",
+                    txtId: "emailId",
+                    txtLabel: "Email",
+                    txtType: "email",
+                    errorMessages: ["Email is required", "Enter valid email ID"],
+                    id: selectedUser.id,
+                    value: selectedUser.email,
+                    actionBtnName: "Delete",
+                }}
+                mode={DialogBoxMode.DELETE_USER}
+                action={{
+                    onClose: setOpenDeleteUserBox,
+                    onCancel: setOpenDeleteUserBox,
+                    onConfirm: () => {}
+                }}
+            />
+            <DialogBox
+                data={{
+                    open: openResetPasswordBox,
+                    dialogTitle: "Reset Password",
+                    dialogContext: "User email:",
+                    txtId: "emailId",
+                    txtLabel: "Email",
+                    txtType: "email",
+                    errorMessages: ["Email is required", "Enter valid email ID"],
+                    id: selectedUser.id,
+                    value: selectedUser.email,
+                    actionBtnName: "Reset",
+                }}
+                mode={DialogBoxMode.RESET_PASS}
+                action={{
+                    onClose: setOpenResetPasswordBox,
+                    onCancel: setOpenResetPasswordBox,
+                    onConfirm: () => {}
+                }}
+            />
         </>
     )
 };
