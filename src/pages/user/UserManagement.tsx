@@ -14,6 +14,8 @@ import {Breadcrumbs, Button, Grid, InputAdornment, LinearProgress, TextField, Ty
 import Link from "@mui/material/Link";
 import DialogBox, {DialogBoxMode} from "../../components/common/DialogBox";
 import colorConfigs from "../../configs/colorConfigs";
+import Drawer from "@mui/material/Drawer";
+import CreateEditViewUser, {UserMode} from "../../components/common/CreateEditViewUser";
 
 type UserDataGridPageModel = {
     page: number,
@@ -31,9 +33,9 @@ export type User = {
 }
 
 const userArray: User[] = [
-    {id: 1, img: "Image 001", firstName: "Pubudu", lastName: "Janith", email: "pubudujanith@gmail.com", mobile: "0771234567", roleIds: [1,2,3]},
-    {id: 2, img: "Image 002", firstName: "Sahan", lastName: "Nuwan", email: "sahannuwan@gmail.com", mobile: "0711234567", roleIds: [1,2,3]},
-    {id: 3, img: "Image 003", firstName: "Kasun", lastName: "Sampath", email: "kasunsampath@gmail.com", mobile: "0721234567", roleIds: [1,2,3]},
+    {id: 1, img: "", firstName: "Pubudu", lastName: "Janith", email: "pubudujanith@gmail.com", mobile: "0771234567", roleIds: [1,2,3]},
+    {id: 2, img: "", firstName: "Sahan", lastName: "Nuwan", email: "sahannuwan@gmail.com", mobile: "0711234567", roleIds: [1,2,3]},
+    {id: 3, img: "", firstName: "Kasun", lastName: "Sampath", email: "kasunsampath@gmail.com", mobile: "0721234567", roleIds: [1,2,3]},
 ];
 
 const UserManagement = () => {
@@ -300,6 +302,78 @@ const UserManagement = () => {
                     </Box>
                 </Grid>
             </Grid>
+            <Drawer
+                open={openNewUser}
+                anchor={"right"}
+                onClose={() => setOpenNewUser(false)}
+                sx={{
+                    zIndex: 10,
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditViewUser
+                        user={selectedUser}
+                        mode={UserMode.CREATE}
+                        action={{
+                            setIsDrawerOpen: setOpenNewUser,
+                            onConfirm: () => {}
+                        }}
+                    />
+                </Box>
+            </Drawer>
+            <Drawer
+                open={openViewUser}
+                anchor={"right"}
+                onClose={() => setOpenViewUser(false)}
+                sx={{
+                    zIndex: 10
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditViewUser
+                        user={selectedUser}
+                        mode={UserMode.VIEW}
+                        action={{
+                            setIsDrawerOpen: setOpenViewUser,
+                            onConfirm: () => {}
+                        }}
+                    />
+                </Box>
+            </Drawer>
+            <Drawer
+                open={openEditUser}
+                anchor={"right"}
+                onClose={() => setOpenEditUser(false)}
+                sx={{
+                    zIndex: 10
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditViewUser
+                        user={selectedUser}
+                        mode={UserMode.EDIT}
+                        action={{
+                            setIsDrawerOpen: setOpenEditUser,
+                            onConfirm: () => {}
+                        }}
+                    />
+                </Box>
+            </Drawer>
             <DialogBox
                 data={{
                     open: openDeleteUserBox,
