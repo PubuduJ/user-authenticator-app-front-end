@@ -262,7 +262,6 @@ const RoleManagement = () => {
             >
                 <Box
                     maxWidth={"800px"}
-                    // width={"800px"}
                     marginTop={"64px"}
                     height={"calc(100vh - 64px)"}
                     role={"presentation"}
@@ -272,6 +271,31 @@ const RoleManagement = () => {
                         mode={RoleMode.CREATE}
                         action={{
                             setIsDrawerOpen: setOpenNewRole,
+                            onCreateRole: () => {},
+                            onUpdateRole: () => {}
+                        }}
+                    />
+                </Box>
+            </Drawer>
+            <Drawer
+                open={openEditRole}
+                anchor={"right"}
+                onClose={() => setOpenEditRole(false)}
+                sx={{
+                    zIndex: 10
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditRole
+                        role={selectedRole}
+                        mode={RoleMode.EDIT}
+                        action={{
+                            setIsDrawerOpen: setOpenEditRole,
                             onCreateRole: () => {},
                             onUpdateRole: () => {}
                         }}

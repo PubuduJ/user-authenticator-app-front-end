@@ -1,10 +1,10 @@
-import React, {SetStateAction, useState} from "react";
+import React, {SetStateAction, useEffect, useState} from "react";
 import {Role} from "./CreateEditViewUser";
-import {UserRole} from "../../pages/user/RoleManagement";
+import {RolePermission, UserRole} from "../../pages/user/RoleManagement";
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary, Chip,
+    AccordionSummary, Button, Chip,
     Grid, MenuItem, OutlinedInput, Select,
     SelectChangeEvent,
     TextField,
@@ -51,6 +51,67 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
         const value = event.target.value;
         setUserRoleManagement(typeof value === 'string' ? value.split(',') : value);
     };
+
+    const handleCreateUpdateRole = () => {
+        if (roleError !== " ") {
+            // @ts-ignore
+            document.getElementById("roleName").focus();
+            return;
+        }
+        if (!roleName) {
+            // @ts-ignore
+            document.getElementById("roleName").focus();
+            setRoleError("Role name is required")
+            return
+        }
+        let userPermissions: RolePermission[] = [];
+
+        userUserManagement.forEach(element => {
+            userPermissions.push({ permissionName: "user_userManagement_" + element });
+        });
+
+        userRoleManagement.forEach(element => {
+            userPermissions.push({ permissionName: "user_RoleManagement_" + element });
+        });
+
+        let enabledPermissions: Role = {
+            role: roleName,
+            rolePermissions: userPermissions
+        }
+
+        if (mode === RoleMode.CREATE) action.onCreateRole(enabledPermissions);
+        else if (mode === RoleMode.EDIT) {
+            const updatePermissions = {id: role.id, role: roleName, rolePermissions: userPermissions}
+            // @ts-ignore
+            action.onUpdateRole(updatePermissions);
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            if (mode === RoleMode.CREATE) {
+                // @ts-ignore
+                document.getElementById("roleName").focus();
+            }
+        }, 500)
+        if (mode === RoleMode.EDIT) {
+            setRoleName(role.role);
+            const array = [];
+            const userUserManagementArray: string[] = [];
+            const userRoleManagementArray: string[] = [];
+
+            for (let i = 0; i < role.rolePermissions.length; i++) {
+                array.push(role.rolePermissions[i].permissionName);
+            }
+            for (const element of array) {
+                if (element.startsWith("user_userManagement_")) userUserManagementArray.push(element.replace("user_userManagement_", ""))
+                else if (element.startsWith("user_userRole_")) userRoleManagementArray.push(element.replace("user_RoleManagement_", ""))
+            }
+
+            setUserUserManagement(userUserManagementArray);
+            setUserRoleManagement(userRoleManagementArray);
+        }
+    }, [])
 
     return (
         <>
@@ -160,6 +221,14 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                         </Accordion>
                     </Grid>
                 </Grid>
+                <Box style={{ backgroundColor: colorConfigs.mainBg }} pb={2} pt={2} pr={4} display={"flex"} justifyContent={"flex-end"} gap={2}>
+                    {mode === RoleMode.CREATE &&
+                        <Button sx={{ p: "10px 50px 10px 50px" }} variant="contained" onClick={handleCreateUpdateRole}>Save</Button>
+                    }
+                    {mode === RoleMode.EDIT &&
+                        <Button sx={{ p: "10px 50px 10px 50px" }} variant="contained" onClick={handleCreateUpdateRole}>Update</Button>
+                    }
+                </Box>
             </Box>
         </>
     )
