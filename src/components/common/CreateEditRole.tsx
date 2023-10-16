@@ -126,7 +126,7 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                                         onChange={handleUserManagementChange}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                                {selected.map((value) => (<Chip color={"primary"} key={value} label={value} />))}
+                                                {selected.map((value) => (<Chip sx={{borderRadius: 1}} color={"primary"} key={value} label={value} />))}
                                             </Box>
                                         )}
                                     >
@@ -146,7 +146,7 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                                         onChange={handleRoleManagementChange}
                                         renderValue={(selected) => (
                                             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                                {selected.map((value) => (<Chip color={"primary"} key={value} label={value} />))}
+                                                {selected.map((value) => (<Chip sx={{borderRadius: 1}} color={"primary"} key={value} label={value} />))}
                                             </Box>
                                         )}
                                     >
