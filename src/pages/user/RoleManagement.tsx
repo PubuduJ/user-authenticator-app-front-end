@@ -12,6 +12,8 @@ import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CreateEditRole, {RoleMode} from "../../components/common/CreateEditRole";
+import Drawer from "@mui/material/Drawer";
 
 type RoleDataGridPageModel = {
     page: number,
@@ -250,6 +252,32 @@ const RoleManagement = () => {
                     </Box>
                 </Grid>
             </Grid>
+            <Drawer
+                open={openNewRole}
+                anchor={"right"}
+                onClose={() => setOpenNewRole(false)}
+                sx={{
+                    zIndex: 10
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    // width={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditRole
+                        role={selectedRole}
+                        mode={RoleMode.CREATE}
+                        action={{
+                            setIsDrawerOpen: setOpenNewRole,
+                            onCreateRole: () => {},
+                            onUpdateRole: () => {}
+                        }}
+                    />
+                </Box>
+            </Drawer>
             <DialogBox
                 data={{
                     open: openDeleteRoleBox,
