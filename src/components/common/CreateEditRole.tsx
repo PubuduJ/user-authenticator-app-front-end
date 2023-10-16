@@ -1,11 +1,20 @@
 import React, {SetStateAction, useState} from "react";
 import {Role} from "./CreateEditViewUser";
 import {UserRole} from "../../pages/user/RoleManagement";
-import {Grid, SelectChangeEvent, TextField, Typography} from "@mui/material";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary, Chip,
+    Grid, MenuItem, OutlinedInput, Select,
+    SelectChangeEvent,
+    TextField,
+    Typography
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import colorConfigs from "../../configs/colorConfigs";
 import CloseIcon from "@mui/icons-material/Close";
 import IconButton from "@mui/material/IconButton";
+import {GridExpandMoreIcon} from "@mui/x-data-grid";
 
 export enum RoleMode {
     CREATE = "Create",
@@ -34,12 +43,12 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
     const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {setExpanded(isExpanded ? panel : false)};
 
     const handleUserManagementChange = (event: SelectChangeEvent<typeof userUserManagement>) => {
-        const { target: { value }, } = event;
+        const value = event.target.value;
         setUserUserManagement(typeof value === 'string' ? value.split(',') : value);
     };
 
     const handleRoleManagementChange = (event: SelectChangeEvent<typeof userRoleManagement>) => {
-        const { target: { value }, } = event;
+        const value = event.target.value;
         setUserRoleManagement(typeof value === 'string' ? value.split(',') : value);
     };
 
@@ -95,11 +104,60 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                     <Grid item xs={12} sm={6}>
                         <Box width={"200px"}></Box>
                     </Grid>
-                    <Grid item xs={12} flexDirection={"row"}>
-                        <Box padding={2} display={"flex"} flexDirection={"row"} style={{ backgroundColor: "#C2E2E8" }}>
-                            <Typography width={"25%"}>Feature</Typography>
+                    <Grid item xs={12}>
+                        <Box padding={2} display={"flex"} style={{ backgroundColor: colorConfigs.sideBar.activeBg, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
+                            <Typography width={160}>Feature</Typography>
                             <Typography>Permission</Typography>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12} style={{ paddingTop: 0 }}>
+                        <Accordion expanded={expanded === "user"} onChange={handleAccordionChange("user")}>
+                            <AccordionSummary expandIcon={<GridExpandMoreIcon/>}>
+                                <Typography>User</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <Box pb={2} display={"flex"} alignItems={"center"}>
+                                    <Typography width={200}>User Management</Typography>
+                                    <Select
+                                        style={{ width: "100%" }}
+                                        variant={"standard"}
+                                        multiple
+                                        value={userUserManagement}
+                                        onChange={handleUserManagementChange}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                                                {selected.map((value) => (<Chip color={"primary"} key={value} label={value} />))}
+                                            </Box>
+                                        )}
+                                    >
+                                        <MenuItem key="View" value="View">View</MenuItem>
+                                        <MenuItem key="Create" value="Create">Create</MenuItem>
+                                        <MenuItem key="Edit" value="Edit">Edit</MenuItem>
+                                        <MenuItem key="Delete" value="Delete">Delete</MenuItem>
+                                    </Select>
+                                </Box>
+                                <Box pb={2} display={"flex"} alignItems={"center"}>
+                                    <Typography width={200}>User Roles</Typography>
+                                    <Select
+                                        style={{ width: "100%" }}
+                                        variant={"standard"}
+                                        multiple
+                                        value={userRoleManagement}
+                                        onChange={handleRoleManagementChange}
+                                        renderValue={(selected) => (
+                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                                                {selected.map((value) => (<Chip color={"primary"} key={value} label={value} />))}
+                                            </Box>
+                                        )}
+                                    >
+                                        <MenuItem key="View" value="View">View</MenuItem>
+                                        <MenuItem key="Create" value="Create">Create</MenuItem>
+                                        <MenuItem key="Edit" value="Edit">Edit</MenuItem>
+                                        <MenuItem key="Delete" value="Delete">Delete</MenuItem>
+                                    </Select>
+                                </Box>
+                            </AccordionDetails>
+                        </Accordion>
                     </Grid>
                 </Grid>
             </Box>
