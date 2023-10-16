@@ -10,9 +10,9 @@ type ErrorMsgType = {
 }
 
 const SignIn = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+    const [username, setUsername] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [error, setError] = useState<ErrorMsgType>({emailError: " ", passwordError: " "});
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
 

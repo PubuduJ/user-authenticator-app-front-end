@@ -11,7 +11,7 @@ import {setBooleanValue} from "../../redux/features/booleanValueSlice";
 
 const MainLayout = () => {
     const dispatch = useDispatch();
-    const [isSideBarOpen, setIsSideBarOpen] = useState(false);
+    const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
     const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
 
     const handleDrawerOpen = useCallback(() => {
