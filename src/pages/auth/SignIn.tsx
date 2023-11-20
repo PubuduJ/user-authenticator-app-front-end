@@ -5,6 +5,8 @@ import Toast, {ToastData} from "../../components/common/Toast";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {signIn} from "../../api/auth/signIn";
+import jwt_decode from "jwt-decode";
+import {useDispatch} from "react-redux";
 
 type ErrorMsgType = {
     emailError: string;
@@ -18,6 +20,7 @@ const SignIn = () => {
     const [error, setError] = useState<ErrorMsgType>({emailError: " ", passwordError: " "});
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -56,6 +59,8 @@ const SignIn = () => {
                     message: "Successfully logged in to the system",
                     type: "success"
                 });
+                const decodedToken = Object(jwt_decode(userData?.token));
+                console.log(decodedToken);
                 // dispatch(setCredentials({ user: null, token: userData.token, permissions: decodedToken.scopes.permissions }))
                 // localStorage.setItem("jwtToken", userData.token);
                 // localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
