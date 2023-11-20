@@ -65,7 +65,7 @@ const SignIn = () => {
         } catch (error) {
             console.log(error);
             if (error instanceof Error) {
-                setToastConfig({open: true, message: error.message, type: "error"});
+                setToastConfig({open: true, message: "Invalid username or password. Please try again.", type: "error"});
             }
         }
     }
@@ -175,7 +175,13 @@ const SignIn = () => {
                         <Grid container>
                             <Grid item xs>
                                 <FormControlLabel
-                                    control={<Checkbox color="primary" checked={rememberMe} onChange={() => {setRememberMe(!rememberMe)}} />}
+                                    control={
+                                    <Checkbox
+                                        color="primary"
+                                        checked={rememberMe}
+                                        onChange={
+                                        () => {setRememberMe(!rememberMe)}}
+                                    />}
                                     slotProps={{ typography: { variant: 'subtitle1' } }}
                                     label="Remember me"
                                 />
