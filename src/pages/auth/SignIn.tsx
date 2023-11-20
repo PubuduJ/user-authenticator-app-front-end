@@ -15,8 +15,8 @@ type ErrorMsgType = {
 }
 
 const SignIn = () => {
-    const [username, setUsername] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [error, setError] = useState<ErrorMsgType>({emailError: " ", passwordError: " "});
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
@@ -27,8 +27,8 @@ const SignIn = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         try {
-            const email = data.get('email')?.toString();
-            const password = data.get('password')?.toString();
+            const email = data.get("email")?.toString();
+            const password = data.get("password")?.toString();
             if (!email) {
                 // @ts-ignore
                 document.getElementById("email").focus();
@@ -46,43 +46,27 @@ const SignIn = () => {
                 return;
             }
             const userData = await signIn(email, password)
-            console.log('userData: ', userData);
-            if (userData?.token) {
-                setToastConfig({
-                    open: true,
-                    message: "Successfully logged in to the system",
-                    type: "success"
-                });
+            if (userData.token) {
+                setToastConfig({open: true, message: "Successfully logged in to the system", type: "success"});
                 const decodedToken = Object(jwt_decode(userData?.token));
                 dispatch(setCredentials({ user: decodedToken.email, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
                 if (rememberMe) {
                     localStorage.setItem('rememberedUsername', JSON.stringify(email));
                     localStorage.setItem('rememberedPassword', JSON.stringify(password));
                 }
-                if (decodedToken.fresh) {
-                    navigate('/reset-password');
-                } else {
-                    navigate('/');
-                }
+                if (decodedToken.fresh) navigate('/reset-password');
+                else navigate('/');
             } else {
-                setToastConfig({
-                    open: true,
-                    message: "Invalid username or password. Please try again.",
-                    type: "error"
-                });
+                setToastConfig({open: true, message: "Invalid username or password. Please try again.", type: "error"});
             }
         } catch (error) {
             console.log(error);
             if (error instanceof Error) {
-                setToastConfig({
-                    open: true,
-                    message: error.message,
-                    type: "error"
-                });
+                setToastConfig({open: true, message: error.message, type: "error"});
             }
         }
     }
-    const loginRememberMe = () => {}
     const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
 
     // Mobile screen auto-responsive code logic.
@@ -92,13 +76,10 @@ const SignIn = () => {
         const rememberMePreference = localStorage.getItem('rememberMe');
         if (rememberMePreference) {
             setRememberMe(JSON.parse(rememberMePreference));
-        }
-
-        if (JSON.parse(rememberMePreference ?? "false")) {
             const storedUsername = JSON.parse(localStorage.getItem('rememberedUsername') ?? "");
             const storedPassword = JSON.parse(localStorage.getItem('rememberedPassword') ?? "");
-            setUsername(storedUsername || '');
-            setPassword(storedPassword || '');
+            setUsername(storedUsername);
+            setPassword(storedPassword);
         }
 
         const handleOrientationChange = () => {
@@ -111,7 +92,6 @@ const SignIn = () => {
                 setHeight(window.innerHeight);
             }
         };
-
         // Listen for orientation change event
         window.addEventListener("resize", handleOrientationChange);
         // Set initial text based on the current orientation
@@ -193,7 +173,7 @@ const SignIn = () => {
                         <Grid container>
                             <Grid item xs>
                                 <FormControlLabel
-                                    control={<Checkbox color="primary" checked={rememberMe} onChange={loginRememberMe} />}
+                                    control={<Checkbox color="primary" checked={rememberMe} onChange={() => {setRememberMe(!rememberMe)}} />}
                                     slotProps={{ typography: { variant: 'subtitle1' } }}
                                     label="Remember me"
                                 />

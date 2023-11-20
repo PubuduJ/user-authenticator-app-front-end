@@ -5,11 +5,13 @@ import SideBar from "../common/SideBar";
 import TopBar from "../common/TopBar";
 import { useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Link from '@mui/material/Link';
 import {setBooleanValue} from "../../redux/features/booleanValueSlice";
+import {RootState} from "../../redux/store";
 
 const MainLayout = () => {
+    const authState = useSelector((state: RootState) => state.authState);
     const dispatch = useDispatch();
     const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
     const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
