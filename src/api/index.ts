@@ -38,19 +38,17 @@ export async function requestApiWithoutSecurity(
   }
 }
 
-export async function requestApi(
+export async function requestApiWithSecurity(
   method: METHODS,
   url: string,
   body?: any,
   header: any = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
   }
 ) {
-
-  // TODO: Add auth token as header
-  // const tokenWithoutJWt = (await Auth.currentSession()).getAccessToken().payload;
-  // const token = (await Auth.currentSession()).getAccessToken().getJwtToken();
-  // header.Authorization = `Bearer ${token}`;
+  const token = localStorage.getItem("jwtToken");
+  header.Authorization = `Bearer ${token}`;
 
   const full_url = getBaseurl(url);
   switch (method) {
