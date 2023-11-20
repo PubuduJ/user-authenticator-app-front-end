@@ -3,14 +3,26 @@ import colorConfigs from "../../configs/colorConfigs";
 import MenuIcon from '@mui/icons-material/Menu';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import jwt_decode from "jwt-decode";
 
 type Props = {
     handleDrawerOpen: () => void
 }
 
 const TopBar = ({ handleDrawerOpen } : Props) => {
+    const authState = useSelector((state: RootState) => state.authState);
     const [placeHolder, setPlaceHolder] = useState("");
     const navigate = useNavigate();
+
+    const getAvatarSrcUrl = () : string => {
+        if (authState.token) {
+            const decodedToken = Object(jwt_decode(authState.token));
+            if (decodedToken.img || decodedToken.img !== "") return decodedToken.img;
+            else return ""
+        } else return ""
+    }
 
     return (
         <AppBar
@@ -56,8 +68,10 @@ const TopBar = ({ handleDrawerOpen } : Props) => {
                         }}
                         title={placeHolder}
                     >
-                        <Avatar>
-
+                        <Avatar
+                            sx={{border: "2px solid white",}}
+                            src={getAvatarSrcUrl()}
+                        >
                         </Avatar>
                     </Button>
                 </Box>

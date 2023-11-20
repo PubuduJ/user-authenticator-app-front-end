@@ -1,9 +1,9 @@
 import {Box, Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
-import {Copyright} from "@mui/icons-material";
 import Link from "@mui/material/Link";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {ToastData} from "../../components/common/Toast";
+import Toast, {ToastData} from "../../components/common/Toast";
+import {forgotPassword} from "../../api/auth/forgotPassword";
 
 type ErrorMsgType = {
     emailError: string;
@@ -19,62 +19,42 @@ const ForgotPassword = () => {
         setLoading(true);
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email')
-        });
-
-        // try {
-        //     const email = data.get('email')?.toString() ?? "";
-        //
-        //     if (email == "") {
-        //
-        //         setError((prevState: ErrorMsgType) => {
-        //             return { ...prevState, "emailError": "Email is required" }
-        //         });
-        //
-        //         return;
-        //     }
-        //
-        //     if (error.emailError !== "") {
-        //         // @ts-ignore
-        //         document.getElementById("email").focus();
-        //         return;
-        //     }
-        //
-        //     const resetResponse = await forgotPassword(email)
-        //
-        //     if ((typeof resetResponse == "string" && resetResponse === "Success")
-        //         || (typeof resetResponse === "object" && resetResponse.status == 200)) {
-        //         setToastConfig({
-        //             open: true,
-        //             message: "Your password reset request was success. Please check your inbox",
-        //             type: "success"
-        //         });
-        //
-        //         setTimeout(() => {
-        //             navigate("/signin");
-        //         }, 2000);
-        //
-        //     } else {
-        //         setToastConfig({
-        //             open: true,
-        //             message: resetResponse.message,
-        //             type: "error"
-        //         });
-        //     }
-        // } catch (error) {
-        //     console.log('[Error]', error);
-        //     if (error instanceof Error) {
-        //         setToastConfig({
-        //             open: true,
-        //             message: error.message,
-        //             type: "error"
-        //         });
-        //     }
-        // } finally {
-        //     setLoading(false);
-        // }
+        try {
+            const email = data.get("email")?.toString() ?? "";
+            if (email == "") {
+                setError((prevState: ErrorMsgType) => {
+                    return { ...prevState, "emailError": "Email is required" }
+                });
+                return;
+            }
+            if (error.emailError !== "") {
+                // @ts-ignore
+                document.getElementById("email").focus();
+                return;
+            }
+            const response = await forgotPassword(email)
+            const resetResponse = response.data;
+            if (typeof resetResponse == "string" && resetResponse === "Success") {
+                setToastConfig({
+                    open: true,
+                    message: "Your password reset request was success. Please check your inbox",
+                    type: "success"
+                });
+                setTimeout(() => {navigate("/sign-in");}, 2000);
+            } else {
+                setToastConfig({open: true, message: resetResponse.message, type: "error"});
+            }
+        } catch (error) {
+            console.log(error);
+            if (error instanceof Error) {
+                setToastConfig({open: true, message: error.message, type: "error"});
+            }
+        } finally {
+            setLoading(false);
+        }
     };
+
+    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
 
     // Mobile screen auto-responsive code logic.
     const [renderComponent, setRenderComponent] = useState("");
@@ -188,6 +168,10 @@ const ForgotPassword = () => {
                     </Box>
                 </Box>
             </Box>
+            <Toast
+                data={toastConfig}
+                action={{onClose: handleToastOnclose}}
+            />
         </>
     )
 }
