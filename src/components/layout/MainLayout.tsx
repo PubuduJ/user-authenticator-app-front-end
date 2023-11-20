@@ -18,7 +18,7 @@ const MainLayout = () => {
 
     const handleDrawerOpen = () => {
         setIsSideBarOpen(!isSideBarOpen);
-        dispatch(setBooleanValue(!isSideBarOpen))
+        dispatch(setBooleanValue(!isSideBarOpen));
     }
 
     const handleDrawerToggle = (status: boolean) => {

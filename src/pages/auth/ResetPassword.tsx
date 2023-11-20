@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastData } from "../../components/common/Toast";
+import Toast, { ToastData } from "../../components/common/Toast";
 import {Box, Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
 import Link from "@mui/material/Link";
+import {resetPassword} from "../../api/auth/resetPassword";
+import jwt_decode from "jwt-decode";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 type ErrorMsgType = {
     temporaryPassword: string;
@@ -17,6 +21,7 @@ export type PasswordObject = {
 }
 
 const ResetPassword = () => {
+    const authState = useSelector((state: RootState) => state.authState);
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
     const [passwordObject, setPasswordObject] = React.useState<PasswordObject>({
         temporaryPassword: "", newPassword: "", repeatNewPassword: ""
@@ -25,9 +30,74 @@ const ResetPassword = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async () => {
-
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        setLoading(true);
+        try {
+            if (!passwordObject.temporaryPassword || !passwordObject.newPassword || !passwordObject.repeatNewPassword) {
+                if (!passwordObject.temporaryPassword) {
+                    // @ts-ignore
+                    setError((prevState: ErrorMsgType) => {
+                        return { ...prevState, "temporaryPassword": "Temporary Password is required", }
+                    });
+                }
+                if (!passwordObject.newPassword) {
+                    // @ts-ignore
+                    setError((prevState: ErrorMsgType) => {
+                        return { ...prevState, "newPassword": "New Password is required", }
+                    });
+                }
+                if (!passwordObject.repeatNewPassword) {
+                    // @ts-ignore
+                    setError((prevState: ErrorMsgType) => {
+                        return { ...prevState, "repeatNewPassword": "Repeat New Password is required", }
+                    });
+                }
+            }
+            if (error.temporaryPassword !== "") {
+                // @ts-ignore
+                document.getElementById("temporaryPassword").focus();
+                return;
+            }
+            if (error.newPassword !== "") {
+                // @ts-ignore
+                document.getElementById("newPassword").focus();
+                return;
+            }
+            if (error.repeatNewPassword !== "") {
+                // @ts-ignore
+                document.getElementById("repeatNewPassword").focus();
+                return;
+            }
+            const response = await resetPassword(Object(jwt_decode(authState.token ?? ""))['email'], passwordObject.temporaryPassword, passwordObject.newPassword)
+            const resetResponse = response.data;
+            if (typeof resetResponse == "string" && resetResponse === "Success") {
+                setToastConfig({
+                    open: true,
+                    message: "Your was password updated successfully",
+                    type: "success"
+                });
+                setTimeout(() => {
+                    navigate("/");
+                }, 2000);
+            } else {
+                setToastConfig({open: true, message: resetResponse.message, type: "error"});
+            }
+        } catch (error) {
+            console.log(error);
+            if (error instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: error.message,
+                    type: "error"
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
     }
+
+    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
 
     // Mobile screen auto-responsive code logic.
     const [renderComponent, setRenderComponent] = useState("");
@@ -215,6 +285,10 @@ const ResetPassword = () => {
                     </Typography>
                 </Box>
             </Box>
+            <Toast
+                data={toastConfig}
+                action={{onClose: handleToastOnclose}}
+            />
         </>
     )
 }
