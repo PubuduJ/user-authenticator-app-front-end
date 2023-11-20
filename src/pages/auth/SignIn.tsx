@@ -45,7 +45,8 @@ const SignIn = () => {
                 });
                 return;
             }
-            const userData = await signIn(email, password)
+            const response = await signIn(email, password)
+            const userData = response.data;
             if (userData.token) {
                 setToastConfig({open: true, message: "Successfully logged in to the system", type: "success"});
                 const decodedToken = Object(jwt_decode(userData?.token));
@@ -75,7 +76,7 @@ const SignIn = () => {
     const [height, setHeight] = useState(window.innerHeight);
     useEffect(() => {
         const rememberMePreference = localStorage.getItem('rememberMe');
-        if (rememberMePreference) {
+        if (rememberMePreference === "true") {
             setRememberMe(JSON.parse(rememberMePreference));
             const storedUsername = JSON.parse(localStorage.getItem('rememberedUsername') ?? "");
             const storedPassword = JSON.parse(localStorage.getItem('rememberedPassword') ?? "");

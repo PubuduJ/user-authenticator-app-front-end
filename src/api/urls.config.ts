@@ -1,1 +1,1 @@
-export const AUTHENTICATE = '/auth/authenticate';
+export const AUTHENTICATE = () => "/auth/authenticate";
