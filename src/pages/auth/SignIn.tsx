@@ -50,6 +50,7 @@ const SignIn = () => {
                 setToastConfig({open: true, message: "Successfully logged in to the system", type: "success"});
                 const decodedToken = Object(jwt_decode(userData?.token));
                 dispatch(setCredentials({ user: decodedToken.email, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                localStorage.setItem("jwtToken", userData.token);
                 localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
                 if (rememberMe) {
                     localStorage.setItem('rememberedUsername', JSON.stringify(email));
