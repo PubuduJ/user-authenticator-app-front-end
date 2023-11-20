@@ -3,6 +3,7 @@ import {Button, Checkbox, FormControlLabel, Grid, TextField, Typography} from "@
 import Link from "@mui/material/Link";
 import Toast, {ToastData} from "../../components/common/Toast";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 type ErrorMsgType = {
     emailError: string;
@@ -15,6 +16,7 @@ const SignIn = () => {
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [error, setError] = useState<ErrorMsgType>({emailError: " ", passwordError: " "});
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const navigate = useNavigate();
 
     const handleSubmit = () => {
 
@@ -136,7 +138,9 @@ const SignIn = () => {
                                 />
                             </Grid>
                             <Grid item paddingY={1}>
-                                <Link href="#" variant="subtitle1" onClick={() => {}}>
+                                <Link href="#" variant="subtitle1" onClick={() => {
+                                    navigate("/forgot-password")
+                                }}>
                                     Forgot password?
                                 </Link>
                             </Grid>
