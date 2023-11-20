@@ -19,6 +19,8 @@
     "antd": "^5.10.1",
     "antd-img-crop": "^4.13.0",
     "axios": "^1.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3",

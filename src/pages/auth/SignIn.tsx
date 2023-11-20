@@ -4,6 +4,7 @@ import Link from "@mui/material/Link";
 import Toast, {ToastData} from "../../components/common/Toast";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {signIn} from "../../api/auth/signIn";
 
 type ErrorMsgType = {
     emailError: string;
@@ -55,20 +56,18 @@ const SignIn = () => {
                     message: "Successfully logged in to the system",
                     type: "success"
                 });
-                const decodedToken = Object(jwt_decode(userData?.token ?? ""));
-
-                dispatch(setCredentials({ user: null, token: userData.token, permissions: decodedToken.scopes.permissions }))
-                localStorage.setItem("jwtToken", userData.token);
-                localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-                if (rememberMe) {
-                    localStorage.setItem('rememberedUsername', JSON.stringify(email));
-                    localStorage.setItem('rememberedPassword', JSON.stringify(password));
-                }
-                if (decodedToken['isFresh'] == true) {
-                    navigate('/reset-passowrd')
-                } else {
-                    navigate('/')
-                }
+                // dispatch(setCredentials({ user: null, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                // localStorage.setItem("jwtToken", userData.token);
+                // localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+                // if (rememberMe) {
+                //     localStorage.setItem('rememberedUsername', JSON.stringify(email));
+                //     localStorage.setItem('rememberedPassword', JSON.stringify(password));
+                // }
+                // if (decodedToken['isFresh'] == true) {
+                //     navigate('/reset-passowrd')
+                // } else {
+                //     navigate('/')
+                // }
             } else {
                 setToastConfig({
                     open: true,

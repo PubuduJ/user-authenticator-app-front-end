@@ -10,6 +10,34 @@ export enum METHODS {
   PATCH,
 }
 
+export async function requestApiWithoutSecurity(
+    method: METHODS,
+    url: string,
+    body?: any,
+    header: any = {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Security-Policy": "upgrade-insecure-requests"
+    }
+) {
+  const full_url = getBaseurl(url);
+  switch (method) {
+    case METHODS.GET:
+      return _get(full_url, header, body);
+    case METHODS.POST:
+      body = body || {};
+      return _post(full_url, body, header);
+    case METHODS.PUT:
+      return _put(full_url, body, header);
+    case METHODS.DELETE:
+      return _delete(full_url, body, header);
+    case METHODS.PATCH:
+      return _patch(full_url, body, header);
+    default:
+      break;
+  }
+}
+
 export async function requestApi(
   method: METHODS,
   url: string,
