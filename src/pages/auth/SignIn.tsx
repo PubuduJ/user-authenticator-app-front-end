@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import {Button, Checkbox, FormControlLabel, Grid, TextField, Typography} from "@mui/material";
 import Link from "@mui/material/Link";
 import Toast, {ToastData} from "../../components/common/Toast";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 type ErrorMsgType = {
@@ -18,8 +18,74 @@ const SignIn = () => {
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
     const navigate = useNavigate();
 
-    const handleSubmit = () => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        console.log({
+            email: data.get('email'),
+            password: data.get('password'),
+        });
+        try {
+            const email = data.get('email')?.toString();
+            const password = data.get('password')?.toString();
 
+            if (!email) {
+                // @ts-ignore
+                document.getElementById("email").focus();
+                setError((prevState: ErrorMsgType) => {
+                    return { ...prevState, "emailError": "Email is required", }
+                });
+                return;
+            }
+            if (!password) {
+                // @ts-ignore
+                document.getElementById("password").focus();
+                setError((prevState: ErrorMsgType) => {
+                    return { ...prevState, "passwordError": "Password is required", }
+                });
+                return;
+            }
+            if (!email || !password) return;
+
+            const userData = await signIn(email, password)
+            console.log('userData: ', userData);
+            if (userData?.token) {
+                setToastConfig({
+                    open: true,
+                    message: "Successfully logged in to the system",
+                    type: "success"
+                });
+                const decodedToken = Object(jwt_decode(userData?.token ?? ""));
+
+                dispatch(setCredentials({ user: null, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                localStorage.setItem("jwtToken", userData.token);
+                localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUsername', JSON.stringify(email));
+                    localStorage.setItem('rememberedPassword', JSON.stringify(password));
+                }
+                if (decodedToken['isFresh'] == true) {
+                    navigate('/reset-passowrd')
+                } else {
+                    navigate('/')
+                }
+            } else {
+                setToastConfig({
+                    open: true,
+                    message: "Invalid username or password. Please try again.",
+                    type: "error"
+                });
+            }
+        } catch (error) {
+            console.log('[Error]', error);
+            if (error instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: error.message,
+                    type: "error"
+                });
+            }
+        }
     }
     const loginRememberMe = () => {}
     const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
@@ -160,15 +226,13 @@ const SignIn = () => {
                         >
                             © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
                         </Typography>
-                        <Toast
-                            data={toastConfig}
-                            action={{
-                                onClose: handleToastOnclose
-                            }}
-                        />
                     </Box>
                 </Box>
             </Box>
+            <Toast
+                data={toastConfig}
+                action={{onClose: handleToastOnclose}}
+            />
         </>
     )
 }
