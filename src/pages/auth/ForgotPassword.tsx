@@ -170,17 +170,21 @@ const ForgotPassword = () => {
                                 }}
                             />
                         )}
-                        <Button
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 1, mb: 2 }}
-                            onClick={() => {
-                                navigate("/sign-in")
-                            }}
+                        <Grid container>
+                            <Grid item xs></Grid>
+                            <Grid item paddingY={1}>
+                                <Link href="#" variant="subtitle1" onClick={() => { navigate('/sign-in') }}>
+                                    Back
+                                </Link>
+                            </Grid>
+                        </Grid>
+                        <Typography
+                            align={"center"}
+                            fontWeight={"bold"}
+                            variant={"subtitle1"}
                         >
-                            Back
-                        </Button>
-                        <Typography align={"center"} fontWeight={"bold"} variant={"subtitle1"}>© {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.</Typography>
+                            © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
+                        </Typography>
                     </Box>
                 </Box>
             </Box>

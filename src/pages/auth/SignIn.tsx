@@ -153,7 +153,13 @@ const SignIn = () => {
                         >
                             Sign In
                         </Button>
-                        <Typography align={"center"} fontWeight={"bold"} variant={"subtitle1"}>© {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.</Typography>
+                        <Typography
+                            align={"center"}
+                            fontWeight={"bold"}
+                            variant={"subtitle1"}
+                        >
+                            © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
+                        </Typography>
                         <Toast
                             data={toastConfig}
                             action={{
