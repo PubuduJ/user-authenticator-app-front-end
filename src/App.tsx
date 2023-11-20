@@ -42,7 +42,6 @@ const App = () => {
         }
     }, [authenticated]);
 
-
     return (
         <BrowserRouter>
             {loading ?
@@ -52,9 +51,7 @@ const App = () => {
                     <Route path="/sign-in" element={<SignIn />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
-                    <Route path={"/"} element={<MainLayout/>}>
-                        {routes}
-                    </Route>
+                    <Route path={"/"} element={<MainLayout/>}>{routes}</Route>
                 </Routes>
             }
         </BrowserRouter>

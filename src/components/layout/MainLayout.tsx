@@ -71,7 +71,7 @@ const MainLayout = () => {
                 </>
                 :
                 <>
-                    <Navigate replace to="/sign-in" />);
+                    <Navigate to="/sign-in"/>);
                 </>
             }
         </>
