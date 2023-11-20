@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {signIn} from "../../api/auth/signIn";
 import jwt_decode from "jwt-decode";
 import {useDispatch} from "react-redux";
+import {setCredentials} from "../../redux/features/authStateSlice";
 
 type ErrorMsgType = {
     emailError: string;
@@ -25,14 +26,9 @@ const SignIn = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
         try {
             const email = data.get('email')?.toString();
             const password = data.get('password')?.toString();
-
             if (!email) {
                 // @ts-ignore
                 document.getElementById("email").focus();
@@ -49,8 +45,6 @@ const SignIn = () => {
                 });
                 return;
             }
-            if (!email || !password) return;
-
             const userData = await signIn(email, password)
             console.log('userData: ', userData);
             if (userData?.token) {
@@ -60,19 +54,16 @@ const SignIn = () => {
                     type: "success"
                 });
                 const decodedToken = Object(jwt_decode(userData?.token));
-                console.log(decodedToken);
-                // dispatch(setCredentials({ user: null, token: userData.token, permissions: decodedToken.scopes.permissions }))
-                // localStorage.setItem("jwtToken", userData.token);
-                // localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
-                // if (rememberMe) {
-                //     localStorage.setItem('rememberedUsername', JSON.stringify(email));
-                //     localStorage.setItem('rememberedPassword', JSON.stringify(password));
-                // }
-                // if (decodedToken['isFresh'] == true) {
-                //     navigate('/reset-passowrd')
-                // } else {
-                //     navigate('/')
-                // }
+                dispatch(setCredentials({ user: decodedToken.email, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                if (rememberMe) {
+                    localStorage.setItem('rememberedUsername', JSON.stringify(email));
+                    localStorage.setItem('rememberedPassword', JSON.stringify(password));
+                }
+                if (decodedToken.fresh) {
+                    navigate('/reset-password');
+                } else {
+                    navigate('/');
+                }
             } else {
                 setToastConfig({
                     open: true,
@@ -81,7 +72,7 @@ const SignIn = () => {
                 });
             }
         } catch (error) {
-            console.log('[Error]', error);
+            console.log(error);
             if (error instanceof Error) {
                 setToastConfig({
                     open: true,

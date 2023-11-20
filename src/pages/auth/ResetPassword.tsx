@@ -62,7 +62,7 @@ const ResetPassword = () => {
                 height={(window.innerHeight <= 530) ? "700px" : (window.innerHeight <= 730) ? 730 : window.innerHeight}
             >
                 <Box maxWidth={"470px"} bottom={0} right={0} position={"absolute"} padding={4}>
-                    <Typography variant='h4' align='center'>Update Password</Typography>
+                    <Typography variant='h4' align='center'>Reset Password</Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
                         <TextField
                             variant="standard"
