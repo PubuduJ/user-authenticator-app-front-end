@@ -31,6 +31,8 @@ import {getUsersByQuery} from "../../api/user/getUsersByQuery";
 import {updateUser} from "../../api/user/updateUser";
 import {deleteUser} from "../../api/user/deleteUser";
 import {resetUserPassword} from "../../api/user/resetPassword";
+// @ts-ignore
+import {ReactComponent as MiniProfileIcon} from '../../assets/svgs/Mini Profile Icon.svg'
 
 type UserDataGridPageModel = {
     page: number,
@@ -47,14 +49,8 @@ export type User = {
     roleIds: number[];
 }
 
-const userArray: User[] = [
-    {id: 1, img: "", firstName: "Pubudu", lastName: "Janith", email: "pubudujanith@gmail.com", mobile: "0771234567", roleIds: [1,2,3]},
-    {id: 2, img: "", firstName: "Sahan", lastName: "Nuwan", email: "sahannuwan@gmail.com", mobile: "0711234567", roleIds: [1,2,3]},
-    {id: 3, img: "", firstName: "Kasun", lastName: "Sampath", email: "kasunsampath@gmail.com", mobile: "0721234567", roleIds: [1,2,3]},
-];
-
 const UserManagement = () => {
-    const [users, setUsers] = useState<User[]>(userArray);
+    const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User>({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []})
     const [openNewUser, setOpenNewUser] = useState<boolean>(false);
     const [openEditUser, setOpenEditUser] = useState<boolean>(false);
@@ -68,6 +64,40 @@ const UserManagement = () => {
     const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
 
     const columns: GridColDef[] = [
+        {
+            field: "img",
+            headerName: "Profile",
+            flex: 1,
+            minWidth: 150,
+            renderHeader: (params) => {
+                return <strong>{params.colDef.headerName}</strong>;
+            },
+            sortable: false,
+            disableColumnMenu: true,
+            renderCell: (params: any) => (
+                <>
+                    <Box
+                        width={"100%"}
+                        height={"80%"}
+                        borderRadius={1}
+                        bgcolor={"#E5E9F1"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        {(params.row.img) ?
+                            <img
+                                src={params.row.img}
+                                alt={"Profile Image"}
+                                style={{width: 50, height: 50, borderRadius: '50%'}}
+                            />
+                            :
+                            <MiniProfileIcon/>
+                        }
+                    </Box>
+                </>
+            )
+        },
         {
             field: 'firstName',
             headerName: 'First Name',
@@ -420,6 +450,7 @@ const UserManagement = () => {
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}
+                                rowHeight={90}
                                 columns={columns}
                                 rows={users}
                                 initialState={{
