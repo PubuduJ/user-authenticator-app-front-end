@@ -3,7 +3,7 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Link from "@mui/material/Link";
 import * as React from "react";
 import Box from "@mui/material/Box";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import colorConfigs from "../../configs/colorConfigs";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
@@ -17,6 +17,8 @@ import Drawer from "@mui/material/Drawer";
 import Toast, {ToastData} from "../../components/common/Toast";
 import {Role} from "../../components/common/CreateEditViewUser";
 import {createRole} from "../../api/role/createRole";
+import {updateRole} from "../../api/role/updateRole";
+import {getRolesByRoleName} from "../../api/role/getRolesByRoleName";
 
 type RoleDataGridPageModel = {
     page: number,
@@ -152,11 +154,37 @@ const RoleManagement = () => {
         },
     ];
 
+    const handleGetRolesByRoleName = async (query: string) => {
+        try {
+            setDataGridLoading(true);
+            const response = await getRolesByRoleName(query);
+            const incomingRoleArray = response.data;
+            const requiredRoleArray: UserRole[] = [];
+            for (let i = 0; i < incomingRoleArray.length; i++) {
+                const tempObject: UserRole = {
+                    id: incomingRoleArray[i].id,
+                    role: incomingRoleArray[i].role,
+                    userCount: incomingRoleArray[i].userCount,
+                    permissionCount: incomingRoleArray[i].rolePermissions.length,
+                    rolePermissions: incomingRoleArray[i].rolePermissions
+                }
+                requiredRoleArray.push(tempObject);
+            }
+            setRoles(requiredRoleArray);
+            setDataGridLoading(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                if (err.message !== "") setToastConfig({ open: true, message: err.message, type: "error" });
+                else setToastConfig({ open: true, message: "Invalid search parameters", type: "error" })
+            } else setToastConfig({ open: true, message: "Fail to search plans", type: "error" })
+        }
+    }
+
     const handleCreateRole = async (role: Role) => {
         try {
             await createRole(role);
             setToastConfig({ open: true, message: "Role created successfully", type: "success" });
-            // await handleGetRolesByQuery(searchQuery);
+            await handleGetRolesByRoleName(searchQuery);
             setOpenNewRole(false);
         } catch (err: any) {
             if (err instanceof Error) {
@@ -172,6 +200,26 @@ const RoleManagement = () => {
         }
     }
 
+    const handleUpdateRole = async (role: Role) => {
+        try {
+            await updateRole(role);
+            setToastConfig({ open: true, message: "Role updated successfully", type: "success" });
+            await handleGetRolesByRoleName(searchQuery);
+            setOpenEditRole(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                if (err.message === "A role is already exists with this role name") {
+                    // @ts-ignore
+                    document.getElementById("roleName").focus();
+                }
+                setToastConfig({ open: true, message: err.message, type: "error" });
+            } else {
+                setToastConfig({ open: true, message: "Something went wrong!", type: "error" });
+            }
+            setOpenEditRole(true);
+        }
+    }
+
     const handleRoleDataGridPageUpdate = () => {
         const lastPage = Math.ceil(roles.length / roleDataGridPageModel.pageSize) - 1;
         if (roles.length === 0) {
@@ -182,6 +230,12 @@ const RoleManagement = () => {
             return roleDataGridPageModel.page;
         }
     }
+
+    useEffect(() => {
+        setTimeout(() => {
+            handleGetRolesByRoleName(searchQuery).then(r => {});
+        }, 100)
+    }, [searchQuery])
 
     const handleToastOnclose = (state: boolean) => {
         setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })
@@ -325,7 +379,7 @@ const RoleManagement = () => {
                         action={{
                             setIsDrawerOpen: setOpenEditRole,
                             onCreateRole: () => {},
-                            onUpdateRole: () => {}
+                            onUpdateRole: handleUpdateRole
                         }}
                     />
                 </Box>

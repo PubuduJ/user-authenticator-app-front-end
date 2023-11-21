@@ -71,7 +71,7 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
         });
 
         userRoleManagement.forEach(element => {
-            userPermissions.push({ permissionName: "user_RoleManagement_" + element });
+            userPermissions.push({ permissionName: "user_roleManagement_" + element });
         });
 
         let enabledPermissions: Role = {
@@ -105,7 +105,7 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
             }
             for (const element of array) {
                 if (element.startsWith("user_userManagement_")) userUserManagementArray.push(element.replace("user_userManagement_", ""))
-                else if (element.startsWith("user_userRole_")) userRoleManagementArray.push(element.replace("user_RoleManagement_", ""))
+                else if (element.startsWith("user_roleManagement_")) userRoleManagementArray.push(element.replace("user_roleManagement_", ""))
             }
 
             setUserUserManagement(userUserManagementArray);
