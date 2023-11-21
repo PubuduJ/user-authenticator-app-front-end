@@ -19,6 +19,7 @@ import {Role} from "../../components/common/CreateEditViewUser";
 import {createRole} from "../../api/role/createRole";
 import {updateRole} from "../../api/role/updateRole";
 import {getRolesByRoleName} from "../../api/role/getRolesByRoleName";
+import {deleteRole} from "../../api/role/deleteRole";
 
 type RoleDataGridPageModel = {
     page: number,
@@ -38,18 +39,8 @@ export type RolePermission = {
     permissionName: string;
 }
 
-const roleArray: UserRole[] = [
-    { id: 1, role: "Admin-User-View", userCount: 3, permissionCount: 1, rolePermissions: [] },
-    { id: 2, role: "Admin-User-View-Edit", userCount: 10, permissionCount: 3, rolePermissions: [] },
-    { id: 3, role: "Admin-User-View-Edit-Delete", userCount: 7, permissionCount: 5, rolePermissions: [] },
-    { id: 4, role: "Admin-Roles", userCount: 2, permissionCount: 7, rolePermissions: [] },
-    { id: 5, role: "Manager-Roles", userCount: 5, permissionCount: 4, rolePermissions: [] },
-    { id: 6, role: "Sales-Roles", userCount: 4, permissionCount: 2, rolePermissions: [] },
-    { id: 7, role: "Service-Roles", userCount: 6, permissionCount: 6, rolePermissions: [] }
-];
-
 const RoleManagement = () => {
-    const [roles, setRoles] = useState<UserRole[]>(roleArray);
+    const [roles, setRoles] = useState<UserRole[]>([]);
     const [selectedRole, setSelectedRole] = useState<UserRole>({id: null, role: "", userCount: 0, permissionCount: 0, rolePermissions: []});
     const [openNewRole, setOpenNewRole] = useState<boolean>(false);
     const [openEditRole, setOpenEditRole] = useState<boolean>(false);
@@ -220,6 +211,28 @@ const RoleManagement = () => {
         }
     }
 
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteRole(id);
+            setToastConfig({ open: true, message: "Role deleted successfully", type: "success" });
+            await handleGetRolesByRoleName(searchQuery);
+            setOpenDeleteRoleBox(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                console.log(err.message);
+                if (err.message === "Internal server error") {
+                    setToastConfig({ open: true, message: "Cannot delete the role, Role has assigned to a user", type: "error" })
+                    if (document.getElementById("roleId") !== null) {
+                        // @ts-ignore
+                        document.getElementById("roleId").focus();
+                    }
+                }
+                else setToastConfig({ open: true, message: err.message, type: "error" })
+            }
+            else setToastConfig({ open: true, message: "Fail to delete the user role", type: "error" })
+        }
+    }
+
     const handleRoleDataGridPageUpdate = () => {
         const lastPage = Math.ceil(roles.length / roleDataGridPageModel.pageSize) - 1;
         if (roles.length === 0) {
@@ -237,9 +250,7 @@ const RoleManagement = () => {
         }, 100)
     }, [searchQuery])
 
-    const handleToastOnclose = (state: boolean) => {
-        setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })
-    }
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } });
 
     return (
         <>
@@ -401,7 +412,7 @@ const RoleManagement = () => {
                 action={{
                     onClose: setOpenDeleteRoleBox,
                     onCancel: setOpenDeleteRoleBox,
-                    onConfirm: () => {}
+                    onConfirm: handleDelete
                 }}
             />
             <Toast

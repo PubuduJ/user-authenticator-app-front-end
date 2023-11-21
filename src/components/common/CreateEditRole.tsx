@@ -99,7 +99,6 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
             const array = [];
             const userUserManagementArray: string[] = [];
             const userRoleManagementArray: string[] = [];
-
             for (let i = 0; i < role.rolePermissions.length; i++) {
                 array.push(role.rolePermissions[i].permissionName);
             }
@@ -107,7 +106,6 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                 if (element.startsWith("user_userManagement_")) userUserManagementArray.push(element.replace("user_userManagement_", ""))
                 else if (element.startsWith("user_roleManagement_")) userRoleManagementArray.push(element.replace("user_roleManagement_", ""))
             }
-
             setUserUserManagement(userUserManagementArray);
             setUserRoleManagement(userRoleManagementArray);
         }
