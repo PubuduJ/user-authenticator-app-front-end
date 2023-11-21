@@ -81,7 +81,7 @@ const UserManagement = () => {
             field: "img",
             headerName: "Profile",
             flex: 1,
-            minWidth: 150,
+            minWidth: 200,
             renderHeader: (params) => {
                 return <strong>{params.colDef.headerName}</strong>;
             },
@@ -172,71 +172,18 @@ const UserManagement = () => {
             },
             renderCell: (params: any) => {
                 return (
-                    <>
-                        <Tooltip title={'view user'}>
-                            <IconButton onClick={() => {
-                                setSelectedUser((prevState: User) => {
-                                    return {
-                                        ...prevState,
-                                        "id": params.row.id,
-                                        "img": params.row.img,
-                                        "firstName": params.row.firstName,
-                                        "lastName": params.row.lastName,
-                                        "email": params.row.email,
-                                        "designation": params.row.designation,
-                                        "mobile": params.row.mobile,
-                                        "roleIds": params.row.roleIds,
-                                    }
-                                })
-                                setOpenViewUser(true)
-                            }}>
-                                <VisibilityIcon/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={'edit user'}>
-                            <IconButton onClick={() => {
-                                setSelectedUser((prevState: User) => {
-                                    return {
-                                        ...prevState,
-                                        "id": params.row.id,
-                                        "img": params.row.img,
-                                        "firstName": params.row.firstName,
-                                        "lastName": params.row.lastName,
-                                        "email": params.row.email,
-                                        "designation": params.row.designation,
-                                        "mobile": params.row.mobile,
-                                        "roleIds": params.row.roleIds,
-                                    }
-                                })
-                                setOpenEditUser(true)
-                            }}>
-                                <EditIcon/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={'reset password'}>
-                            <IconButton onClick={() => {
-                                setSelectedUser((prevState: User) => {
-                                    return {
-                                        ...prevState,
-                                        "id": params.row.id,
-                                        "img": params.row.img,
-                                        "firstName": params.row.firstName,
-                                        "lastName": params.row.lastName,
-                                        "email": params.row.email,
-                                        "designation": params.row.designation,
-                                        "mobile": params.row.mobile,
-                                        "roleIds": params.row.roleIds,
-                                    }
-                                })
-                                setOpenResetPasswordBox(true)
-                            }}>
-                                <LockIcon/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={'delete user'}>
-                            <IconButton
-                                disabled={params.row.id === getLoggedUserIdFromToken()}
-                                onClick={() => {
+                    <Box
+                        width={"100%"}
+                        height={"80%"}
+                        borderRadius={1}
+                        bgcolor={"#E5E9F1"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        <>
+                            <Tooltip title={'view user'}>
+                                <IconButton onClick={() => {
                                     setSelectedUser((prevState: User) => {
                                         return {
                                             ...prevState,
@@ -250,12 +197,75 @@ const UserManagement = () => {
                                             "roleIds": params.row.roleIds,
                                         }
                                     })
-                                    setOpenDeleteUserBox(true)
+                                    setOpenViewUser(true)
                                 }}>
-                                <DeleteIcon/>
-                            </IconButton>
-                        </Tooltip>
-                    </>
+                                    <VisibilityIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={'edit user'}>
+                                <IconButton onClick={() => {
+                                    setSelectedUser((prevState: User) => {
+                                        return {
+                                            ...prevState,
+                                            "id": params.row.id,
+                                            "img": params.row.img,
+                                            "firstName": params.row.firstName,
+                                            "lastName": params.row.lastName,
+                                            "email": params.row.email,
+                                            "designation": params.row.designation,
+                                            "mobile": params.row.mobile,
+                                            "roleIds": params.row.roleIds,
+                                        }
+                                    })
+                                    setOpenEditUser(true)
+                                }}>
+                                    <EditIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={'reset password'}>
+                                <IconButton onClick={() => {
+                                    setSelectedUser((prevState: User) => {
+                                        return {
+                                            ...prevState,
+                                            "id": params.row.id,
+                                            "img": params.row.img,
+                                            "firstName": params.row.firstName,
+                                            "lastName": params.row.lastName,
+                                            "email": params.row.email,
+                                            "designation": params.row.designation,
+                                            "mobile": params.row.mobile,
+                                            "roleIds": params.row.roleIds,
+                                        }
+                                    })
+                                    setOpenResetPasswordBox(true)
+                                }}>
+                                    <LockIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={'delete user'}>
+                                <IconButton
+                                    disabled={params.row.id === getLoggedUserIdFromToken()}
+                                    onClick={() => {
+                                        setSelectedUser((prevState: User) => {
+                                            return {
+                                                ...prevState,
+                                                "id": params.row.id,
+                                                "img": params.row.img,
+                                                "firstName": params.row.firstName,
+                                                "lastName": params.row.lastName,
+                                                "email": params.row.email,
+                                                "designation": params.row.designation,
+                                                "mobile": params.row.mobile,
+                                                "roleIds": params.row.roleIds,
+                                            }
+                                        })
+                                        setOpenDeleteUserBox(true)
+                                    }}>
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </>
+                    </Box>
                 );
             }
         },
@@ -478,7 +488,7 @@ const UserManagement = () => {
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5}>
                     <Box padding={2} style={{backgroundColor: colorConfigs.secondBg, borderRadius: 5}}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 450, width: '100%'}}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 550, width: '100%'}}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}

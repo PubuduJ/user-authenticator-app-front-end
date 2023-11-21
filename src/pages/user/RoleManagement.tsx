@@ -110,42 +110,52 @@ const RoleManagement = () => {
             },
             renderCell: (params: any) => {
                 return (
-                    <>
-                        <Tooltip title={'edit role'}>
-                            <IconButton onClick={() => {
-                                setSelectedRole((prevState) => {
-                                    return {
-                                        ...prevState,
-                                        "id": params.row.id,
-                                        "role": params.row.role,
-                                        "userCount": params.row.userCount,
-                                        "permissionCount": params.row.permissionCount,
-                                        "rolePermissions": params.row.rolePermissions
-                                    }
-                                })
-                                setOpenEditRole(true)
-                            }}>
-                                <EditIcon/>
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title={'delete role'}>
-                            <IconButton onClick={() => {
-                                setSelectedRole((prevState) => {
-                                    return {
-                                        ...prevState,
-                                        "id": params.row.id,
-                                        "role": params.row.role,
-                                        "userCount": params.row.userCount,
-                                        "permissionCount": params.row.permissionCount,
-                                        "rolePermissions": params.row.rolePermissions
-                                    }
-                                })
-                                setOpenDeleteRoleBox(true)
-                            }}>
-                                <DeleteIcon/>
-                            </IconButton>
-                        </Tooltip>
-                    </>
+                    <Box
+                        width={"100%"}
+                        height={"80%"}
+                        borderRadius={1}
+                        bgcolor={"#E5E9F1"}
+                        display={"flex"}
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                    >
+                        <>
+                            <Tooltip title={'edit role'}>
+                                <IconButton onClick={() => {
+                                    setSelectedRole((prevState) => {
+                                        return {
+                                            ...prevState,
+                                            "id": params.row.id,
+                                            "role": params.row.role,
+                                            "userCount": params.row.userCount,
+                                            "permissionCount": params.row.permissionCount,
+                                            "rolePermissions": params.row.rolePermissions
+                                        }
+                                    })
+                                    setOpenEditRole(true)
+                                }}>
+                                    <EditIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title={'delete role'}>
+                                <IconButton onClick={() => {
+                                    setSelectedRole((prevState) => {
+                                        return {
+                                            ...prevState,
+                                            "id": params.row.id,
+                                            "role": params.row.role,
+                                            "userCount": params.row.userCount,
+                                            "permissionCount": params.row.permissionCount,
+                                            "rolePermissions": params.row.rolePermissions
+                                        }
+                                    })
+                                    setOpenDeleteRoleBox(true)
+                                }}>
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </Tooltip>
+                        </>
+                    </Box>
                 );
             }
         },
@@ -327,10 +337,11 @@ const RoleManagement = () => {
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5}>
                     <Box padding={2} style={{backgroundColor: colorConfigs.secondBg, borderRadius: 5}}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 400, width: '100%'}}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 550, width: '100%'}}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}
+                                rowHeight={90}
                                 columns={columns}
                                 rows={roles}
                                 initialState={{
