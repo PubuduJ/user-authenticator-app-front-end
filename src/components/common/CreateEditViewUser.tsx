@@ -545,7 +545,9 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         {
-                            (mode === UserMode.CREATE || mode === UserMode.EDIT) ? <Autocomplete
+                            (mode === UserMode.CREATE || mode === UserMode.EDIT) ?
+                                <Autocomplete
+                                    sx={{pt: 0.4}}
                                     multiple
                                     id="roles-field"
                                     size="small"
@@ -557,6 +559,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                         return option.id === value.id;
                                     }}
                                     ChipProps={{
+                                        color: "primary",
                                         deleteIcon: <CloseIcon/>,
                                         sx: {borderRadius: 1, fontSize: "14px"}
                                     }}
@@ -586,6 +589,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                     )}
                                 /> :
                                 <Autocomplete
+                                    sx={{pt: 0.4}}
                                     multiple
                                     id="tags-standard"
                                     size="small"
@@ -599,6 +603,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                     open={false}
                                     readOnly={true}
                                     ChipProps={{
+                                        color: "primary",
                                         deleteIcon: <></>,
                                         sx: {borderRadius: 1, fontSize: "14px"}
                                     }}
