@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from "@mui/material/Box";
 import SearchIcon from '@mui/icons-material/Search';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import IconButton from "@mui/material/IconButton";
@@ -10,12 +10,27 @@ import LockIcon from '@mui/icons-material/Lock';
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Tooltip from "@mui/material/Tooltip";
-import {Breadcrumbs, Button, Grid, InputAdornment, LinearProgress, TextField, Typography} from "@mui/material";
+import {
+    Backdrop,
+    Breadcrumbs,
+    Button, CircularProgress,
+    Grid,
+    InputAdornment,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@mui/material";
 import Link from "@mui/material/Link";
 import DialogBox, {DialogBoxMode} from "../../components/common/DialogBox";
 import colorConfigs from "../../configs/colorConfigs";
 import Drawer from "@mui/material/Drawer";
 import CreateEditViewUser, {UserMode} from "../../components/common/CreateEditViewUser";
+import {createUser} from "../../api/user/createUser";
+import Toast, {ToastData} from "../../components/common/Toast";
+import {getUsersByQuery} from "../../api/user/getUsersByQuery";
+import {updateUser} from "../../api/user/updateUser";
+import {deleteUser} from "../../api/user/deleteUser";
+import {resetUserPassword} from "../../api/user/resetPassword";
 
 type UserDataGridPageModel = {
     page: number,
@@ -49,6 +64,8 @@ const UserManagement = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dataGridLoading, setDataGridLoading] = useState<boolean>(false);
     const [userDataGridPageModel, setUserDataGridPageModel] = useState<UserDataGridPageModel>({ page: 0, pageSize: 5 });
+    const [loading, setLoading] = useState<boolean>(false);
+    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
 
     const columns: GridColDef[] = [
         {
@@ -200,6 +217,130 @@ const UserManagement = () => {
         },
     ];
 
+    const handleCreate = async (user: User) => {
+        try {
+            setLoading(true);
+            await createUser(user);
+            setOpenNewUser(false);
+            setToastConfig({
+                open: true,
+                message: "User created successfully",
+                type: "success"
+            });
+            await handleGetUsersByQuery(searchQuery);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                if (err.message === "A user is already exists with this email id") {
+                    // @ts-ignore
+                    document.getElementById("email").focus();
+                }
+                setToastConfig({
+                    open: true,
+                    message: err.message,
+                    type: "error"
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleUpdate = async (user: User) => {
+        try {
+            setLoading(true);
+            await updateUser(user);
+            setLoading(false);
+            setOpenEditUser(false);
+            setToastConfig({
+                open: true,
+                message: "User updated successfully",
+                type: "success"
+            });
+            await handleGetUsersByQuery(searchQuery);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: err.message,
+                    type: "error"
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    const handleDelete = async (id: number) => {
+        try {
+            await deleteUser(id);
+            setToastConfig({
+                open: true,
+                message: "User deleted successfully",
+                type: "success"
+            });
+            setOpenDeleteUserBox(false);
+            await handleGetUsersByQuery(searchQuery);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: err.message,
+                    type: "error"
+                });
+            }
+        }
+    }
+
+    const handleReset = async (id: number) => {
+        try {
+            setLoading(true);               // Set backdrop state.
+            await resetUserPassword(id);
+            setToastConfig({ open: true, message: "Password reset successfully", type: "success" });
+            setOpenResetPasswordBox(false);
+        } catch (err: any) {
+            if (err instanceof Error) setToastConfig({ open: true, message: err.message, type: "error" });
+            else setToastConfig({ open: true, message: "Fail to reset the password", type: "error" })
+        } finally {
+            setLoading(false);              // Set backdrop state.
+        }
+    }
+
+    const handleGetUsersByQuery = async (query: string) => {
+        try {
+            setLoading(true);
+            setDataGridLoading(true);
+            const response = await getUsersByQuery(query);
+            setUsers(response.data);
+            setLoading(false);
+            setDataGridLoading(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: err.message,
+                    type: "error"
+                });
+            }
+        }
+    }
+
+    const handleSearchUsersByQuery = async (query: string) => {
+        try {
+            setDataGridLoading(true);
+            const response = await getUsersByQuery(query);
+            setUsers(response.data);
+            setDataGridLoading(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                setToastConfig({
+                    open: true,
+                    message: err.message,
+                    type: "error"
+                });
+            }
+        }
+    }
+
     const handleUserDataGridPageUpdate = () => {
         const lastPage = Math.ceil(users.length / userDataGridPageModel.pageSize) - 1;
         if (users.length === 0) {
@@ -210,6 +351,14 @@ const UserManagement = () => {
             return userDataGridPageModel.page;
         }
     }
+
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } });
+
+    useEffect(() => {
+        setTimeout(() => {
+            handleSearchUsersByQuery(searchQuery).then(r => {})
+        }, 100)
+    }, [searchQuery])
 
     return (
         <>
@@ -322,7 +471,7 @@ const UserManagement = () => {
                         mode={UserMode.CREATE}
                         action={{
                             setIsDrawerOpen: setOpenNewUser,
-                            onConfirm: () => {}
+                            onConfirm: handleCreate
                         }}
                     />
                 </Box>
@@ -372,7 +521,7 @@ const UserManagement = () => {
                         mode={UserMode.EDIT}
                         action={{
                             setIsDrawerOpen: setOpenEditUser,
-                            onConfirm: () => {}
+                            onConfirm: handleUpdate
                         }}
                     />
                 </Box>
@@ -394,7 +543,7 @@ const UserManagement = () => {
                 action={{
                     onClose: setOpenDeleteUserBox,
                     onCancel: setOpenDeleteUserBox,
-                    onConfirm: () => {}
+                    onConfirm: handleDelete
                 }}
             />
             <DialogBox
@@ -414,9 +563,22 @@ const UserManagement = () => {
                 action={{
                     onClose: setOpenResetPasswordBox,
                     onCancel: setOpenResetPasswordBox,
-                    onConfirm: () => {}
+                    onConfirm: handleReset
                 }}
             />
+            <Toast
+                data={toastConfig}
+                action={{onClose: handleToastOnclose}}
+            />
+            <Backdrop
+                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1301 }}
+                open={loading}
+            >
+                <Box>
+                    <Box width={"100%"} display={"flex"} justifyContent={"center"}><CircularProgress color="inherit" /></Box>
+                    <Box pt={2}><Typography fontFamily={"pt-serif"} fontSize={"18px"} color={"white"}>Please Wait</Typography></Box>
+                </Box>
+            </Backdrop>
         </>
     )
 };
