@@ -79,7 +79,7 @@ const UserManagement = () => {
     const columns: GridColDef[] = [
         {
             field: "img",
-            headerName: "Profile",
+            headerName: "Image",
             flex: 1,
             minWidth: 200,
             renderHeader: (params) => {
