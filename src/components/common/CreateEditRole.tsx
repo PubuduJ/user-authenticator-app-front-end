@@ -5,7 +5,7 @@ import {
     Accordion,
     AccordionDetails,
     AccordionSummary, Button, Chip,
-    Grid, MenuItem, OutlinedInput, Select,
+    Grid, MenuItem, Select,
     SelectChangeEvent,
     TextField,
     Typography

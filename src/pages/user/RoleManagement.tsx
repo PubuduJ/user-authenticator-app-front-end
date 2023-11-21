@@ -14,6 +14,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateEditRole, {RoleMode} from "../../components/common/CreateEditRole";
 import Drawer from "@mui/material/Drawer";
+import Toast, {ToastData} from "../../components/common/Toast";
+import {Role} from "../../components/common/CreateEditViewUser";
+import {createRole} from "../../api/role/createRole";
 
 type RoleDataGridPageModel = {
     page: number,
@@ -52,6 +55,7 @@ const RoleManagement = () => {
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dataGridLoading, setDataGridLoading] = useState<boolean>(false);
     const [roleDataGridPageModel, setRoleDataGridPageModel] = useState<RoleDataGridPageModel>({ page: 0, pageSize: 5 });
+    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
 
     const columns: GridColDef[] = [
         {
@@ -148,6 +152,26 @@ const RoleManagement = () => {
         },
     ];
 
+    const handleCreateRole = async (role: Role) => {
+        try {
+            await createRole(role);
+            setToastConfig({ open: true, message: "Role created successfully", type: "success" });
+            // await handleGetRolesByQuery(searchQuery);
+            setOpenNewRole(false);
+        } catch (err: any) {
+            if (err instanceof Error) {
+                if (err.message === "A role is already exists with this role name") {
+                    // @ts-ignore
+                    document.getElementById("roleName").focus();
+                }
+                setToastConfig({ open: true, message: err.message, type: "error" });
+            } else {
+                setToastConfig({ open: true, message: "Something went wrong!", type: "error" });
+            }
+            setOpenNewRole(true);
+        }
+    }
+
     const handleRoleDataGridPageUpdate = () => {
         const lastPage = Math.ceil(roles.length / roleDataGridPageModel.pageSize) - 1;
         if (roles.length === 0) {
@@ -157,6 +181,10 @@ const RoleManagement = () => {
         } else {
             return roleDataGridPageModel.page;
         }
+    }
+
+    const handleToastOnclose = (state: boolean) => {
+        setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })
     }
 
     return (
@@ -271,7 +299,7 @@ const RoleManagement = () => {
                         mode={RoleMode.CREATE}
                         action={{
                             setIsDrawerOpen: setOpenNewRole,
-                            onCreateRole: () => {},
+                            onCreateRole: handleCreateRole,
                             onUpdateRole: () => {}
                         }}
                     />
@@ -320,6 +348,12 @@ const RoleManagement = () => {
                     onClose: setOpenDeleteRoleBox,
                     onCancel: setOpenDeleteRoleBox,
                     onConfirm: () => {}
+                }}
+            />
+            <Toast
+                data={toastConfig}
+                action={{
+                    onClose: handleToastOnclose
                 }}
             />
         </>
