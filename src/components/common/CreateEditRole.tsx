@@ -4,8 +4,12 @@ import {RolePermission, UserRole} from "../../pages/user/RoleManagement";
 import {
     Accordion,
     AccordionDetails,
-    AccordionSummary, Button, Chip,
-    Grid, MenuItem, Select,
+    AccordionSummary,
+    Button,
+    Chip,
+    Grid,
+    MenuItem,
+    Select,
     SelectChangeEvent,
     TextField,
     Typography
@@ -33,14 +37,16 @@ type Props = {
     action: RoleAction;
 }
 
-const CreateEditRole = ({ role, mode, action } : Props) => {
+const CreateEditRole = ({role, mode, action}: Props) => {
     const [expanded, setExpanded] = useState<string | false>(false);
     const [roleName, setRoleName] = useState<string>("");
     const [userUserManagement, setUserUserManagement] = useState<string[]>([]);
     const [userRoleManagement, setUserRoleManagement] = useState<string[]>([]);
     const [roleError, setRoleError] = useState<string>(" ");
 
-    const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {setExpanded(isExpanded ? panel : false)};
+    const handleAccordionChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+        setExpanded(isExpanded ? panel : false)
+    };
 
     const handleUserManagementChange = (event: SelectChangeEvent<typeof userUserManagement>) => {
         const value = event.target.value;
@@ -67,11 +73,11 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
         let userPermissions: RolePermission[] = [];
 
         userUserManagement.forEach(element => {
-            userPermissions.push({ permissionName: "user_userManagement_" + element });
+            userPermissions.push({permissionName: "user_userManagement_" + element});
         });
 
         userRoleManagement.forEach(element => {
-            userPermissions.push({ permissionName: "user_roleManagement_" + element });
+            userPermissions.push({permissionName: "user_roleManagement_" + element});
         });
 
         let enabledPermissions: Role = {
@@ -119,19 +125,21 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                 display={"flex"}
                 flexDirection={"column"}
                 justifyContent={"space-between"}
-                style={{ backgroundColor: colorConfigs.mainBg }}
+                style={{backgroundColor: colorConfigs.mainBg}}
             >
                 <Box top={"8px"} right={"24px"} position={"absolute"}>
-                    <IconButton onClick={() => {action.setIsDrawerOpen(false)}}><CloseIcon /></IconButton>
+                    <IconButton onClick={() => {
+                        action.setIsDrawerOpen(false)
+                    }}><CloseIcon/></IconButton>
                 </Box>
                 <Grid
                     container
                     columnSpacing={6}
                     rowSpacing={3}
                     pl={4} pr={4} pt={2}
-                    style={{ backgroundColor: colorConfigs.mainBg }}
+                    style={{backgroundColor: colorConfigs.mainBg}}
                 >
-                    <Grid item xs={12} pb={2} >
+                    <Grid item xs={12} pb={2}>
                         {mode === RoleMode.CREATE && <Typography variant={"h5"}>Create Role</Typography>}
                         {mode === RoleMode.EDIT && <Typography variant={"h5"}>Edit Role</Typography>}
                     </Grid>
@@ -164,12 +172,16 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                         <Box width={"200px"}></Box>
                     </Grid>
                     <Grid item xs={12}>
-                        <Box padding={2} display={"flex"} style={{ backgroundColor: colorConfigs.sideBar.activeBg, borderTopLeftRadius: 5, borderTopRightRadius: 5 }}>
+                        <Box padding={2} display={"flex"} style={{
+                            backgroundColor: colorConfigs.sideBar.activeBg,
+                            borderTopLeftRadius: 5,
+                            borderTopRightRadius: 5
+                        }}>
                             <Typography width={160}>Feature</Typography>
                             <Typography>Permission</Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} style={{ paddingTop: 0 }}>
+                    <Grid item xs={12} style={{paddingTop: 0}}>
                         <Accordion expanded={expanded === "user"} onChange={handleAccordionChange("user")}>
                             <AccordionSummary expandIcon={<GridExpandMoreIcon/>}>
                                 <Typography>User</Typography>
@@ -178,14 +190,16 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                                 <Box pb={2} display={"flex"} alignItems={"center"}>
                                     <Typography width={200}>User Management</Typography>
                                     <Select
-                                        style={{ width: "100%" }}
+                                        style={{width: "100%"}}
                                         variant={"standard"}
                                         multiple
                                         value={userUserManagement}
                                         onChange={handleUserManagementChange}
                                         renderValue={(selected) => (
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                                {selected.map((value) => (<Chip sx={{borderRadius: 1}} color={"primary"} key={value} label={value} />))}
+                                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1}}>
+                                                {selected.map((value) => (
+                                                    <Chip sx={{borderRadius: 1}} color={"primary"} key={value}
+                                                          label={value}/>))}
                                             </Box>
                                         )}
                                     >
@@ -198,14 +212,16 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                                 <Box pb={2} display={"flex"} alignItems={"center"}>
                                     <Typography width={200}>User Roles</Typography>
                                     <Select
-                                        style={{ width: "100%" }}
+                                        style={{width: "100%"}}
                                         variant={"standard"}
                                         multiple
                                         value={userRoleManagement}
                                         onChange={handleRoleManagementChange}
                                         renderValue={(selected) => (
-                                            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                                                {selected.map((value) => (<Chip sx={{borderRadius: 1}} color={"primary"} key={value} label={value} />))}
+                                            <Box sx={{display: 'flex', flexWrap: 'wrap', gap: 1}}>
+                                                {selected.map((value) => (
+                                                    <Chip sx={{borderRadius: 1}} color={"primary"} key={value}
+                                                          label={value}/>))}
                                             </Box>
                                         )}
                                     >
@@ -219,12 +235,15 @@ const CreateEditRole = ({ role, mode, action } : Props) => {
                         </Accordion>
                     </Grid>
                 </Grid>
-                <Box style={{ backgroundColor: colorConfigs.mainBg }} pb={2} pt={2} pr={4} display={"flex"} justifyContent={"flex-end"} gap={2}>
+                <Box style={{backgroundColor: colorConfigs.mainBg}} pb={2} pt={2} pr={4} display={"flex"}
+                     justifyContent={"flex-end"} gap={2}>
                     {mode === RoleMode.CREATE &&
-                        <Button sx={{ p: "10px 50px 10px 50px" }} variant="contained" onClick={handleCreateUpdateRole}>Save</Button>
+                        <Button sx={{p: "10px 50px 10px 50px"}} variant="contained"
+                                onClick={handleCreateUpdateRole}>Save</Button>
                     }
                     {mode === RoleMode.EDIT &&
-                        <Button sx={{ p: "10px 50px 10px 50px" }} variant="contained" onClick={handleCreateUpdateRole}>Update</Button>
+                        <Button sx={{p: "10px 50px 10px 50px"}} variant="contained"
+                                onClick={handleCreateUpdateRole}>Update</Button>
                     }
                 </Box>
             </Box>
