@@ -13,6 +13,7 @@ import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUpload
 import "./CreateEditViewUser.css";
 // @ts-ignore
 import {ReactComponent as ProfileIcon} from '../../assets/svgs/Profile Icon.svg';
+import {getAllRoles} from "../../api/role/getAllRoles";
 
 export enum UserMode {
     CREATE = "Create",
@@ -116,17 +117,16 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                 }
             }, 500)
         }
-        // eslint-disable-next-line
     }, [])
 
-    // useEffect(() => {
-    //     setNewUser({...user});
-    //     getRoleArray().then(r => {})
-    //     if (user.roleIds.length === 0) setSelectedRoles([]);
-    //     else if (user.roleIds.length !== 0) {
-    //         getSelectedRoleArray().then(r => {});
-    //     }
-    // }, [user]);
+    useEffect(() => {
+        setNewUser({...user});
+        getRoleArray().then(r => {})
+        if (user.roleIds.length === 0) setSelectedRoles([]);
+        else if (user.roleIds.length !== 0) {
+            getSelectedRoleArray().then(r => {});
+        }
+    }, [user]);
 
     useEffect(() => {
         if (newUser.roleIds.length !== 0) {
@@ -135,6 +135,37 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
             })
         }
     }, [newUser]);
+
+    const getRoleArray = async () => {
+        try {
+            const response = await getAllRoles();
+            setRoles(response.data);
+        } catch (err: any) {
+            if (err instanceof Error) setToastConfig({open: true, message: err.message, type: "error"})
+            else setToastConfig({open: true, message: "Fail to load the user roles", type: "error"})
+        }
+    }
+
+    const getSelectedRoleArray = async () => {
+        try {
+            const response = await getAllRoles();
+            setSelectedRoles(response.data.filter((roleObject: Role) => {
+                return user.roleIds.indexOf(roleObject.id??0) !== -1;
+            }))
+        } catch (err: any) {
+            if (err instanceof Error) setToastConfig({open: true, message: err.message, type: "error"})
+            else setToastConfig({open: true, message: "Fail to load the user roles", type: "error"})
+        }
+    }
+
+    // Image uploading related functions.
+    useEffect(() => {
+        if (fileList.length === 0) {
+            setNewUser((prevState: User) => {
+                return {...prevState, "img": ""}
+            })
+        }
+    },[fileList])
 
     const beforeImageUpload = async (file: RcFile) => {
         const isJpgOrPngOrJpeg = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';

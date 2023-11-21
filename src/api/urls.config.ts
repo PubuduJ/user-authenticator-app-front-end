@@ -1,6 +1,7 @@
 export const AUTHENTICATE = () => "/auth/authenticate";
 export const FORGOT_PASSWORD = (email: string) => `/auth/forgot/password/${email}`;
 export const RESET_PASSWORD = () => `/auth/reset/password`;
+export const GET_ALL_ROLES = () => "/roles/all";
 export const GET_LOGGED_USER_DETAILS = (email: string) => `/auth/logged-user/${email}`;
 export const CREATE_ROLE = () => "/roles";
 export const UPDATE_ROLE = () => "/roles";
