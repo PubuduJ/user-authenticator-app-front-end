@@ -33,6 +33,9 @@ import {deleteUser} from "../../api/user/deleteUser";
 import {resetUserPassword} from "../../api/user/resetPassword";
 // @ts-ignore
 import {ReactComponent as MiniProfileIcon} from '../../assets/svgs/Mini Profile Icon.svg'
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import jwt_decode from "jwt-decode";
 
 type UserDataGridPageModel = {
     page: number,
@@ -50,6 +53,7 @@ export type User = {
 }
 
 const UserManagement = () => {
+    const authState = useSelector((state: RootState) => state.authState);
     const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User>({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []})
     const [openNewUser, setOpenNewUser] = useState<boolean>(false);
@@ -222,6 +226,7 @@ const UserManagement = () => {
                         </Tooltip>
                         <Tooltip title={'delete user'}>
                             <IconButton
+                                disabled={params.row.id === getLoggedUserIdFromToken()}
                                 onClick={() => {
                                     setSelectedUser((prevState: User) => {
                                         return {
@@ -246,6 +251,13 @@ const UserManagement = () => {
             }
         },
     ];
+
+    const getLoggedUserIdFromToken = (): number => {
+        if (authState.token) {
+            const decodedToken = Object(jwt_decode(authState.token));
+            return decodedToken.id;
+        } else return -1;
+    }
 
     const handleCreate = async (user: User) => {
         try {
@@ -446,7 +458,7 @@ const UserManagement = () => {
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5} >
                     <Box padding={2} style={{ backgroundColor: colorConfigs.secondBg, borderRadius: 5 }}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{ height: 400, width: '100%' }}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{ height: 450, width: '100%' }}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}

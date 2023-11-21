@@ -328,9 +328,8 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                 marginTop: "20px"
                             }}
                             required
-                            disabled={(mode === UserMode.EDIT)}
                             InputProps={{
-                                readOnly: (mode === UserMode.VIEW),
+                                readOnly: (mode === UserMode.VIEW || mode === UserMode.EDIT),
                             }}
                             id="email"
                             name="email"
