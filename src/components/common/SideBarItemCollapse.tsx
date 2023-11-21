@@ -1,21 +1,21 @@
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, Typography } from "@mui/material";
+import {Collapse, List, ListItemButton, ListItemIcon, ListItemText, Typography} from "@mui/material";
 import React, {SetStateAction, useEffect, useState} from "react";
 import colorConfigs from "../../configs/colorConfigs";
-import { RouteType } from "../../routes/config";
+import {RouteType} from "../../routes/config";
 import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined';
 import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
 import SideBarItem from "./SideBarItem";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
 
 type Props = {
     item: RouteType;
     setIsSideBarOpen: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const SideBarItemCollapse = ({ item, setIsSideBarOpen } : Props) => {
+const SideBarItemCollapse = ({item, setIsSideBarOpen}: Props) => {
     const [open, setOpen] = useState(false);
-    const { appState } = useSelector((state: RootState) => state.appState);
+    const {appState} = useSelector((state: RootState) => state.appState);
 
     useEffect(() => {
         if (appState.includes(item.state)) {
@@ -50,7 +50,7 @@ const SideBarItemCollapse = ({ item, setIsSideBarOpen } : Props) => {
                             </Typography>
                         }
                     />
-                    {open ? <ExpandLessOutlinedIcon /> : <ExpandMoreOutlinedIcon />}
+                    {open ? <ExpandLessOutlinedIcon/> : <ExpandMoreOutlinedIcon/>}
                 </ListItemButton>
                 <Collapse in={open} timeout="auto">
                     <List>

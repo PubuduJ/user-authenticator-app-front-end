@@ -2,8 +2,8 @@ import {Breadcrumbs, Button, Grid, InputAdornment, LinearProgress, TextField, Ty
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Link from "@mui/material/Link";
 import * as React from "react";
-import Box from "@mui/material/Box";
 import {useEffect, useState} from "react";
+import Box from "@mui/material/Box";
 import SearchIcon from "@mui/icons-material/Search";
 import colorConfigs from "../../configs/colorConfigs";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
@@ -41,14 +41,20 @@ export type RolePermission = {
 
 const RoleManagement = () => {
     const [roles, setRoles] = useState<UserRole[]>([]);
-    const [selectedRole, setSelectedRole] = useState<UserRole>({id: null, role: "", userCount: 0, permissionCount: 0, rolePermissions: []});
+    const [selectedRole, setSelectedRole] = useState<UserRole>({
+        id: null,
+        role: "",
+        userCount: 0,
+        permissionCount: 0,
+        rolePermissions: []
+    });
     const [openNewRole, setOpenNewRole] = useState<boolean>(false);
     const [openEditRole, setOpenEditRole] = useState<boolean>(false);
     const [openDeleteRoleBox, setOpenDeleteRoleBox] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dataGridLoading, setDataGridLoading] = useState<boolean>(false);
-    const [roleDataGridPageModel, setRoleDataGridPageModel] = useState<RoleDataGridPageModel>({ page: 0, pageSize: 5 });
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [roleDataGridPageModel, setRoleDataGridPageModel] = useState<RoleDataGridPageModel>({page: 0, pageSize: 5});
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
 
     const columns: GridColDef[] = [
         {
@@ -119,7 +125,7 @@ const RoleManagement = () => {
                                 })
                                 setOpenEditRole(true)
                             }}>
-                                <EditIcon />
+                                <EditIcon/>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={'delete role'}>
@@ -136,7 +142,7 @@ const RoleManagement = () => {
                                 })
                                 setOpenDeleteRoleBox(true)
                             }}>
-                                <DeleteIcon />
+                                <DeleteIcon/>
                             </IconButton>
                         </Tooltip>
                     </>
@@ -165,16 +171,16 @@ const RoleManagement = () => {
             setDataGridLoading(false);
         } catch (err: any) {
             if (err instanceof Error) {
-                if (err.message !== "") setToastConfig({ open: true, message: err.message, type: "error" });
-                else setToastConfig({ open: true, message: "Invalid search parameters", type: "error" })
-            } else setToastConfig({ open: true, message: "Fail to search plans", type: "error" })
+                if (err.message !== "") setToastConfig({open: true, message: err.message, type: "error"});
+                else setToastConfig({open: true, message: "Invalid search parameters", type: "error"})
+            } else setToastConfig({open: true, message: "Fail to search plans", type: "error"})
         }
     }
 
     const handleCreateRole = async (role: Role) => {
         try {
             await createRole(role);
-            setToastConfig({ open: true, message: "Role created successfully", type: "success" });
+            setToastConfig({open: true, message: "Role created successfully", type: "success"});
             await handleGetRolesByRoleName(searchQuery);
             setOpenNewRole(false);
         } catch (err: any) {
@@ -183,9 +189,9 @@ const RoleManagement = () => {
                     // @ts-ignore
                     document.getElementById("roleName").focus();
                 }
-                setToastConfig({ open: true, message: err.message, type: "error" });
+                setToastConfig({open: true, message: err.message, type: "error"});
             } else {
-                setToastConfig({ open: true, message: "Something went wrong!", type: "error" });
+                setToastConfig({open: true, message: "Something went wrong!", type: "error"});
             }
             setOpenNewRole(true);
         }
@@ -194,7 +200,7 @@ const RoleManagement = () => {
     const handleUpdateRole = async (role: Role) => {
         try {
             await updateRole(role);
-            setToastConfig({ open: true, message: "Role updated successfully", type: "success" });
+            setToastConfig({open: true, message: "Role updated successfully", type: "success"});
             await handleGetRolesByRoleName(searchQuery);
             setOpenEditRole(false);
         } catch (err: any) {
@@ -203,9 +209,9 @@ const RoleManagement = () => {
                     // @ts-ignore
                     document.getElementById("roleName").focus();
                 }
-                setToastConfig({ open: true, message: err.message, type: "error" });
+                setToastConfig({open: true, message: err.message, type: "error"});
             } else {
-                setToastConfig({ open: true, message: "Something went wrong!", type: "error" });
+                setToastConfig({open: true, message: "Something went wrong!", type: "error"});
             }
             setOpenEditRole(true);
         }
@@ -214,22 +220,24 @@ const RoleManagement = () => {
     const handleDelete = async (id: number) => {
         try {
             await deleteRole(id);
-            setToastConfig({ open: true, message: "Role deleted successfully", type: "success" });
+            setToastConfig({open: true, message: "Role deleted successfully", type: "success"});
             await handleGetRolesByRoleName(searchQuery);
             setOpenDeleteRoleBox(false);
         } catch (err: any) {
             if (err instanceof Error) {
                 console.log(err.message);
                 if (err.message === "Internal server error") {
-                    setToastConfig({ open: true, message: "Cannot delete the role, Role has assigned to a user", type: "error" })
+                    setToastConfig({
+                        open: true,
+                        message: "Cannot delete the role, Role has assigned to a user",
+                        type: "error"
+                    })
                     if (document.getElementById("roleId") !== null) {
                         // @ts-ignore
                         document.getElementById("roleId").focus();
                     }
-                }
-                else setToastConfig({ open: true, message: err.message, type: "error" })
-            }
-            else setToastConfig({ open: true, message: "Fail to delete the user role", type: "error" })
+                } else setToastConfig({open: true, message: err.message, type: "error"})
+            } else setToastConfig({open: true, message: "Fail to delete the user role", type: "error"})
         }
     }
 
@@ -246,11 +254,14 @@ const RoleManagement = () => {
 
     useEffect(() => {
         setTimeout(() => {
-            handleGetRolesByRoleName(searchQuery).then(r => {});
+            handleGetRolesByRoleName(searchQuery).then(r => {
+            });
         }, 100)
     }, [searchQuery])
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } });
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {
+        return {...prevState, "open": state}
+    });
 
     return (
         <>
@@ -293,15 +304,21 @@ const RoleManagement = () => {
                                 setSearchQuery(filteredValue);
                             }}
                             InputProps={{
-                                endAdornment: <InputAdornment position={"end"}><SearchIcon /></InputAdornment>
+                                endAdornment: <InputAdornment position={"end"}><SearchIcon/></InputAdornment>
                             }}
                         />
                         <Button
                             onClick={() => {
-                                setSelectedRole({id: null, role: "", userCount: 0, permissionCount: 0, rolePermissions: []});
+                                setSelectedRole({
+                                    id: null,
+                                    role: "",
+                                    userCount: 0,
+                                    permissionCount: 0,
+                                    rolePermissions: []
+                                });
                                 setOpenNewRole(true);
                             }}
-                            sx={{ height: "50px" }}
+                            sx={{height: "50px"}}
                             variant="contained"
                         >
                             Add New Role
@@ -309,8 +326,8 @@ const RoleManagement = () => {
                     </Box>
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5}>
-                    <Box padding={2} style={{ backgroundColor: colorConfigs.secondBg, borderRadius: 5 }}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{ height: 400, width: '100%' }}>
+                    <Box padding={2} style={{backgroundColor: colorConfigs.secondBg, borderRadius: 5}}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 400, width: '100%'}}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}
@@ -365,7 +382,8 @@ const RoleManagement = () => {
                         action={{
                             setIsDrawerOpen: setOpenNewRole,
                             onCreateRole: handleCreateRole,
-                            onUpdateRole: () => {}
+                            onUpdateRole: () => {
+                            }
                         }}
                     />
                 </Box>
@@ -389,7 +407,8 @@ const RoleManagement = () => {
                         mode={RoleMode.EDIT}
                         action={{
                             setIsDrawerOpen: setOpenEditRole,
-                            onCreateRole: () => {},
+                            onCreateRole: () => {
+                            },
                             onUpdateRole: handleUpdateRole
                         }}
                     />

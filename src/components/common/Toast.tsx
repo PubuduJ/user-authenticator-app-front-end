@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import MuiAlert, {AlertProps} from '@mui/material/Alert';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props,
@@ -25,7 +25,7 @@ type Props = {
     action: ToastAction
 }
 
-const Toast = ({ data, action }: Props) => {
+const Toast = ({data, action}: Props) => {
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return;
@@ -38,10 +38,10 @@ const Toast = ({ data, action }: Props) => {
             <Snackbar
                 open={data.open}
                 autoHideDuration={5000}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                anchorOrigin={{vertical: "bottom", horizontal: "right"}}
                 onClose={handleClose}
-                sx={{ zIndex: 999999999999999 }}>
-                <Alert onClose={handleClose} severity={data.type} sx={{ width: '100%', zIndex: 999999999999999 }}>
+                sx={{zIndex: 999999999999999}}>
+                <Alert onClose={handleClose} severity={data.type} sx={{width: '100%', zIndex: 999999999999999}}>
                     {data.message}
                 </Alert>
             </Snackbar>

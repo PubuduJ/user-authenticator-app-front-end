@@ -1,6 +1,7 @@
-import {AppBar, Avatar, Box, Button, IconButton, Menu, MenuItem, Toolbar, Typography} from "@mui/material";
+import {AppBar, Avatar, Box, Button, IconButton, Toolbar, Typography} from "@mui/material";
 import colorConfigs from "../../configs/colorConfigs";
 import MenuIcon from '@mui/icons-material/Menu';
+import * as React from "react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -8,16 +9,15 @@ import {RootState} from "../../redux/store";
 import jwt_decode from "jwt-decode";
 import {getLoggedUserDetails} from "../../api/auth/getLoggedUserDetails";
 import Toast, {ToastData} from "./Toast";
-import * as React from "react";
 
 type Props = {
     handleDrawerOpen: () => void
 }
 
-const TopBar = ({ handleDrawerOpen } : Props) => {
+const TopBar = ({handleDrawerOpen}: Props) => {
     const authState = useSelector((state: RootState) => state.authState);
     const [imgUrl, setImgUrl] = useState<string>("");
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
     const [placeHolder, setPlaceHolder] = useState("");
     const navigate = useNavigate();
 
@@ -32,17 +32,20 @@ const TopBar = ({ handleDrawerOpen } : Props) => {
             setImgUrl(response.data.img);
         } catch (err: any) {
             if (err instanceof Error) {
-                if (err.message !== "") setToastConfig({ open: true, message: err.message, type: "error" });
-                else setToastConfig({ open: true, message: "Fail to load logged user details", type: "error" })
-            } else setToastConfig({ open: true, message: "Fail to load logged user details", type: "error" })
+                if (err.message !== "") setToastConfig({open: true, message: err.message, type: "error"});
+                else setToastConfig({open: true, message: "Fail to load logged user details", type: "error"})
+            } else setToastConfig({open: true, message: "Fail to load logged user details", type: "error"})
         }
     }
 
     useEffect(() => {
-        getLoggedUserLogo().then(r => {});
+        getLoggedUserLogo().then(r => {
+        });
     }, [])
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } });
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {
+        return {...prevState, "open": state}
+    });
 
     return (
         <>
@@ -71,7 +74,7 @@ const TopBar = ({ handleDrawerOpen } : Props) => {
                             onClick={handleDrawerOpen}
                             edge="start"
                         >
-                            <MenuIcon />
+                            <MenuIcon/>
                         </IconButton>
                         <Typography pt={0.5} pl={1} fontWeight={"bold"} variant={"h5"}>Authenticator App</Typography>
                     </Box>

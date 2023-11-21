@@ -11,7 +11,7 @@ type ErrorMsgType = {
 
 const ForgotPassword = () => {
     const [loading, setLoading] = useState(false);
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
     const navigate = useNavigate();
     const [error, setError] = useState<ErrorMsgType>({emailError: ""});
 
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
             const email = data.get("email")?.toString() ?? "";
             if (email == "") {
                 setError((prevState: ErrorMsgType) => {
-                    return { ...prevState, "emailError": "Email is required" }
+                    return {...prevState, "emailError": "Email is required"}
                 });
                 return;
             }
@@ -40,7 +40,9 @@ const ForgotPassword = () => {
                     message: "Your password reset request was success. Please check your inbox",
                     type: "success"
                 });
-                setTimeout(() => {navigate("/sign-in");}, 2000);
+                setTimeout(() => {
+                    navigate("/sign-in");
+                }, 2000);
             } else {
                 setToastConfig({open: true, message: resetResponse.message, type: "error"});
             }
@@ -54,7 +56,11 @@ const ForgotPassword = () => {
         }
     };
 
-    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
+    const handleToastOnclose = (state: boolean) => {
+        setToastConfig((prevState: ToastData) => {
+            return {...prevState, "open": state}
+        })
+    }
 
     // Mobile screen auto-responsive code logic.
     const [renderComponent, setRenderComponent] = useState("");
@@ -98,7 +104,7 @@ const ForgotPassword = () => {
                     position={"absolute"}
                     padding={4}>
                     <Typography variant='h4' align='center'>Forgot Password?</Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
                             margin="normal"
@@ -112,18 +118,19 @@ const ForgotPassword = () => {
                             error={(error.emailError !== "")}
                             helperText={error.emailError}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                const { name, value } = event.target;
+                                const {name, value} = event.target;
                                 if (value.trim() === "") {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "emailError": "Email is required" }
+                                        return {...prevState, "emailError": "Email is required"}
                                     });
-                                } if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
+                                }
+                                if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(value)) {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "emailError": "Enter valid email ID" }
+                                        return {...prevState, "emailError": "Enter valid email ID"}
                                     });
                                 } else {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "emailError": "" }
+                                        return {...prevState, "emailError": ""}
                                     });
                                 }
                             }}
@@ -133,7 +140,7 @@ const ForgotPassword = () => {
                             fullWidth
                             variant="contained"
                             disabled={loading}
-                            sx={{ mt: 3, mb: 2 }}
+                            sx={{mt: 3, mb: 2}}
                         >
                             Reset Password
                         </Button>
@@ -153,7 +160,9 @@ const ForgotPassword = () => {
                         <Grid container>
                             <Grid item xs></Grid>
                             <Grid item paddingY={1}>
-                                <Link href="#" variant="subtitle1" onClick={() => { navigate('/sign-in') }}>
+                                <Link href="#" variant="subtitle1" onClick={() => {
+                                    navigate('/sign-in')
+                                }}>
                                     Back
                                 </Link>
                             </Grid>
@@ -163,7 +172,8 @@ const ForgotPassword = () => {
                             fontWeight={"bold"}
                             variant={"subtitle1"}
                         >
-                            © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
+                            © {new Date().getFullYear()} <Link
+                            href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
                         </Typography>
                     </Box>
                 </Box>

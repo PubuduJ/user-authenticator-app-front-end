@@ -19,7 +19,7 @@ const SignIn = () => {
     const [password, setPassword] = useState<string>("");
     const [rememberMe, setRememberMe] = useState<boolean>(false);
     const [error, setError] = useState<ErrorMsgType>({emailError: " ", passwordError: " "});
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ const SignIn = () => {
                 // @ts-ignore
                 document.getElementById("email").focus();
                 setError((prevState: ErrorMsgType) => {
-                    return { ...prevState, "emailError": "Email is required", }
+                    return {...prevState, "emailError": "Email is required",}
                 });
                 return;
             }
@@ -41,7 +41,7 @@ const SignIn = () => {
                 // @ts-ignore
                 document.getElementById("password").focus();
                 setError((prevState: ErrorMsgType) => {
-                    return { ...prevState, "passwordError": "Password is required", }
+                    return {...prevState, "passwordError": "Password is required",}
                 });
                 return;
             }
@@ -50,7 +50,11 @@ const SignIn = () => {
             if (userData.token) {
                 setToastConfig({open: true, message: "Successfully logged in to the system", type: "success"});
                 const decodedToken = Object(jwt_decode(userData?.token));
-                dispatch(setCredentials({ user: decodedToken.email, token: userData.token, permissions: decodedToken.scopes.permissions }))
+                dispatch(setCredentials({
+                    user: decodedToken.email,
+                    token: userData.token,
+                    permissions: decodedToken.scopes.permissions
+                }))
                 localStorage.setItem("jwtToken", userData.token);
                 localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
                 if (rememberMe) {
@@ -69,7 +73,11 @@ const SignIn = () => {
             }
         }
     }
-    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
+    const handleToastOnclose = (state: boolean) => {
+        setToastConfig((prevState: ToastData) => {
+            return {...prevState, "open": state}
+        })
+    }
 
     // Mobile screen auto-responsive code logic.
     const [renderComponent, setRenderComponent] = useState("");
@@ -99,7 +107,9 @@ const SignIn = () => {
         // Set initial text based on the current orientation
         handleOrientationChange();
         // Clean up event listener on unmount
-        return () => {window.removeEventListener("resize", handleOrientationChange);};
+        return () => {
+            window.removeEventListener("resize", handleOrientationChange);
+        };
     }, []);
 
     return (
@@ -117,7 +127,7 @@ const SignIn = () => {
                     position={"absolute"}
                     padding={4}>
                     <Typography variant='h4' align='center'>Welcome</Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
                             margin="normal"
@@ -132,11 +142,11 @@ const SignIn = () => {
                                 const value = event.target.value;
                                 if (value.trim() === "") {
                                     setError((prevState) => {
-                                        return { ...prevState, "emailError": "Email is required" }
+                                        return {...prevState, "emailError": "Email is required"}
                                     });
                                 } else {
                                     setError((prevState) => {
-                                        return { ...prevState, "emailError": " "}
+                                        return {...prevState, "emailError": " "}
                                     })
                                 }
                                 setUsername(value);
@@ -159,11 +169,11 @@ const SignIn = () => {
                                 const value = event.target.value;
                                 if (value.trim() === "") {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "passwordError": "Password is required" }
+                                        return {...prevState, "passwordError": "Password is required"}
                                     });
                                 } else {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "passwordError": " " }
+                                        return {...prevState, "passwordError": " "}
                                     });
                                 }
                                 setPassword(value);
@@ -176,13 +186,15 @@ const SignIn = () => {
                             <Grid item xs>
                                 <FormControlLabel
                                     control={
-                                    <Checkbox
-                                        color="primary"
-                                        checked={rememberMe}
-                                        onChange={
-                                        () => {setRememberMe(!rememberMe)}}
-                                    />}
-                                    slotProps={{ typography: { variant: 'subtitle1' } }}
+                                        <Checkbox
+                                            color="primary"
+                                            checked={rememberMe}
+                                            onChange={
+                                                () => {
+                                                    setRememberMe(!rememberMe)
+                                                }}
+                                        />}
+                                    slotProps={{typography: {variant: 'subtitle1'}}}
                                     label="Remember me"
                                 />
                             </Grid>
@@ -198,7 +210,7 @@ const SignIn = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
-                            sx={{ mt: 3, mb: 3 }}
+                            sx={{mt: 3, mb: 3}}
                         >
                             Sign In
                         </Button>
@@ -207,7 +219,8 @@ const SignIn = () => {
                             fontWeight={"bold"}
                             variant={"subtitle1"}
                         >
-                            © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
+                            © {new Date().getFullYear()} <Link
+                            href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
                         </Typography>
                     </Box>
                 </Box>

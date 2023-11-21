@@ -1,6 +1,6 @@
 export const responseHandler = (response: any) => {
     try {
-        if (response.status <= 299 && response.status >= 200 ) {
+        if (response.status <= 299 && response.status >= 200) {
             return response;
         } else if (response.status === 500) {
             throw new Error("Internal server error");

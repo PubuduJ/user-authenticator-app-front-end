@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import appStateSlice from "./features/appStateSlice";
 import authStateSlice from "./features/authStateSlice";
 import booleanValueSlice from "./features/booleanValueSlice";

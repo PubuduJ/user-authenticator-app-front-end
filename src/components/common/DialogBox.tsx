@@ -45,14 +45,14 @@ const DialogBox = ({mode, data, action}: Props) => {
     useEffect(() => {
         setInput("");
         setError(" ");
-        setTimeout(()=>{
+        setTimeout(() => {
             if (document.getElementById(`${data.txtId}`) !== null) {
                 // @ts-ignore
                 document.getElementById(`${data.txtId}`).focus();
             }
-        },500);
+        }, 500);
 
-    },[data.open])
+    }, [data.open])
 
     const handleCancel = () => {
         action.onCancel(false);
@@ -85,11 +85,14 @@ const DialogBox = ({mode, data, action}: Props) => {
 
     return (
         <>
-            <Dialog fullWidth maxWidth={"xs"} open={data.open} onClose={() => {action.onClose(false)}}>
+            <Dialog fullWidth maxWidth={"xs"} open={data.open} onClose={() => {
+                action.onClose(false)
+            }}>
                 <DialogTitle variant="h6">{data.dialogTitle}</DialogTitle>
                 <DialogContent>
                     {
-                        (mode === DialogBoxMode.DELETE_USER || mode === DialogBoxMode.RESET_PASS) && <DialogContentText pb={1} variant={"body1"}>
+                        (mode === DialogBoxMode.DELETE_USER || mode === DialogBoxMode.RESET_PASS) &&
+                        <DialogContentText pb={1} variant={"body1"}>
                             Please enter <i>{data.value}</i> as the email address.
                         </DialogContentText>
                     }
@@ -117,11 +120,9 @@ const DialogBox = ({mode, data, action}: Props) => {
                             const {value} = event.target;
                             if (value.trim() === "") {
                                 setError(data.errorMessages[0]);
-                            }
-                            else if (value !== data.value) {
+                            } else if (value !== data.value) {
                                 setError(data.errorMessages[1]);
-                            }
-                            else (setError(" "));
+                            } else (setError(" "));
                             setInput(value);
                         }}
                     />

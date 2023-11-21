@@ -1,10 +1,10 @@
 import {Navigate, Outlet} from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import sizeConfigs from "../../configs/sizeConfigs";
 import SideBar from "../common/SideBar";
 import TopBar from "../common/TopBar";
 import {useState} from "react";
-import { useMediaQuery } from "react-responsive";
+import {useMediaQuery} from "react-responsive";
 import {useDispatch, useSelector} from "react-redux";
 import Link from '@mui/material/Link';
 import {setBooleanValue} from "../../redux/features/booleanValueSlice";
@@ -14,7 +14,7 @@ const MainLayout = () => {
     const authState = useSelector((state: RootState) => state.authState);
     const dispatch = useDispatch();
     const [isSideBarOpen, setIsSideBarOpen] = useState<boolean>(false);
-    const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+    const isMobile = useMediaQuery({query: `(max-width: 600px)`});
 
     const handleDrawerOpen = () => {
         setIsSideBarOpen(!isSideBarOpen);
@@ -29,8 +29,8 @@ const MainLayout = () => {
         <>
             {(authState.token) ?
                 <>
-                    <TopBar handleDrawerOpen={handleDrawerOpen} />
-                    <Box sx={{ display: "flex", backgroundColor: "#E5E9F1" }}>
+                    <TopBar handleDrawerOpen={handleDrawerOpen}/>
+                    <Box sx={{display: "flex", backgroundColor: "#E5E9F1"}}>
                         <Box
                             component="nav"
                             sx={{
@@ -51,7 +51,7 @@ const MainLayout = () => {
                             width={"100px"}
                             bgcolor={"#E5E9F1"}
                         >
-                            <Outlet />
+                            <Outlet/>
                         </Box>
                     </Box>
                     <Box
@@ -66,7 +66,9 @@ const MainLayout = () => {
                             width: isSideBarOpen && !isMobile ? `calc(100% - ${sizeConfigs.sideBar.width})` : "100%",
                         }}
                     >
-                        <Typography fontWeight={"bold"} variant={"body2"}>© {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.</Typography>
+                        <Typography fontWeight={"bold"} variant={"body2"}>© {new Date().getFullYear()} <Link
+                            href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights
+                            Reserved.</Typography>
                     </Box>
                 </>
                 :

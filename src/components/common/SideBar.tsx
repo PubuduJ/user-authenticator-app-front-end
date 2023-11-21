@@ -1,9 +1,9 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, {SetStateAction, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import sizeConfigs from '../../configs/sizeConfigs';
-import { useMediaQuery } from 'react-responsive';
+import {useMediaQuery} from 'react-responsive';
 import colorConfigs from '../../configs/colorConfigs';
 import appRoutes from '../../routes/appRoutes';
 import SideBarItemCollapse from './SideBarItemCollapse';
@@ -16,9 +16,9 @@ type Props = {
     setIsSideBarOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const SideBar = ({ window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen } : Props) => {
+const SideBar = ({window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen}: Props) => {
     const [open, setOpen] = useState(false);
-    const isMobile = useMediaQuery({ query: `(max-width: 600px)` });
+    const isMobile = useMediaQuery({query: `(max-width: 600px)`});
 
     useEffect(() => setOpen(isSideBarOpen), [isSideBarOpen]);
 
@@ -30,7 +30,7 @@ const SideBar = ({ window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen }
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{display: 'flex'}}>
             <Drawer
                 container={container}
                 variant="temporary"
@@ -40,8 +40,12 @@ const SideBar = ({ window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen }
                     keepMounted: true,
                 }}
                 sx={{
-                    display: { xs: 'block', sm: 'none' },
-                    '& .MuiDrawer-paper': { boxSizing: 'border-box', width: sizeConfigs.sideBar.width, backgroundColor: colorConfigs.sideBar.bg },
+                    display: {xs: 'block', sm: 'none'},
+                    '& .MuiDrawer-paper': {
+                        boxSizing: 'border-box',
+                        width: sizeConfigs.sideBar.width,
+                        backgroundColor: colorConfigs.sideBar.bg
+                    },
                 }}
             >
                 <List disablePadding style={{
@@ -53,9 +57,9 @@ const SideBar = ({ window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen }
                     {appRoutes.map((route, index) => (
                         route.sidebarProps ? (
                             route.child ? (
-                                <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen} />
+                                <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             ) : (
-                                <SideBarItem item={route} key={index} setIsSideBarOpen={setIsSideBarOpen} />
+                                <SideBarItem item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             )
                         ) : null
                     ))}
@@ -85,9 +89,9 @@ const SideBar = ({ window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen }
                     {appRoutes.map((route, index) => (
                         route.sidebarProps ? (
                             route.child ? (
-                                <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen} />
+                                <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             ) : (
-                                <SideBarItem item={route} key={index} setIsSideBarOpen={setIsSideBarOpen} />
+                                <SideBarItem item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             )
                         ) : null
                     ))}

@@ -60,8 +60,22 @@ const getBase64 = (file: RcFile): Promise<string> =>
     });
 
 const CreateEditViewUser = ({user, mode, action}: Props) => {
-    const [newUser, setNewUser] = useState<User>({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []});
-    const [error, setError] = useState<ErrorMsgType>({emailError: " ", firstNameError: " ", lastNameError: " ", mobileError: " ", roleError: " "});
+    const [newUser, setNewUser] = useState<User>({
+        id: null,
+        img: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        mobile: "",
+        roleIds: []
+    });
+    const [error, setError] = useState<ErrorMsgType>({
+        emailError: " ",
+        firstNameError: " ",
+        lastNameError: " ",
+        mobileError: " ",
+        roleError: " "
+    });
     const [roles, setRoles] = useState<Role[]>([]);
     const [selectedRoles, setSelectedRoles] = useState<Role[]>([]);
     const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "error"});
@@ -110,8 +124,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                 if (user.img !== "" && user.id !== null) {
                     const elements = document.getElementsByClassName("ant-btn") as HTMLCollectionOf<Element>;
                     if (elements[0] !== undefined) (elements[0] as HTMLElement).style.display = "none";
-                }
-                else {
+                } else {
                     const elements = document.getElementsByClassName("ant-upload-select") as HTMLCollectionOf<Element>;
                     if (elements[0] !== undefined) (elements[0] as HTMLElement).style.display = "none";
                 }
@@ -121,10 +134,12 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
 
     useEffect(() => {
         setNewUser({...user});
-        getRoleArray().then(r => {})
+        getRoleArray().then(r => {
+        })
         if (user.roleIds.length === 0) setSelectedRoles([]);
         else if (user.roleIds.length !== 0) {
-            getSelectedRoleArray().then(r => {});
+            getSelectedRoleArray().then(r => {
+            });
         }
     }, [user]);
 
@@ -150,7 +165,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
         try {
             const response = await getAllRoles();
             setSelectedRoles(response.data.filter((roleObject: Role) => {
-                return user.roleIds.indexOf(roleObject.id??0) !== -1;
+                return user.roleIds.indexOf(roleObject.id ?? 0) !== -1;
             }))
         } catch (err: any) {
             if (err instanceof Error) setToastConfig({open: true, message: err.message, type: "error"})
@@ -165,7 +180,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                 return {...prevState, "img": ""}
             })
         }
-    },[fileList])
+    }, [fileList])
 
     const beforeImageUpload = async (file: RcFile) => {
         const isJpgOrPngOrJpeg = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/jpg';
@@ -297,7 +312,11 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
             action.onConfirm(newUser);
         }
     }
-    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => {return {...prevState, "open" : state}})};
+    const handleToastOnclose = (state: boolean) => {
+        setToastConfig((prevState: ToastData) => {
+            return {...prevState, "open": state}
+        })
+    };
 
     return (
         <>
@@ -310,7 +329,9 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                 style={{backgroundColor: colorConfigs.mainBg}}
             >
                 <Box top={"8px"} right={"24px"} position={"absolute"}>
-                    <IconButton onClick={() => {action.setIsDrawerOpen(false)}}>
+                    <IconButton onClick={() => {
+                        action.setIsDrawerOpen(false)
+                    }}>
                         <CloseIcon/>
                     </IconButton>
                 </Box>
@@ -567,7 +588,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                         setSelectedRoles([...value]);
                                         let newRoles: number[] = [];
                                         for (let i = 0; i < value.length; i++) {
-                                            newRoles.push(value[i].id??0);
+                                            newRoles.push(value[i].id ?? 0);
                                         }
                                         setNewUser((prevState: User) => {
                                             return {...prevState, "roleIds": newRoles}
@@ -623,15 +644,18 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                 </Grid>
                 {
                     (mode === UserMode.CREATE || mode === UserMode.EDIT) &&
-                    <Box style={{backgroundColor: colorConfigs.mainBg}} pb={2} pt={2} pr={4} display={"flex"} justifyContent={"flex-end"} gap={2}>
+                    <Box style={{backgroundColor: colorConfigs.mainBg}} pb={2} pt={2} pr={4} display={"flex"}
+                         justifyContent={"flex-end"} gap={2}>
                         <Button variant="outlined" onClick={handleClear}>Clear</Button>
                         {
                             (mode === UserMode.CREATE) &&
-                            <Button sx={{p: "10px 50px 10px 50px"}} variant="contained" onClick={handleAction}>Create User</Button>
+                            <Button sx={{p: "10px 50px 10px 50px"}} variant="contained" onClick={handleAction}>Create
+                                User</Button>
                         }
                         {
                             (mode === UserMode.EDIT) &&
-                            <Button sx={{p: "10px 50px 10px 50px"}} variant="contained" onClick={handleAction}>Update User</Button>
+                            <Button sx={{p: "10px 50px 10px 50px"}} variant="contained" onClick={handleAction}>Update
+                                User</Button>
                         }
                     </Box>
                 }

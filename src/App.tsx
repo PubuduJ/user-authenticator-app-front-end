@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import {routes} from "./routes";
 import SignIn from "./pages/auth/SignIn";
@@ -27,7 +27,7 @@ const App = () => {
                 if (decodedToken.exp < currentTime) {
                     localStorage.removeItem("jwtToken");
                 } else {
-                    dispatch(setCredentials({ user: decodedToken.email, token: jwtToken, permissions: userPermissions }))
+                    dispatch(setCredentials({user: decodedToken.email, token: jwtToken, permissions: userPermissions}))
                     setAuthenticated(true);
                 }
                 setLoading(false);
@@ -48,14 +48,14 @@ const App = () => {
                 <></>
                 :
                 <Routes>
-                    <Route path="/sign-in" element={<SignIn />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/sign-in" element={<SignIn/>}/>
+                    <Route path="/forgot-password" element={<ForgotPassword/>}/>
+                    <Route path="/reset-password" element={<ResetPassword/>}/>
                     <Route path={"/"} element={<MainLayout/>}>{routes}</Route>
                 </Routes>
             }
         </BrowserRouter>
-      );
+    );
 }
 
 export default App;

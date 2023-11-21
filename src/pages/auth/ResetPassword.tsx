@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
-import Toast, { ToastData } from "../../components/common/Toast";
+import {useNavigate} from "react-router-dom";
+import Toast, {ToastData} from "../../components/common/Toast";
 import {Box, Button, CircularProgress, Grid, TextField, Typography} from "@mui/material";
 import Link from "@mui/material/Link";
 import {resetPassword} from "../../api/auth/resetPassword";
@@ -22,7 +22,7 @@ export type PasswordObject = {
 
 const ResetPassword = () => {
     const authState = useSelector((state: RootState) => state.authState);
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
     const [passwordObject, setPasswordObject] = React.useState<PasswordObject>({
         temporaryPassword: "", newPassword: "", repeatNewPassword: ""
     })
@@ -38,19 +38,19 @@ const ResetPassword = () => {
                 if (!passwordObject.temporaryPassword) {
                     // @ts-ignore
                     setError((prevState: ErrorMsgType) => {
-                        return { ...prevState, "temporaryPassword": "Temporary Password is required", }
+                        return {...prevState, "temporaryPassword": "Temporary Password is required",}
                     });
                 }
                 if (!passwordObject.newPassword) {
                     // @ts-ignore
                     setError((prevState: ErrorMsgType) => {
-                        return { ...prevState, "newPassword": "New Password is required", }
+                        return {...prevState, "newPassword": "New Password is required",}
                     });
                 }
                 if (!passwordObject.repeatNewPassword) {
                     // @ts-ignore
                     setError((prevState: ErrorMsgType) => {
-                        return { ...prevState, "repeatNewPassword": "Repeat New Password is required", }
+                        return {...prevState, "repeatNewPassword": "Repeat New Password is required",}
                     });
                 }
             }
@@ -97,7 +97,11 @@ const ResetPassword = () => {
         }
     }
 
-    const handleToastOnclose = (state: boolean) => {setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } })}
+    const handleToastOnclose = (state: boolean) => {
+        setToastConfig((prevState: ToastData) => {
+            return {...prevState, "open": state}
+        })
+    }
 
     // Mobile screen auto-responsive code logic.
     const [renderComponent, setRenderComponent] = useState("");
@@ -133,7 +137,7 @@ const ResetPassword = () => {
             >
                 <Box maxWidth={"470px"} bottom={0} right={0} position={"absolute"} padding={4}>
                     <Typography variant='h4' align='center'>Reset Password</Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
                             margin="normal"
@@ -148,19 +152,19 @@ const ResetPassword = () => {
                             error={(error.temporaryPassword !== "")}
                             helperText={error.temporaryPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                const { name, value } = event.target;
+                                const {name, value} = event.target;
                                 if (value.trim() === "") {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "temporaryPassword": "Temporary Password is required" }
+                                        return {...prevState, "temporaryPassword": "Temporary Password is required"}
                                     });
                                 } else {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "temporaryPassword": "" }
+                                        return {...prevState, "temporaryPassword": ""}
                                     });
                                 }
 
                                 setPasswordObject((prevState) => {
-                                    return { ...prevState, [name]: value }
+                                    return {...prevState, [name]: value}
                                 })
                             }}
                         />
@@ -177,29 +181,36 @@ const ResetPassword = () => {
                             error={(error.newPassword !== "")}
                             helperText={error.newPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                const { name, value } = event.target;
+                                const {name, value} = event.target;
                                 if (value.trim() === "") {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "newPassword": "Password is required" }
+                                        return {...prevState, "newPassword": "Password is required"}
                                     });
-                                } if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
+                                }
+                                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "newPassword": "Password should contain 8 characters including both numbers and letters, at least one capital and simple letter, and one special character" }
+                                        return {
+                                            ...prevState,
+                                            "newPassword": "Password should contain 8 characters including both numbers and letters, at least one capital and simple letter, and one special character"
+                                        }
                                     });
                                 } else {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "newPassword": "" }
+                                        return {...prevState, "newPassword": ""}
                                     });
                                 }
 
                                 setPasswordObject((prevState) => {
-                                    return { ...prevState, [name]: value }
+                                    return {...prevState, [name]: value}
                                 })
 
                                 if (value && passwordObject.repeatNewPassword && passwordObject.repeatNewPassword.trim() != ""
                                     && value != passwordObject.repeatNewPassword) {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "repeatNewPassword": "New password and Repeat new password should be equal" }
+                                        return {
+                                            ...prevState,
+                                            "repeatNewPassword": "New password and Repeat new password should be equal"
+                                        }
                                     });
                                 }
                             }}
@@ -217,35 +228,38 @@ const ResetPassword = () => {
                             error={(error.repeatNewPassword !== "")}
                             helperText={error.repeatNewPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                                const { name, value } = event.target;
+                                const {name, value} = event.target;
                                 if (value.trim() === "") {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "repeatNewPassword": "Repeat New Password is required" }
+                                        return {...prevState, "repeatNewPassword": "Repeat New Password is required"}
                                     });
                                 } else {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "repeatNewPassword": "" }
+                                        return {...prevState, "repeatNewPassword": ""}
                                     });
                                 }
 
                                 setPasswordObject((prevState) => {
-                                    return { ...prevState, [name]: value }
+                                    return {...prevState, [name]: value}
                                 })
 
                                 if (passwordObject.newPassword && passwordObject.newPassword != value) {
                                     setError((prevState: ErrorMsgType) => {
-                                        return { ...prevState, "repeatNewPassword": "New password and Repeat new password should be equal" }
+                                        return {
+                                            ...prevState,
+                                            "repeatNewPassword": "New password and Repeat new password should be equal"
+                                        }
                                     });
                                 }
                             }}
                         />
-                        <Box sx={{ position: 'relative' }}>
+                        <Box sx={{position: 'relative'}}>
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
                                 disabled={loading}
-                                sx={{ mt: 3, mb: 2 }}
+                                sx={{mt: 3, mb: 2}}
                             >
                                 Update Password
                             </Button>
@@ -265,12 +279,16 @@ const ResetPassword = () => {
                         </Box>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="subtitle1" onClick={() => { navigate('/') }}>
+                                <Link href="#" variant="subtitle1" onClick={() => {
+                                    navigate('/')
+                                }}>
                                     Skip
                                 </Link>
                             </Grid>
                             <Grid item paddingY={1}>
-                                <Link href="#" variant="subtitle1" onClick={() => { navigate('/sign-in') }}>
+                                <Link href="#" variant="subtitle1" onClick={() => {
+                                    navigate('/sign-in')
+                                }}>
                                     Back
                                 </Link>
                             </Grid>
@@ -281,7 +299,8 @@ const ResetPassword = () => {
                         fontWeight={"bold"}
                         variant={"subtitle1"}
                     >
-                        © {new Date().getFullYear()} <Link href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
+                        © {new Date().getFullYear()} <Link
+                        href="https://www.linkedin.com/in/pubudujanith/">PubuduJ.</Link> All Rights Reserved.
                     </Typography>
                 </Box>
             </Box>

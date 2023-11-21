@@ -1,24 +1,24 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 type navOpen = {
-  booleanValue: boolean ;
+    booleanValue: boolean;
 }
 
 const initialState: navOpen = {
-  booleanValue: false,
-  
+    booleanValue: false,
+
 };
 
 const booleanSlice = createSlice({
     name: 'boolean',
     initialState,
     reducers: {
-      setBooleanValue: (state, action: PayloadAction<boolean>) => {
-        state.booleanValue = action.payload;
-      },
+        setBooleanValue: (state, action: PayloadAction<boolean>) => {
+            state.booleanValue = action.payload;
+        },
     },
-  });
+});
 
-export const { setBooleanValue } = booleanSlice.actions;
+export const {setBooleanValue} = booleanSlice.actions;
 
 export default booleanSlice.reducer;

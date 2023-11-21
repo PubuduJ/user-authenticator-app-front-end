@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {useEffect, useState} from 'react';
 import Box from "@mui/material/Box";
 import SearchIcon from '@mui/icons-material/Search';
-import {useEffect, useState} from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import IconButton from "@mui/material/IconButton";
 import EditIcon from '@mui/icons-material/Edit';
@@ -13,7 +13,8 @@ import Tooltip from "@mui/material/Tooltip";
 import {
     Backdrop,
     Breadcrumbs,
-    Button, CircularProgress,
+    Button,
+    CircularProgress,
     Grid,
     InputAdornment,
     LinearProgress,
@@ -55,7 +56,15 @@ export type User = {
 const UserManagement = () => {
     const authState = useSelector((state: RootState) => state.authState);
     const [users, setUsers] = useState<User[]>([]);
-    const [selectedUser, setSelectedUser] = useState<User>({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []})
+    const [selectedUser, setSelectedUser] = useState<User>({
+        id: null,
+        img: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        mobile: "",
+        roleIds: []
+    })
     const [openNewUser, setOpenNewUser] = useState<boolean>(false);
     const [openEditUser, setOpenEditUser] = useState<boolean>(false);
     const [openViewUser, setOpenViewUser] = useState<boolean>(false);
@@ -63,9 +72,9 @@ const UserManagement = () => {
     const [openDeleteUserBox, setOpenDeleteUserBox] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dataGridLoading, setDataGridLoading] = useState<boolean>(false);
-    const [userDataGridPageModel, setUserDataGridPageModel] = useState<UserDataGridPageModel>({ page: 0, pageSize: 5 });
+    const [userDataGridPageModel, setUserDataGridPageModel] = useState<UserDataGridPageModel>({page: 0, pageSize: 5});
     const [loading, setLoading] = useState<boolean>(false);
-    const [toastConfig, setToastConfig] = useState<ToastData>({ open: false, message: "", type: "success" });
+    const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
 
     const columns: GridColDef[] = [
         {
@@ -181,7 +190,7 @@ const UserManagement = () => {
                                 })
                                 setOpenViewUser(true)
                             }}>
-                                <VisibilityIcon />
+                                <VisibilityIcon/>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={'edit user'}>
@@ -201,7 +210,7 @@ const UserManagement = () => {
                                 })
                                 setOpenEditUser(true)
                             }}>
-                                <EditIcon />
+                                <EditIcon/>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={'reset password'}>
@@ -221,7 +230,7 @@ const UserManagement = () => {
                                 })
                                 setOpenResetPasswordBox(true)
                             }}>
-                                <LockIcon />
+                                <LockIcon/>
                             </IconButton>
                         </Tooltip>
                         <Tooltip title={'delete user'}>
@@ -243,7 +252,7 @@ const UserManagement = () => {
                                     })
                                     setOpenDeleteUserBox(true)
                                 }}>
-                                <DeleteIcon />
+                                <DeleteIcon/>
                             </IconButton>
                         </Tooltip>
                     </>
@@ -337,11 +346,11 @@ const UserManagement = () => {
         try {
             setLoading(true);               // Set backdrop state.
             await resetUserPassword(id);
-            setToastConfig({ open: true, message: "Password reset successfully", type: "success" });
+            setToastConfig({open: true, message: "Password reset successfully", type: "success"});
             setOpenResetPasswordBox(false);
         } catch (err: any) {
-            if (err instanceof Error) setToastConfig({ open: true, message: err.message, type: "error" });
-            else setToastConfig({ open: true, message: "Fail to reset the password", type: "error" })
+            if (err instanceof Error) setToastConfig({open: true, message: err.message, type: "error"});
+            else setToastConfig({open: true, message: "Fail to reset the password", type: "error"})
         } finally {
             setLoading(false);              // Set backdrop state.
         }
@@ -394,11 +403,14 @@ const UserManagement = () => {
         }
     }
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => { return { ...prevState, "open": state } });
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {
+        return {...prevState, "open": state}
+    });
 
     useEffect(() => {
         setTimeout(() => {
-            handleSearchUsersByQuery(searchQuery).then(r => {})
+            handleSearchUsersByQuery(searchQuery).then(r => {
+            })
         }, 100)
     }, [searchQuery])
 
@@ -442,23 +454,31 @@ const UserManagement = () => {
                                 const filteredValue = value.replace(/[\\{}[\]|^`%&#+]/g, "");
                                 setSearchQuery(filteredValue);
                             }}
-                            InputProps={{endAdornment: <InputAdornment position={"end"}><SearchIcon /></InputAdornment>}}
+                            InputProps={{endAdornment: <InputAdornment position={"end"}><SearchIcon/></InputAdornment>}}
                         />
                         <Button
                             onClick={() => {
-                                setSelectedUser({id: null, img: "", email: "", firstName: "", lastName: "", mobile: "", roleIds: []})
+                                setSelectedUser({
+                                    id: null,
+                                    img: "",
+                                    email: "",
+                                    firstName: "",
+                                    lastName: "",
+                                    mobile: "",
+                                    roleIds: []
+                                })
                                 setOpenNewUser(true)
                             }}
-                            sx={{ height: "50px" }}
+                            sx={{height: "50px"}}
                             variant="contained"
                         >
                             Add New User
                         </Button>
                     </Box>
                 </Grid>
-                <Grid item xs={12} mt={4} mb={5} >
-                    <Box padding={2} style={{ backgroundColor: colorConfigs.secondBg, borderRadius: 5 }}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{ height: 450, width: '100%' }}>
+                <Grid item xs={12} mt={4} mb={5}>
+                    <Box padding={2} style={{backgroundColor: colorConfigs.secondBg, borderRadius: 5}}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 450, width: '100%'}}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}
@@ -539,7 +559,8 @@ const UserManagement = () => {
                         mode={UserMode.VIEW}
                         action={{
                             setIsDrawerOpen: setOpenViewUser,
-                            onConfirm: () => {}
+                            onConfirm: () => {
+                            }
                         }}
                     />
                 </Box>
@@ -614,12 +635,14 @@ const UserManagement = () => {
                 action={{onClose: handleToastOnclose}}
             />
             <Backdrop
-                sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1301 }}
+                sx={{color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1301}}
                 open={loading}
             >
                 <Box>
-                    <Box width={"100%"} display={"flex"} justifyContent={"center"}><CircularProgress color="inherit" /></Box>
-                    <Box pt={2}><Typography fontFamily={"pt-serif"} fontSize={"18px"} color={"white"}>Please Wait</Typography></Box>
+                    <Box width={"100%"} display={"flex"} justifyContent={"center"}><CircularProgress
+                        color="inherit"/></Box>
+                    <Box pt={2}><Typography fontFamily={"pt-serif"} fontSize={"18px"} color={"white"}>Please
+                        Wait</Typography></Box>
                 </Box>
             </Backdrop>
         </>

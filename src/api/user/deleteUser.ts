@@ -1,4 +1,4 @@
-import { METHODS, requestApiWithSecurity, URL } from "..";
+import {METHODS, requestApiWithSecurity, URL} from "..";
 import {responseHandler} from "../util/responseHandler";
 
 export const deleteUser = async (userId: number) => {

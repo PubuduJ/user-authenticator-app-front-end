@@ -1,13 +1,13 @@
-import { getBaseurl } from "./baseURL.config";
+import {getBaseurl} from "./baseURL.config";
 import Axios from "axios";
 import * as Urls from "./urls.config";
 
 export enum METHODS {
-  GET,
-  POST,
-  PUT,
-  DELETE,
-  PATCH,
+    GET,
+    POST,
+    PUT,
+    DELETE,
+    PATCH,
 }
 
 export async function requestApiWithoutSecurity(
@@ -15,57 +15,57 @@ export async function requestApiWithoutSecurity(
     url: string,
     body?: any,
     header: any = {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Content-Security-Policy": "upgrade-insecure-requests"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Content-Security-Policy": "upgrade-insecure-requests"
     }
 ) {
-  const full_url = getBaseurl(url);
-  switch (method) {
-    case METHODS.GET:
-      return _get(full_url, header, body);
-    case METHODS.POST:
-      body = body || {};
-      return _post(full_url, body, header);
-    case METHODS.PUT:
-      return _put(full_url, body, header);
-    case METHODS.DELETE:
-      return _delete(full_url, body, header);
-    case METHODS.PATCH:
-      return _patch(full_url, body, header);
-    default:
-      break;
-  }
+    const full_url = getBaseurl(url);
+    switch (method) {
+        case METHODS.GET:
+            return _get(full_url, header, body);
+        case METHODS.POST:
+            body = body || {};
+            return _post(full_url, body, header);
+        case METHODS.PUT:
+            return _put(full_url, body, header);
+        case METHODS.DELETE:
+            return _delete(full_url, body, header);
+        case METHODS.PATCH:
+            return _patch(full_url, body, header);
+        default:
+            break;
+    }
 }
 
 export async function requestApiWithSecurity(
-  method: METHODS,
-  url: string,
-  body?: any,
-  header: any = {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "*",
-  }
+    method: METHODS,
+    url: string,
+    body?: any,
+    header: any = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+    }
 ) {
-  const token = localStorage.getItem("jwtToken");
-  header.Authorization = `Bearer ${token}`;
+    const token = localStorage.getItem("jwtToken");
+    header.Authorization = `Bearer ${token}`;
 
-  const full_url = getBaseurl(url);
-  switch (method) {
-    case METHODS.GET:
-      return _get(full_url, header, body);
-    case METHODS.POST:
-      body = body || {};
-      return _post(full_url, body, header);
-    case METHODS.PUT:
-      return _put(full_url, body, header);
-    case METHODS.DELETE:
-      return _delete(full_url, body, header);
-    case METHODS.PATCH:
-      return _patch(full_url, body, header);
-    default:
-      break;
-  }
+    const full_url = getBaseurl(url);
+    switch (method) {
+        case METHODS.GET:
+            return _get(full_url, header, body);
+        case METHODS.POST:
+            body = body || {};
+            return _post(full_url, body, header);
+        case METHODS.PUT:
+            return _put(full_url, body, header);
+        case METHODS.DELETE:
+            return _delete(full_url, body, header);
+        case METHODS.PATCH:
+            return _patch(full_url, body, header);
+        default:
+            break;
+    }
 }
 
 export const URL = Urls;
@@ -79,9 +79,9 @@ export const URL = Urls;
  * @memberof RestClient
  */
 const _get = async (url: string, header: any, params: any) => {
-  return Axios.get(url, { headers: header, params: params })
-    .then((response) => response)
-    .catch(_catch);
+    return Axios.get(url, {headers: header, params: params})
+        .then((response) => response)
+        .catch(_catch);
 };
 
 /**
@@ -94,7 +94,7 @@ const _get = async (url: string, header: any, params: any) => {
  * @memberof RestClient
  */
 const _post = async (url: string, body: any, header: any) => {
-  return Axios.post(url, body, { headers: header }).then(_then).catch(_catch);
+    return Axios.post(url, body, {headers: header}).then(_then).catch(_catch);
 };
 
 /**
@@ -107,9 +107,9 @@ const _post = async (url: string, body: any, header: any) => {
  * @memberof RestClient
  */
 const _put = async (url: string, body: any, header: any) => {
-  return Axios.put(url, body, { headers: header })
-    .then((response) => response)
-    .catch(_catch);
+    return Axios.put(url, body, {headers: header})
+        .then((response) => response)
+        .catch(_catch);
 };
 
 /**
@@ -121,9 +121,9 @@ const _put = async (url: string, body: any, header: any) => {
  * @memberof RestClient
  */
 const _delete = async (url: string, body: any, header: any) => {
-  return Axios.delete(url, { headers: header })
-    .then((response) => response)
-    .catch(_catch);
+    return Axios.delete(url, {headers: header})
+        .then((response) => response)
+        .catch(_catch);
 };
 
 /**
@@ -135,16 +135,16 @@ const _delete = async (url: string, body: any, header: any) => {
  * @memberof RestClient
  */
 const _patch = async (url: string, body: any, header: any) => {
-  return Axios.patch(url, body, { headers: header })
-    .then((response) => response)
-    .catch(_catch);
+    return Axios.patch(url, body, {headers: header})
+        .then((response) => response)
+        .catch(_catch);
 };
 
 const _catch = (error: any) => {
-  console.error("api error", error?.response);
-  return error?.response || error;
+    console.error("api error", error?.response);
+    return error?.response || error;
 };
 
 const _then = (response: any) => {
-  return response;
+    return response;
 };
