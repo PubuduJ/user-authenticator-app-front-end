@@ -37,8 +37,6 @@ const Profile = () => {
         updateTime();
     }, 1000);
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {return {...prevState, "open": state}});
-
     const getLoggedUser = async () => {
         try {
             let email = "";
@@ -58,12 +56,31 @@ const Profile = () => {
 
     const filterPermissions = (value: string): string => {
         if (value.includes("user_userManagement_")) {
-            return value.replace("user_userManagement_", "User ");
+            return value.replace("user_userManagement_", "User_");
         }
         else if (value.includes("user_roleManagement_")) {
-            return  value.replace("user_roleManagement_", "Role ");
+            return  value.replace("user_roleManagement_", "Role_");
         }
         return value;
+    }
+
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {return {...prevState, "open": state}});
+
+    const getGreeting = () => {
+        const currentTime = new Date();
+        const currentHour = currentTime.getHours();
+
+        let greeting;
+        if (currentHour >= 5 && currentHour < 12) {
+            greeting = "Good Morning";
+        } else if (currentHour >= 12 && currentHour < 18) {
+            greeting = "Good Afternoon";
+        } else if (currentHour >= 18 || currentHour < 5) {
+            greeting = "Good Evening";
+        } else {
+            greeting = "Hello";
+        }
+        return greeting;
     }
 
     useEffect(() => {
@@ -101,7 +118,7 @@ const Profile = () => {
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
-                        <Typography variant={"h4"}>Good Morning {loggedUser.firstName}</Typography>
+                        <Typography variant={"h4"}>{getGreeting()} {loggedUser.firstName}</Typography>
                         <Typography variant={"h6"}>Welcome to the User Authenticator Application</Typography>
                     </Box>
                 </Grid>
@@ -136,7 +153,7 @@ const Profile = () => {
                         bgcolor={colorConfigs.secondBg}
                     >
                         <Typography pt={2} variant={"h6"} textAlign={"left"}>You logged in to the system as: </Typography>
-                        <Typography variant={"h6"} textAlign={"center"}>{loggedUser.roleNames.join(", ")}</Typography>
+                        <Typography pl={5} pb={3} variant={"h6"} textAlign={"left"}>{loggedUser.roleNames.join(", ")}</Typography>
                         <Typography variant={"h6"} textAlign={"left"}>You have permissions to: </Typography>
                         {
                             loggedUser.permissionNames.map((value, index) => {

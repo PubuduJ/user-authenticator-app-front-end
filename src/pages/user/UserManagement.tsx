@@ -243,26 +243,28 @@ const UserManagement = () => {
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title={'delete user'}>
-                                <IconButton
-                                    disabled={params.row.id === getLoggedUserIdFromToken()}
-                                    onClick={() => {
-                                        setSelectedUser((prevState: User) => {
-                                            return {
-                                                ...prevState,
-                                                "id": params.row.id,
-                                                "img": params.row.img,
-                                                "firstName": params.row.firstName,
-                                                "lastName": params.row.lastName,
-                                                "email": params.row.email,
-                                                "designation": params.row.designation,
-                                                "mobile": params.row.mobile,
-                                                "roleIds": params.row.roleIds,
-                                            }
-                                        })
-                                        setOpenDeleteUserBox(true)
-                                    }}>
-                                    <DeleteIcon/>
-                                </IconButton>
+                                <>
+                                    <IconButton
+                                        disabled={params.row.id === getLoggedUserIdFromToken()}
+                                        onClick={() => {
+                                            setSelectedUser((prevState: User) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "img": params.row.img,
+                                                    "firstName": params.row.firstName,
+                                                    "lastName": params.row.lastName,
+                                                    "email": params.row.email,
+                                                    "designation": params.row.designation,
+                                                    "mobile": params.row.mobile,
+                                                    "roleIds": params.row.roleIds,
+                                                }
+                                            })
+                                            setOpenDeleteUserBox(true)
+                                        }}>
+                                        <DeleteIcon/>
+                                    </IconButton>
+                                </>
                             </Tooltip>
                         </>
                     </Box>
