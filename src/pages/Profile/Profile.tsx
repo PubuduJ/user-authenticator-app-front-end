@@ -93,7 +93,7 @@ const Profile = () => {
     return (
         <>
             <Grid pl={3} pr={3} pt={"15px"} spacing={2} container>
-                <Grid item xs={12} mb={-1}>
+                <Grid ml={2} item xs={12} mb={-1}>
                     <Breadcrumbs
                         separator={<NavigateNextIcon fontSize="medium"/>}
                     >
@@ -121,8 +121,8 @@ const Profile = () => {
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
-                        <Typography variant={"h4"}>{getGreeting()} {loggedUser.firstName}</Typography>
-                        <Typography variant={"h6"}>Welcome to the System</Typography>
+                        <Typography pl={1} variant={"h4"}>{getGreeting()} {loggedUser.firstName}</Typography>
+                        <Typography pl={1} variant={"h6"}>Welcome to the System</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} lg={4}>
@@ -180,21 +180,46 @@ const Profile = () => {
                     >
                         <Box
                             bgcolor={colorConfigs.secondBg}
-                            borderRadius={2}
-                        >
-                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                <DateCalendar />
-                            </LocalizationProvider>
-                        </Box>
-                        <Box
-                            mt={2}
-                            bgcolor={colorConfigs.secondBg}
                             height={60}
                             pt={1}
                             borderRadius={2}
                         >
                             <Typography textAlign={"center"} variant={"h4"}>{currentTime}</Typography>
                         </Box>
+                        <Box
+                            mt={2}
+                            borderRadius={2}
+                            display={"flex"}
+                        >
+                            <Box
+                                borderRadius={2}
+                                bgcolor={colorConfigs.secondBg}
+                                width={330}
+                            >
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <DateCalendar views={['day']} />
+                                </LocalizationProvider>
+                            </Box>
+                            <Box
+                                ml={2}
+                                borderRadius={2}
+                                bgcolor={colorConfigs.secondBg}
+                                height={335}
+                                flexGrow={1}
+                            ></Box>
+                        </Box>
+                        {
+                            (window.innerWidth > 1200) &&
+                            <Box
+                                mt={2}
+                                borderRadius={2}
+                                bgcolor={colorConfigs.secondBg}
+                                height={273}
+                                width={"100%"}
+                            >
+
+                            </Box>
+                        }
                     </Box>
                 </Grid>
             </Grid>
