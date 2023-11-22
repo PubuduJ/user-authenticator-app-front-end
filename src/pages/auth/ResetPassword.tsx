@@ -7,6 +7,7 @@ import {resetPassword} from "../../api/auth/resetPassword";
 import jwt_decode from "jwt-decode";
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import SecurityIcon from "@mui/icons-material/Security";
 
 type ErrorMsgType = {
     temporaryPassword: string;
@@ -129,12 +130,49 @@ const ResetPassword = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #B5C6E7 20%, #FFFFFF 100%)'}}
+                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
                 position={"relative"}
                 width={"100vw"}
                 // Change code
                 height={(window.innerHeight <= 530) ? "700px" : (window.innerHeight <= 730) ? 730 : window.innerHeight}
             >
+                {
+                    (window.innerWidth <= 1200) ?
+                        <Box
+                            position={"absolute"}
+                            top={10}
+                            left={5}
+                            width={100}
+                            display={"flex"}
+                        >
+                            <Box pt={0.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 130,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                        :
+                        <Box
+                            position={"absolute"}
+                            top={20}
+                            left={50}
+                            display={"flex"}
+                        >
+                            <Box pt={1.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 80,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                }
                 <Box maxWidth={"470px"} bottom={0} right={0} position={"absolute"} padding={4}>
                     <Typography variant='h4' align='center'>Reset Password</Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>

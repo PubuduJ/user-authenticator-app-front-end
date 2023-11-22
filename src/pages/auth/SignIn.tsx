@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {signIn} from "../../api/auth/signIn";
 import jwt_decode from "jwt-decode";
 import {useDispatch} from "react-redux";
+import SecurityIcon from '@mui/icons-material/Security';
 import {setCredentials} from "../../redux/features/authStateSlice";
 
 type ErrorMsgType = {
@@ -115,11 +116,48 @@ const SignIn = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #B5C6E7 20%, #FFFFFF 100%)'}}
+                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
                 position={"relative"}
                 width={"100vw"}
                 height={(window.innerHeight <= 530) ? "500px" : height}
             >
+                {
+                    (window.innerWidth <= 1200) ?
+                        <Box
+                            position={"absolute"}
+                            top={10}
+                            left={5}
+                            width={100}
+                            display={"flex"}
+                        >
+                            <Box pt={0.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 130,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                        :
+                        <Box
+                            position={"absolute"}
+                            top={20}
+                            left={50}
+                            display={"flex"}
+                        >
+                            <Box pt={1.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 80,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                }
                 <Box
                     width={(window.innerWidth > 600) ? "470px" : "auto"}
                     bottom={0}

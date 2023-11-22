@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import Toast, {ToastData} from "../../components/common/Toast";
 import {forgotPassword} from "../../api/auth/forgotPassword";
+import SecurityIcon from "@mui/icons-material/Security";
 
 type ErrorMsgType = {
     emailError: string;
@@ -92,12 +93,49 @@ const ForgotPassword = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #B5C6E7 20%, #FFFFFF 100%)'}}
+                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
                 position={"relative"}
                 width={"100vw"}
                 // Change code
                 height={(window.innerHeight <= 530) ? "520px" : height}
             >
+                {
+                    (window.innerWidth <= 1200) ?
+                        <Box
+                            position={"absolute"}
+                            top={10}
+                            left={5}
+                            width={100}
+                            display={"flex"}
+                        >
+                            <Box pt={0.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 130,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                        :
+                        <Box
+                            position={"absolute"}
+                            top={20}
+                            left={50}
+                            display={"flex"}
+                        >
+                            <Box pt={1.5} pr={1}>
+                                <SecurityIcon
+                                    sx={{
+                                        fontSize: 80,
+                                        color: "white"
+                                    }}
+                                />
+                            </Box>
+                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                        </Box>
+                }
                 <Box
                     width={(window.innerWidth > 600) ? "470px" : "auto"}
                     bottom={0} right={0}
