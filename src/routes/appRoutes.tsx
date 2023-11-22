@@ -4,7 +4,7 @@ import {RouteType} from "./config";
 import UserManagement from "../pages/user/UserManagement";
 import RoleManagement from "../pages/user/RoleManagement";
 import UserPageLayout from "../pages/user/UserPageLayout";
-import Profile from "../pages/home/Profile";
+import Profile from "../pages/Profile/Profile";
 
 const appRoutes: RouteType[] = [
     {
