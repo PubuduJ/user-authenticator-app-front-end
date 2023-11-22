@@ -417,7 +417,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                                                     <DriveFolderUploadOutlinedIcon
                                                         sx={{
                                                             fontSize: 90,
-                                                            color: '#005dff'
+                                                            color: "#80A2CE"
                                                         }}
                                                     />
                                                     <Box

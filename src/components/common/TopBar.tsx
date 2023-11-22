@@ -39,13 +39,10 @@ const TopBar = ({handleDrawerOpen}: Props) => {
     }
 
     useEffect(() => {
-        getLoggedUserLogo().then(r => {
-        });
+        getLoggedUserLogo().then(r => {});
     }, [])
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {
-        return {...prevState, "open": state}
-    });
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {return {...prevState, "open": state}});
 
     return (
         <>
