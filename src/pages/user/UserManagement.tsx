@@ -194,7 +194,6 @@ const UserManagement = () => {
                                                 "firstName": params.row.firstName,
                                                 "lastName": params.row.lastName,
                                                 "email": params.row.email,
-                                                "designation": params.row.designation,
                                                 "mobile": params.row.mobile,
                                                 "roleIds": params.row.roleIds,
                                             }
@@ -217,7 +216,6 @@ const UserManagement = () => {
                                                     "firstName": params.row.firstName,
                                                     "lastName": params.row.lastName,
                                                     "email": params.row.email,
-                                                    "designation": params.row.designation,
                                                     "mobile": params.row.mobile,
                                                     "roleIds": params.row.roleIds,
                                                 }
@@ -240,7 +238,6 @@ const UserManagement = () => {
                                                     "firstName": params.row.firstName,
                                                     "lastName": params.row.lastName,
                                                     "email": params.row.email,
-                                                    "designation": params.row.designation,
                                                     "mobile": params.row.mobile,
                                                     "roleIds": params.row.roleIds,
                                                 }
@@ -266,7 +263,6 @@ const UserManagement = () => {
                                                             "firstName": params.row.firstName,
                                                             "lastName": params.row.lastName,
                                                             "email": params.row.email,
-                                                            "designation": params.row.designation,
                                                             "mobile": params.row.mobile,
                                                             "roleIds": params.row.roleIds,
                                                         }
@@ -323,6 +319,7 @@ const UserManagement = () => {
     const handleUpdate = async (user: User) => {
         try {
             setLoading(true);
+            console.log(user);
             await updateUser(user);
             setLoading(false);
             setOpenEditUser(false);
@@ -514,7 +511,6 @@ const UserManagement = () => {
                                     columns: {
                                         columnVisibilityModel: {
                                             lastName: (window.innerWidth >= 600),
-                                            designation: (window.innerWidth >= 600)
                                         }
                                     },
                                     pagination: {
