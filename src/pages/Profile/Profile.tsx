@@ -56,10 +56,13 @@ const Profile = () => {
 
     const filterPermissions = (value: string): string => {
         if (value.includes("user_userManagement_")) {
-            return value.replace("user_userManagement_", "User - ");
+            let updatedValue = value.replace("user_userManagement_", "");
+            if (updatedValue === "Reset Password") return "Reset User Password"
+            return updatedValue + " User";
         }
         else if (value.includes("user_roleManagement_")) {
-            return  value.replace("user_roleManagement_", "Role - ");
+            let updatedValue =  value.replace("user_roleManagement_", "");
+            return updatedValue + " Role";
         }
         return value;
     }

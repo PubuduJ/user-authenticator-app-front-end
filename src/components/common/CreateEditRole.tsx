@@ -22,7 +22,8 @@ import {GridExpandMoreIcon} from "@mui/x-data-grid";
 
 export enum RoleMode {
     CREATE = "Create",
-    EDIT = "Edit"
+    EDIT = "Edit",
+    VIEW = "View"
 }
 
 export type RoleAction = {
@@ -100,7 +101,8 @@ const CreateEditRole = ({role, mode, action}: Props) => {
                 document.getElementById("roleName").focus();
             }
         }, 500)
-        if (mode === RoleMode.EDIT) {
+        if (mode === RoleMode.EDIT || mode === RoleMode.VIEW) {
+            if (mode === RoleMode.VIEW) setExpanded("user");
             setRoleName(role.role);
             const array = [];
             const userUserManagementArray: string[] = [];
@@ -150,10 +152,12 @@ const CreateEditRole = ({role, mode, action}: Props) => {
                             name="roleName"
                             label="Role name"
                             variant="standard"
+                            InputProps={{
+                                readOnly: (mode === RoleMode.VIEW),
+                            }}
                             error={(roleError !== " ")}
                             helperText={roleError}
                             value={roleName}
-                            // onChange={e => setRoleName(e.target.value)}
                             onChange={(event) => {
                                 const value = event.target.value;
                                 if (value.trim() === "") {
@@ -193,6 +197,7 @@ const CreateEditRole = ({role, mode, action}: Props) => {
                                         style={{width: "100%"}}
                                         variant={"standard"}
                                         multiple
+                                        readOnly={mode === RoleMode.VIEW}
                                         value={userUserManagement}
                                         onChange={handleUserManagementChange}
                                         renderValue={(selected) => (
@@ -216,6 +221,7 @@ const CreateEditRole = ({role, mode, action}: Props) => {
                                         style={{width: "100%"}}
                                         variant={"standard"}
                                         multiple
+                                        readOnly={mode === RoleMode.VIEW}
                                         value={userRoleManagement}
                                         onChange={handleRoleManagementChange}
                                         renderValue={(selected) => (

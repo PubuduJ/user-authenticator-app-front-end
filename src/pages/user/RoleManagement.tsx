@@ -20,6 +20,9 @@ import {createRole} from "../../api/role/createRole";
 import {updateRole} from "../../api/role/updateRole";
 import {getRolesByRoleName} from "../../api/role/getRolesByRoleName";
 import {deleteRole} from "../../api/role/deleteRole";
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 type RoleDataGridPageModel = {
     page: number,
@@ -40,6 +43,7 @@ export type RolePermission = {
 }
 
 const RoleManagement = () => {
+    const authState = useSelector((state: RootState) => state.authState);
     const [roles, setRoles] = useState<UserRole[]>([]);
     const [selectedRole, setSelectedRole] = useState<UserRole>({
         id: null,
@@ -50,6 +54,7 @@ const RoleManagement = () => {
     });
     const [openNewRole, setOpenNewRole] = useState<boolean>(false);
     const [openEditRole, setOpenEditRole] = useState<boolean>(false);
+    const [openViewRole, setOpenViewRole] = useState<boolean>(false);
     const [openDeleteRoleBox, setOpenDeleteRoleBox] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
     const [dataGridLoading, setDataGridLoading] = useState<boolean>(false);
@@ -120,40 +125,66 @@ const RoleManagement = () => {
                         alignItems={"center"}
                     >
                         <>
-                            <Tooltip title={'edit role'}>
-                                <IconButton onClick={() => {
-                                    setSelectedRole((prevState) => {
-                                        return {
-                                            ...prevState,
-                                            "id": params.row.id,
-                                            "role": params.row.role,
-                                            "userCount": params.row.userCount,
-                                            "permissionCount": params.row.permissionCount,
-                                            "rolePermissions": params.row.rolePermissions
-                                        }
-                                    })
-                                    setOpenEditRole(true)
-                                }}>
-                                    <EditIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={'delete role'}>
-                                <IconButton onClick={() => {
-                                    setSelectedRole((prevState) => {
-                                        return {
-                                            ...prevState,
-                                            "id": params.row.id,
-                                            "role": params.row.role,
-                                            "userCount": params.row.userCount,
-                                            "permissionCount": params.row.permissionCount,
-                                            "rolePermissions": params.row.rolePermissions
-                                        }
-                                    })
-                                    setOpenDeleteRoleBox(true)
-                                }}>
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </Tooltip>
+                            {
+                                authState.permissions?.includes("user_roleManagement_View") ?
+                                    <Tooltip title={"view role"}>
+                                        <IconButton onClick={() => {
+                                            setSelectedRole((prevState) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "role": params.row.role,
+                                                    "userCount": params.row.userCount,
+                                                    "permissionCount": params.row.permissionCount,
+                                                    "rolePermissions": params.row.rolePermissions
+                                                }
+                                            })
+                                            setOpenViewRole(true)
+                                        }}>
+                                            <VisibilityIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
+                            }
+                            {
+                                authState.permissions?.includes("user_roleManagement_Edit") ?
+                                    <Tooltip title={'edit role'}>
+                                        <IconButton onClick={() => {
+                                            setSelectedRole((prevState) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "role": params.row.role,
+                                                    "userCount": params.row.userCount,
+                                                    "permissionCount": params.row.permissionCount,
+                                                    "rolePermissions": params.row.rolePermissions
+                                                }
+                                            })
+                                            setOpenEditRole(true)
+                                        }}>
+                                            <EditIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
+                            }
+                            {
+                                authState.permissions?.includes("user_roleManagement_Edit") ?
+                                    <Tooltip title={'delete role'}>
+                                        <IconButton onClick={() => {
+                                            setSelectedRole((prevState) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "role": params.row.role,
+                                                    "userCount": params.row.userCount,
+                                                    "permissionCount": params.row.permissionCount,
+                                                    "rolePermissions": params.row.rolePermissions
+                                                }
+                                            })
+                                            setOpenDeleteRoleBox(true)
+                                        }}>
+                                            <DeleteIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
+                            }
                         </>
                     </Box>
                 );
@@ -328,6 +359,7 @@ const RoleManagement = () => {
                                 });
                                 setOpenNewRole(true);
                             }}
+                            disabled={!authState.permissions?.includes("user_roleManagement_Create")}
                             sx={{height: "50px"}}
                             variant="contained"
                         >
@@ -421,6 +453,31 @@ const RoleManagement = () => {
                             onCreateRole: () => {
                             },
                             onUpdateRole: handleUpdateRole
+                        }}
+                    />
+                </Box>
+            </Drawer>
+            <Drawer
+                open={openViewRole}
+                anchor={"right"}
+                onClose={() => setOpenViewRole(false)}
+                sx={{
+                    zIndex: 10
+                }}
+            >
+                <Box
+                    maxWidth={"800px"}
+                    marginTop={"64px"}
+                    height={"calc(100vh - 64px)"}
+                    role={"presentation"}
+                >
+                    <CreateEditRole
+                        role={selectedRole}
+                        mode={RoleMode.VIEW}
+                        action={{
+                            setIsDrawerOpen: setOpenViewRole,
+                            onCreateRole: () => {},
+                            onUpdateRole: () => {}
                         }}
                     />
                 </Box>
