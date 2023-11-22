@@ -646,7 +646,7 @@ const CreateEditViewUser = ({user, mode, action}: Props) => {
                     (mode === UserMode.CREATE || mode === UserMode.EDIT) &&
                     <Box style={{backgroundColor: colorConfigs.mainBg}} pb={2} pt={2} pr={4} display={"flex"}
                          justifyContent={"flex-end"} gap={2}>
-                        <Button variant="outlined" onClick={handleClear}>Clear</Button>
+                        <Button variant="outlined" sx={{backgroundColor: colorConfigs.secondBg}} onClick={handleClear}>Clear</Button>
                         {
                             (mode === UserMode.CREATE) &&
                             <Button sx={{p: "10px 50px 10px 50px"}} variant="contained" onClick={handleAction}>Create
