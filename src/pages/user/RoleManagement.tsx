@@ -337,7 +337,7 @@ const RoleManagement = () => {
                 </Grid>
                 <Grid item xs={12} mt={4} mb={5}>
                     <Box padding={2} style={{backgroundColor: colorConfigs.secondBg, borderRadius: 5}}>
-                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 550, width: '100%'}}>
+                        <Box bgcolor={colorConfigs.secondBg} sx={{height: 570, width: '100%'}}>
                             <DataGrid
                                 slots={{loadingOverlay: LinearProgress}}
                                 loading={dataGridLoading}

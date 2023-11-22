@@ -56,10 +56,10 @@ const Profile = () => {
 
     const filterPermissions = (value: string): string => {
         if (value.includes("user_userManagement_")) {
-            return value.replace("user_userManagement_", "User_");
+            return value.replace("user_userManagement_", "User - ");
         }
         else if (value.includes("user_roleManagement_")) {
-            return  value.replace("user_roleManagement_", "Role_");
+            return  value.replace("user_roleManagement_", "Role - ");
         }
         return value;
     }
