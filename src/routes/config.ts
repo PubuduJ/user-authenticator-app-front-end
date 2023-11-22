@@ -19,5 +19,7 @@ export type RouteType = {
         icon?: ReactNode
         // SideBar text.
         displayText: string,
+        // Permission text
+        permission: string
     }
 };

@@ -13,7 +13,8 @@ const appRoutes: RouteType[] = [
         state: "profile",
         sidebarProps: {
             displayText: "Profile",
-            icon: <AccountBoxIcon/>
+            icon: <AccountBoxIcon/>,
+            permission: "profile_"
         }
     },
     {
@@ -22,7 +23,8 @@ const appRoutes: RouteType[] = [
         state: "dashboard",
         sidebarProps: {
             displayText: "Profile",
-            icon: <AccountBoxIcon/>
+            icon: <AccountBoxIcon/>,
+            permission: "profile_"
         }
     },
     {
@@ -31,7 +33,8 @@ const appRoutes: RouteType[] = [
         state: "user",
         sidebarProps: {
             displayText: "User",
-            icon: <PeopleAltIcon/>
+            icon: <PeopleAltIcon/>,
+            permission: "user_"
         },
         child: [
             {
@@ -40,6 +43,7 @@ const appRoutes: RouteType[] = [
                 state: "user.user-management",
                 sidebarProps: {
                     displayText: "User Management",
+                    permission: "user_userManagement_"
                 },
             },
             {
@@ -48,6 +52,7 @@ const appRoutes: RouteType[] = [
                 state: "user.role-management",
                 sidebarProps: {
                     displayText: "Role Management",
+                    permission: "user_roleManagement_"
                 }
             }
         ]

@@ -8,6 +8,9 @@ import colorConfigs from '../../configs/colorConfigs';
 import appRoutes from '../../routes/appRoutes';
 import SideBarItemCollapse from './SideBarItemCollapse';
 import SideBarItem from './SideBarItem';
+import {useSelector} from "react-redux";
+import {RootState} from "../../redux/store";
+import {RouteType} from "../../routes/config";
 
 type Props = {
     window?: () => Window;
@@ -18,7 +21,20 @@ type Props = {
 
 const SideBar = ({window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen}: Props) => {
     const [open, setOpen] = useState(false);
+    const authState = useSelector((state: RootState) => state.authState);
     const isMobile = useMediaQuery({query: `(max-width: 600px)`});
+
+    const isPermitted = (routeType: RouteType): boolean => {
+        let sideBarPermission = routeType.sidebarProps ? routeType.sidebarProps.permission : "";
+        if (sideBarPermission && authState.permissions) {
+            for (const permission of authState.permissions) {
+                if (permission.startsWith(sideBarPermission)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     useEffect(() => setOpen(isSideBarOpen), [isSideBarOpen]);
 
@@ -55,7 +71,7 @@ const SideBar = ({window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen}: 
                     backgroundColor: colorConfigs.sideBar.bg
                 }}>
                     {appRoutes.map((route, index) => (
-                        route.sidebarProps ? (
+                        route.sidebarProps && isPermitted(route) ? (
                             route.child ? (
                                 <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             ) : (
@@ -87,7 +103,7 @@ const SideBar = ({window, isSideBarOpen, handleDrawerToggle, setIsSideBarOpen}: 
                     backgroundColor: colorConfigs.sideBar.bg
                 }}>
                     {appRoutes.map((route, index) => (
-                        route.sidebarProps ? (
+                        route.sidebarProps && isPermitted(route) ? (
                             route.child ? (
                                 <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                             ) : (
