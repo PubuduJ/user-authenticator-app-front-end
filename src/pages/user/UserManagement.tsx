@@ -182,71 +182,33 @@ const UserManagement = () => {
                         alignItems={"center"}
                     >
                         <>
-                            <Tooltip title={'view user'}>
-                                <IconButton onClick={() => {
-                                    setSelectedUser((prevState: User) => {
-                                        return {
-                                            ...prevState,
-                                            "id": params.row.id,
-                                            "img": params.row.img,
-                                            "firstName": params.row.firstName,
-                                            "lastName": params.row.lastName,
-                                            "email": params.row.email,
-                                            "designation": params.row.designation,
-                                            "mobile": params.row.mobile,
-                                            "roleIds": params.row.roleIds,
-                                        }
-                                    })
-                                    setOpenViewUser(true)
-                                }}>
-                                    <VisibilityIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={'edit user'}>
-                                <IconButton onClick={() => {
-                                    setSelectedUser((prevState: User) => {
-                                        return {
-                                            ...prevState,
-                                            "id": params.row.id,
-                                            "img": params.row.img,
-                                            "firstName": params.row.firstName,
-                                            "lastName": params.row.lastName,
-                                            "email": params.row.email,
-                                            "designation": params.row.designation,
-                                            "mobile": params.row.mobile,
-                                            "roleIds": params.row.roleIds,
-                                        }
-                                    })
-                                    setOpenEditUser(true)
-                                }}>
-                                    <EditIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={'reset password'}>
-                                <IconButton onClick={() => {
-                                    setSelectedUser((prevState: User) => {
-                                        return {
-                                            ...prevState,
-                                            "id": params.row.id,
-                                            "img": params.row.img,
-                                            "firstName": params.row.firstName,
-                                            "lastName": params.row.lastName,
-                                            "email": params.row.email,
-                                            "designation": params.row.designation,
-                                            "mobile": params.row.mobile,
-                                            "roleIds": params.row.roleIds,
-                                        }
-                                    })
-                                    setOpenResetPasswordBox(true)
-                                }}>
-                                    <LockIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={'delete user'}>
-                                <>
-                                    <IconButton
-                                        disabled={params.row.id === getLoggedUserIdFromToken()}
-                                        onClick={() => {
+                            {
+                                authState.permissions?.includes("user_userManagement_View") ?
+                                <Tooltip title={'view user'}>
+                                    <IconButton onClick={() => {
+                                        setSelectedUser((prevState: User) => {
+                                            return {
+                                                ...prevState,
+                                                "id": params.row.id,
+                                                "img": params.row.img,
+                                                "firstName": params.row.firstName,
+                                                "lastName": params.row.lastName,
+                                                "email": params.row.email,
+                                                "designation": params.row.designation,
+                                                "mobile": params.row.mobile,
+                                                "roleIds": params.row.roleIds,
+                                            }
+                                        })
+                                        setOpenViewUser(true)
+                                    }}>
+                                        <VisibilityIcon/>
+                                    </IconButton>
+                                </Tooltip> : <></>
+                            }
+                            {
+                                authState.permissions?.includes("user_userManagement_Edit") ?
+                                    <Tooltip title={'edit user'}>
+                                        <IconButton onClick={() => {
                                             setSelectedUser((prevState: User) => {
                                                 return {
                                                     ...prevState,
@@ -260,12 +222,62 @@ const UserManagement = () => {
                                                     "roleIds": params.row.roleIds,
                                                 }
                                             })
-                                            setOpenDeleteUserBox(true)
+                                            setOpenEditUser(true)
                                         }}>
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                </>
-                            </Tooltip>
+                                            <EditIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
+                            }
+                            {
+                                authState.permissions?.includes("user_userManagement_Reset Password") ?
+                                    <Tooltip title={'reset password'}>
+                                        <IconButton onClick={() => {
+                                            setSelectedUser((prevState: User) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "img": params.row.img,
+                                                    "firstName": params.row.firstName,
+                                                    "lastName": params.row.lastName,
+                                                    "email": params.row.email,
+                                                    "designation": params.row.designation,
+                                                    "mobile": params.row.mobile,
+                                                    "roleIds": params.row.roleIds,
+                                                }
+                                            })
+                                            setOpenResetPasswordBox(true)
+                                        }}>
+                                            <LockIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
+                            }
+                            {
+                                authState.permissions?.includes("user_userManagement_Delete") ?
+                                    <Tooltip title={'delete user'}>
+                                        <>
+                                            <IconButton
+                                                disabled={params.row.id === getLoggedUserIdFromToken()}
+                                                onClick={() => {
+                                                    setSelectedUser((prevState: User) => {
+                                                        return {
+                                                            ...prevState,
+                                                            "id": params.row.id,
+                                                            "img": params.row.img,
+                                                            "firstName": params.row.firstName,
+                                                            "lastName": params.row.lastName,
+                                                            "email": params.row.email,
+                                                            "designation": params.row.designation,
+                                                            "mobile": params.row.mobile,
+                                                            "roleIds": params.row.roleIds,
+                                                        }
+                                                    })
+                                                    setOpenDeleteUserBox(true)
+                                                }}>
+                                                <DeleteIcon/>
+                                            </IconButton>
+                                        </>
+                                    </Tooltip> : <></>
+                            }
                         </>
                     </Box>
                 );
@@ -483,6 +495,7 @@ const UserManagement = () => {
                             }}
                             sx={{height: "50px"}}
                             variant="contained"
+                            disabled={!authState.permissions?.includes("user_userManagement_Create")}
                         >
                             Add New User
                         </Button>

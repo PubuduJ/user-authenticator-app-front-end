@@ -207,6 +207,7 @@ const CreateEditRole = ({role, mode, action}: Props) => {
                                         <MenuItem key="Create" value="Create">Create</MenuItem>
                                         <MenuItem key="Edit" value="Edit">Edit</MenuItem>
                                         <MenuItem key="Delete" value="Delete">Delete</MenuItem>
+                                        <MenuItem key="Reset Password" value="Reset Password">Reset Password</MenuItem>
                                     </Select>
                                 </Box>
                                 <Box pb={2} display={"flex"} alignItems={"center"}>
