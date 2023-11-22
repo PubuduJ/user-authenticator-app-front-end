@@ -89,11 +89,18 @@ const TopBar = ({handleDrawerOpen}: Props) => {
                             }}
                             title={placeHolder}
                         >
-                            <Avatar
-                                sx={{border: "2px solid white",}}
-                                src={imgUrl}
+                            <Box
+                                sx={{
+                                    borderRadius: "50%",
+                                    border: "2px solid white"
+                                }}
                             >
-                            </Avatar>
+                                <Avatar
+                                    sx={{border: "2px solid #508abb"}}
+                                    src={imgUrl}
+                                >
+                                </Avatar>
+                            </Box>
                         </Button>
                     </Box>
                 </Toolbar>

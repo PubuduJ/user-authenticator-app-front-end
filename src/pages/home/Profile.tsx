@@ -129,15 +129,22 @@ const Profile = () => {
                         bgcolor={colorConfigs.secondBg}
                     >
                         <Box pt={5} display={"flex"} justifyContent={"center"}>
-                            <Avatar
+                            <Box
                                 sx={{
-                                    border: "5px solid black",
-                                    width: 250,
-                                    height: 250
+                                    borderRadius: "50%",
+                                    border: "5px solid black"
                                 }}
-                                src={loggedUser.img}
                             >
-                            </Avatar>
+                                <Avatar
+                                    sx={{
+                                        border: "5px solid white",
+                                        width: 250,
+                                        height: 250,
+                                    }}
+                                    src={loggedUser.img}
+                                >
+                                </Avatar>
+                            </Box>
                         </Box>
                         <Typography pt={5} variant={"h6"} textAlign={"center"}>Name: {loggedUser.firstName} {loggedUser.lastName}</Typography>
                         <Typography pl={1} pr={1} variant={"h6"} textAlign={"center"}>Email: {loggedUser.email}</Typography>

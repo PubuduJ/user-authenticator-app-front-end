@@ -102,7 +102,7 @@ const UserManagement = () => {
                             <img
                                 src={params.row.img}
                                 alt={"Profile Image"}
-                                style={{width: 50, height: 50, borderRadius: '50%'}}
+                                style={{width: 55, height: 55, borderRadius: '50%', border: "2px solid black", padding: "3px"}}
                             />
                             :
                             <MiniProfileIcon/>
