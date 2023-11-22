@@ -25,7 +25,7 @@ export type UserDetails = {
 
 const Profile = () => {
     const authState = useSelector((state: RootState) => state.authState);
-    const [loggedUser, setLoggedUser] = useState<UserDetails>({email: "", img: "", firstName: "", lastName: "", mobile: "", permissionNames: [], roleNames: []});
+    const [loggedUser, setLoggedUser] = useState<UserDetails>({email: " ", img: "", firstName: " ", lastName: " ", mobile: " ", permissionNames: [], roleNames: []});
     const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
     let time  = new Date().toLocaleTimeString();
     const [currentTime,setCurrentTime] = useState(time)
@@ -119,12 +119,12 @@ const Profile = () => {
                         bgcolor={colorConfigs.secondBg}
                     >
                         <Typography variant={"h4"}>{getGreeting()} {loggedUser.firstName}</Typography>
-                        <Typography variant={"h6"}>Welcome to the User Authenticator Application</Typography>
+                        <Typography variant={"h6"}>Welcome to the System</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} lg={4}>
                     <Box
-                        height={700}
+                        minHeight={(window.innerWidth <= 1200) ? 100 : 700}
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
@@ -140,15 +140,15 @@ const Profile = () => {
                             </Avatar>
                         </Box>
                         <Typography pt={5} variant={"h6"} textAlign={"center"}>Name: {loggedUser.firstName} {loggedUser.lastName}</Typography>
-                        <Typography variant={"h6"} textAlign={"center"}>Email: {loggedUser.email}</Typography>
-                        <Typography variant={"h6"} textAlign={"center"}>Mobile: {loggedUser.mobile}</Typography>
+                        <Typography pl={1} pr={1} variant={"h6"} textAlign={"center"}>Email: {loggedUser.email}</Typography>
+                        <Typography pb={5} variant={"h6"} textAlign={"center"}>Mobile: {loggedUser.mobile}</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} lg={4}>
                     <Box
                         pl={1}
                         pr={1}
-                        height={700}
+                        minHeight={(window.innerWidth <= 1200) ? 100 : 700}
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
@@ -160,6 +160,7 @@ const Profile = () => {
                                 return <Typography pl={5} key={index} variant={"h6"} textAlign={"left"}>{filterPermissions(value)}</Typography>
                             })
                         }
+                        <Box pb={2}></Box>
                     </Box>
                 </Grid>
                 <Grid item xs={12} lg={4}>
@@ -176,7 +177,7 @@ const Profile = () => {
                             </LocalizationProvider>
                         </Box>
                         <Box
-                            mt={1}
+                            mt={2}
                             bgcolor={colorConfigs.secondBg}
                             height={60}
                             pt={1}
