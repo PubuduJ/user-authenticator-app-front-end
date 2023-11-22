@@ -16,6 +16,19 @@ type Props = {
 const SideBarItemCollapse = ({item, setIsSideBarOpen}: Props) => {
     const [open, setOpen] = useState(false);
     const {appState} = useSelector((state: RootState) => state.appState);
+    const authState = useSelector((state: RootState) => state.authState);
+
+    const isPermitted = (routeType: RouteType): boolean => {
+        let sideBarPermission = routeType.sidebarProps ? routeType.sidebarProps.permission : "";
+        if (sideBarPermission && authState.permissions) {
+            for (const permission of authState.permissions) {
+                if (permission.startsWith(sideBarPermission)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     useEffect(() => {
         if (appState.includes(item.state)) {
@@ -55,7 +68,7 @@ const SideBarItemCollapse = ({item, setIsSideBarOpen}: Props) => {
                 <Collapse in={open} timeout="auto">
                     <List>
                         {item.child?.map((route, index) => (
-                            route.sidebarProps ? (
+                            route.sidebarProps && isPermitted(route) ? (
                                 route.child ? (
                                     <SideBarItemCollapse item={route} key={index} setIsSideBarOpen={setIsSideBarOpen}/>
                                 ) : (
