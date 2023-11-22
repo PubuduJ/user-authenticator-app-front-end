@@ -152,9 +152,9 @@ const Profile = () => {
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
-                        <Typography pt={2} variant={"h6"} textAlign={"left"}>You logged in to the system as: </Typography>
+                        <Typography pl={1} pt={2} variant={"h6"} textAlign={"left"}>You logged in to the system as: </Typography>
                         <Typography pl={5} pb={3} variant={"h6"} textAlign={"left"}>{loggedUser.roleNames.join(", ")}</Typography>
-                        <Typography variant={"h6"} textAlign={"left"}>You have permissions to: </Typography>
+                        <Typography pl={1} variant={"h6"} textAlign={"left"}>You have permissions to: </Typography>
                         {
                             loggedUser.permissionNames.map((value, index) => {
                                 return <Typography pl={5} key={index} variant={"h6"} textAlign={"left"}>{filterPermissions(value)}</Typography>
