@@ -319,7 +319,6 @@ const UserManagement = () => {
     const handleUpdate = async (user: User) => {
         try {
             setLoading(true);
-            console.log(user);
             await updateUser(user);
             setLoading(false);
             setOpenEditUser(false);
