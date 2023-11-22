@@ -1,6 +1,6 @@
 import {Grid, Typography} from "@mui/material";
 
-const Home = () => {
+const Profile = () => {
     return (
         <>
             <Grid pl={3} pr={3} pt={"15px"} container>
@@ -12,4 +12,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default Profile;

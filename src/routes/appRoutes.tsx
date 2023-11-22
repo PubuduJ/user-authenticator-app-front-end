@@ -1,28 +1,28 @@
-import HomeIcon from '@mui/icons-material/Home';
-import Person3Icon from '@mui/icons-material/Person3';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import {RouteType} from "./config";
 import UserManagement from "../pages/user/UserManagement";
 import RoleManagement from "../pages/user/RoleManagement";
 import UserPageLayout from "../pages/user/UserPageLayout";
-import Home from "../pages/home/Home";
+import Profile from "../pages/home/Profile";
 
 const appRoutes: RouteType[] = [
     {
         index: true,
-        element: <Home/>,
-        state: "home",
+        element: <Profile/>,
+        state: "profile",
         sidebarProps: {
-            displayText: "Home",
-            icon: <HomeIcon/>
+            displayText: "Profile",
+            icon: <AccountBoxIcon/>
         }
     },
     {
-        path: "/dashboard",
-        element: <Home/>,
+        path: "/profile",
+        element: <Profile/>,
         state: "dashboard",
         sidebarProps: {
-            displayText: "Home",
-            icon: <HomeIcon/>
+            displayText: "Profile",
+            icon: <AccountBoxIcon/>
         }
     },
     {
@@ -31,7 +31,7 @@ const appRoutes: RouteType[] = [
         state: "user",
         sidebarProps: {
             displayText: "User",
-            icon: <Person3Icon/>
+            icon: <PeopleAltIcon/>
         },
         child: [
             {
