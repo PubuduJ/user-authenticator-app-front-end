@@ -75,7 +75,7 @@ https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/f62
 
 ## How to use ?
 - This project can be used by cloning the project to your local computer.
-- Clone the project using `https://github.com/PubuduJ/responsive-dashboard-design-layout.git` terminal command.
+- Clone the project using `https://github.com/PubuduJ/user-authenticator-app-front-end` terminal command.
 - Run `npm install` and `npm start` to run the project.
 
 ## Version
