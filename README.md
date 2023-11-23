@@ -20,27 +20,27 @@ For instance, a guest user is restricted from performing operations within the s
 
 - Sign In Page<br>
 
-<img src="img/sign-in.png" alt="sign-in" width="600px"/>
+<img src="assets/sign-in.png" alt="sign-in" width="600px"/>
 
 - Forgot Password Page<br>
 
-<img src="img/forgot-password.png" alt="forgot-password" width="600px"/>
+<img src="assets/forgot-password.png" alt="forgot-password" width="600px"/>
 
 - Reset Password Page<br>
 
-<img src="img/reset-password.png" alt="reset-password" width="600px"/>
+<img src="assets/reset-password.png" alt="reset-password" width="600px"/>
 
 - Profile Page<br>
 
-<img src="img/profile.png" alt="profile" width="600px"/>
+<img src="assets/profile.png" alt="profile" width="600px"/>
 
 - User Management Page<br>
 
-<img src="img/user-management.png" alt="user-management" width="600px"/>
+<img src="assets/user-management.png" alt="user-management" width="600px"/>
 
 - Role Management Page<br>
 
-<img src="img/role-management.png" alt="role-management" width="600px"/>
+<img src="assets/role-management.png" alt="role-management" width="600px"/>
 
 #### Desktop View Demo Video
 
