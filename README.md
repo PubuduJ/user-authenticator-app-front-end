@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Use Authenticator Application <img src="public/favicon.png" alt="header-logo" width="27px"/>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+#### User Interfaces
 
-## Available Scripts
+- Sign In Page<br>
 
-In the project directory, you can run:
+<img src="img/sign-in.png" alt="sign-in" width="600px"/>
 
-### `npm start`
+- Forgot Password Page<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<img src="img/forgot-password.png" alt="forgot-password" width="600px"/>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Reset Password Page<br>
 
-### `npm test`
+<img src="img/reset-password.png" alt="reset-password" width="600px"/>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Profile Page<br>
 
-### `npm run build`
+<img src="img/profile.png" alt="profile" width="600px"/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- User Management Page<br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<img src="img/user-management.png" alt="user-management" width="600px"/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Role Management Page<br>
 
-### `npm run eject`
+<img src="img/role-management.png" alt="role-management" width="600px"/>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Used Technologies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- React
+- MUI
+- Ant Design
+- Redux Toolkit
+- Axios
+- TypeScript
+- CSS
+- JWT
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### Used Integrated Development Environment
+- IntelliJ IDEA
 
-## Learn More
+## How to use ?
+- This project can be used by cloning the project to your local computer.
+- Clone the project using `https://github.com/PubuduJ/responsive-dashboard-design-layout.git` terminal command.
+- Run `npm install` and `npm start` to run the project.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Version
+v1.0.0
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+Copyright &copy; 2023 [Pubudu Janith](https://www.linkedin.com/in/pubudujanith/). All Rights Reserved.<br>
+This project is licensed under the [MIT license](LICENSE.txt).
