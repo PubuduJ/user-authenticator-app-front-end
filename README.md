@@ -1,5 +1,20 @@
 # Use Authenticator Application <img src="public/favicon.png" alt="header-logo" width="27px"/>
 
+This application is a **mobile-responsive web-based user authentication system.** 
+Upon registration, users gain access to the system where their **assigned roles and permissions** dictate the functionalities available to them. 
+For instance, a guest user is restricted from performing operations within the system and is limited to viewing details exclusively.
+
+#### Key features of the system include,
+
+- The Super Administrator, serving as the system's primary authority, possesses comprehensive access across all functionalities within the system.
+
+- Registered users have the capability to assume multiple roles, each of which may entail various permissions within the system. Upon logging in, a user can view their assigned roles and associated permissions within the Profile section.
+
+- The system accommodates an unlimited number of users and roles, ensuring scalability and adaptability to organizational needs.
+
+- Users hold exclusive authority over changing their own passwords. However, the Super Administrator retains the ability to reset a user's password, triggering the issuance of a temporary password sent via email. The user can then employ this temporary password to reset their password securely.
+
+
 #### User Interfaces
 
 - Sign In Page<br>
