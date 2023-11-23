@@ -46,7 +46,15 @@ For instance, a guest user is restricted from performing operations within the s
 
 
 
+https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/068822ad-3d0a-4578-8e1d-8ff0356a00f3
+
+
+
 #### Mobile View Demo Video
+
+
+
+https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/f6287382-d352-438b-90d6-ac9c2a347e6d
 
 
 
