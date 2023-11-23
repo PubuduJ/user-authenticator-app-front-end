@@ -1,4 +1,4 @@
-# Use Authenticator Application <img src="public/favicon.png" alt="header-logo" width="27px"/>
+# Use Authenticator Application Front End <img src="public/favicon.png" alt="header-logo" width="27px"/>
 
 This application is a **mobile-responsive web-based user authentication system.** 
 Upon registration, users gain access to the system where their **assigned roles and permissions** dictate the functionalities available to them. 
