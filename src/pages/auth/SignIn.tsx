@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {signIn} from "../../api/auth/signIn";
 import jwt_decode from "jwt-decode";
 import {useDispatch} from "react-redux";
-import SecurityIcon from '@mui/icons-material/Security';
+import SecurityIcon from "@mui/icons-material/Security";
 import {setCredentials} from "../../redux/features/authStateSlice";
 
 type ErrorMsgType = {
@@ -57,13 +57,13 @@ const SignIn = () => {
                     permissions: decodedToken.scopes.permissions
                 }))
                 localStorage.setItem("jwtToken", userData.token);
-                localStorage.setItem('rememberMe', JSON.stringify(rememberMe));
+                localStorage.setItem("rememberMe", JSON.stringify(rememberMe));
                 if (rememberMe) {
-                    localStorage.setItem('rememberedUsername', JSON.stringify(email));
-                    localStorage.setItem('rememberedPassword', JSON.stringify(password));
+                    localStorage.setItem("rememberedUsername", JSON.stringify(email));
+                    localStorage.setItem("rememberedPassword", JSON.stringify(password));
                 }
-                if (decodedToken.fresh) navigate('/reset-password');
-                else navigate('/');
+                if (decodedToken.fresh) navigate("/reset-password");
+                else navigate("/");
             } else {
                 setToastConfig({open: true, message: "Invalid username or password. Please try again.", type: "error"});
             }
@@ -84,11 +84,11 @@ const SignIn = () => {
     const [renderComponent, setRenderComponent] = useState("");
     const [height, setHeight] = useState(window.innerHeight);
     useEffect(() => {
-        const rememberMePreference = localStorage.getItem('rememberMe');
+        const rememberMePreference = localStorage.getItem("rememberMe");
         if (rememberMePreference === "true") {
             setRememberMe(JSON.parse(rememberMePreference));
-            const storedUsername = JSON.parse(localStorage.getItem('rememberedUsername') ?? "");
-            const storedPassword = JSON.parse(localStorage.getItem('rememberedPassword') ?? "");
+            const storedUsername = JSON.parse(localStorage.getItem("rememberedUsername") ?? "");
+            const storedPassword = JSON.parse(localStorage.getItem("rememberedPassword") ?? "");
             setUsername(storedUsername);
             setPassword(storedPassword);
         }
@@ -116,7 +116,7 @@ const SignIn = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
+                sx={{background: "linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)"}}
                 position={"relative"}
                 width={"100vw"}
                 height={(window.innerHeight <= 530) ? "500px" : height}
@@ -166,7 +166,7 @@ const SignIn = () => {
                     right={0}
                     position={"absolute"}
                     padding={4}>
-                    <Typography variant='h4' align='center'>Welcome</Typography>
+                    <Typography variant="h4" align="center">Welcome</Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
@@ -234,7 +234,7 @@ const SignIn = () => {
                                                     setRememberMe(!rememberMe)
                                                 }}
                                         />}
-                                    slotProps={{typography: {variant: 'subtitle1'}}}
+                                    slotProps={{typography: {variant: "subtitle1"}}}
                                     label="Remember me"
                                 />
                             </Grid>

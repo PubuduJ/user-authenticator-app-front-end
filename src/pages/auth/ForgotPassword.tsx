@@ -93,7 +93,7 @@ const ForgotPassword = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
+                sx={{background: "linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)"}}
                 position={"relative"}
                 width={"100vw"}
                 // Change code
@@ -143,7 +143,7 @@ const ForgotPassword = () => {
                     bottom={0} right={0}
                     position={"absolute"}
                     padding={4}>
-                    <Typography variant='h4' align='center'>Forgot Password?</Typography>
+                    <Typography variant="h4" align="center">Forgot Password?</Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
@@ -189,11 +189,11 @@ const ForgotPassword = () => {
                                 size={24}
                                 sx={{
                                     color: "#005DFF",
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    marginTop: '-12px',
-                                    marginLeft: '-12px',
+                                    position: "absolute",
+                                    top: "50%",
+                                    left: "50%",
+                                    marginTop: "-12px",
+                                    marginLeft: "-12px",
                                 }}
                             />
                         )}
@@ -201,7 +201,7 @@ const ForgotPassword = () => {
                             <Grid item xs></Grid>
                             <Grid item paddingY={1}>
                                 <Link href="#" variant="subtitle1" onClick={() => {
-                                    navigate('/sign-in')
+                                    navigate("/sign-in")
                                 }}>
                                     Back
                                 </Link>

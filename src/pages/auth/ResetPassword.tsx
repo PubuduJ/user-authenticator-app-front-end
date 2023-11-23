@@ -70,7 +70,7 @@ const ResetPassword = () => {
                 document.getElementById("repeatNewPassword").focus();
                 return;
             }
-            const response = await resetPassword(Object(jwt_decode(authState.token ?? ""))['email'], passwordObject.temporaryPassword, passwordObject.newPassword)
+            const response = await resetPassword(Object(jwt_decode(authState.token ?? ""))["email"], passwordObject.temporaryPassword, passwordObject.newPassword)
             const resetResponse = response.data;
             if (typeof resetResponse == "string" && resetResponse === "Success") {
                 setToastConfig({
@@ -130,7 +130,7 @@ const ResetPassword = () => {
     return (
         <>
             <Box
-                sx={{background: 'linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)'}}
+                sx={{background: "linear-gradient(to bottom, #4c6c8d 10%, #FFFFFF 75%)"}}
                 position={"relative"}
                 width={"100vw"}
                 // Change code
@@ -176,7 +176,7 @@ const ResetPassword = () => {
                         </Box>
                 }
                 <Box maxWidth={"470px"} bottom={0} right={0} position={"absolute"} padding={4}>
-                    <Typography variant='h4' align='center'>Reset Password</Typography>
+                    <Typography variant="h4" align="center">Reset Password</Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
                         <TextField
                             variant="standard"
@@ -188,7 +188,7 @@ const ResetPassword = () => {
                             name="temporaryPassword"
                             autoComplete="temporaryPassword"
                             autoFocus
-                            type='password'
+                            type="password"
                             error={(error.temporaryPassword !== "")}
                             helperText={error.temporaryPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -217,7 +217,7 @@ const ResetPassword = () => {
                             label="New Password"
                             name="newPassword"
                             autoComplete="newPassword"
-                            type='password'
+                            type="password"
                             error={(error.newPassword !== "")}
                             helperText={error.newPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -264,7 +264,7 @@ const ResetPassword = () => {
                             label="Repeat New Password"
                             name="repeatNewPassword"
                             autoComplete="repeatNewPassword"
-                            type='password'
+                            type="password"
                             error={(error.repeatNewPassword !== "")}
                             helperText={error.repeatNewPassword}
                             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -293,7 +293,7 @@ const ResetPassword = () => {
                                 }
                             }}
                         />
-                        <Box sx={{position: 'relative'}}>
+                        <Box sx={{position: "relative"}}>
                             <Button
                                 type="submit"
                                 fullWidth
@@ -308,11 +308,11 @@ const ResetPassword = () => {
                                     size={24}
                                     sx={{
                                         color: "#005DFF",
-                                        position: 'absolute',
-                                        top: '50%',
-                                        left: '50%',
-                                        marginTop: '-12px',
-                                        marginLeft: '-12px',
+                                        position: "absolute",
+                                        top: "50%",
+                                        left: "50%",
+                                        marginTop: "-12px",
+                                        marginLeft: "-12px",
                                     }}
                                 />
                             )}
@@ -320,14 +320,14 @@ const ResetPassword = () => {
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="subtitle1" onClick={() => {
-                                    navigate('/')
+                                    navigate("/")
                                 }}>
                                     Skip
                                 </Link>
                             </Grid>
                             <Grid item paddingY={1}>
                                 <Link href="#" variant="subtitle1" onClick={() => {
-                                    navigate('/sign-in')
+                                    navigate("/sign-in")
                                 }}>
                                     Back
                                 </Link>
