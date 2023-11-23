@@ -102,7 +102,13 @@ const UserManagement = () => {
                             <img
                                 src={params.row.img}
                                 alt={"Profile Image"}
-                                style={{width: 55, height: 55, borderRadius: '50%', border: "2px solid black", padding: "3px"}}
+                                style={{
+                                    width: 55,
+                                    height: 55,
+                                    borderRadius: '50%',
+                                    border: "2px solid black",
+                                    padding: "3px"
+                                }}
                             />
                             :
                             <MiniProfileIcon/>
@@ -184,25 +190,25 @@ const UserManagement = () => {
                         <>
                             {
                                 authState.permissions?.includes("user_userManagement_View") ?
-                                <Tooltip title={'view user'}>
-                                    <IconButton onClick={() => {
-                                        setSelectedUser((prevState: User) => {
-                                            return {
-                                                ...prevState,
-                                                "id": params.row.id,
-                                                "img": params.row.img,
-                                                "firstName": params.row.firstName,
-                                                "lastName": params.row.lastName,
-                                                "email": params.row.email,
-                                                "mobile": params.row.mobile,
-                                                "roleIds": params.row.roleIds,
-                                            }
-                                        })
-                                        setOpenViewUser(true)
-                                    }}>
-                                        <VisibilityIcon/>
-                                    </IconButton>
-                                </Tooltip> : <></>
+                                    <Tooltip title={'view user'}>
+                                        <IconButton onClick={() => {
+                                            setSelectedUser((prevState: User) => {
+                                                return {
+                                                    ...prevState,
+                                                    "id": params.row.id,
+                                                    "img": params.row.img,
+                                                    "firstName": params.row.firstName,
+                                                    "lastName": params.row.lastName,
+                                                    "email": params.row.email,
+                                                    "mobile": params.row.mobile,
+                                                    "roleIds": params.row.roleIds,
+                                                }
+                                            })
+                                            setOpenViewUser(true)
+                                        }}>
+                                            <VisibilityIcon/>
+                                        </IconButton>
+                                    </Tooltip> : <></>
                             }
                             {
                                 authState.permissions?.includes("user_userManagement_Edit") ?

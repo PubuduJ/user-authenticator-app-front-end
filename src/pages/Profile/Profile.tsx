@@ -2,9 +2,9 @@ import * as React from "react";
 import {Avatar, Box, Breadcrumbs, Grid, Typography} from "@mui/material";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Link from "@mui/material/Link";
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DateCalendar} from '@mui/x-date-pickers/DateCalendar';
 import {useEffect, useState} from "react";
 import colorConfigs from "../../configs/colorConfigs";
 import {getLoggedUserDetails} from "../../api/auth/getLoggedUserDetails";
@@ -25,12 +25,20 @@ export type UserDetails = {
 
 const Profile = () => {
     const authState = useSelector((state: RootState) => state.authState);
-    const [loggedUser, setLoggedUser] = useState<UserDetails>({email: " ", img: "", firstName: " ", lastName: " ", mobile: " ", permissionNames: [], roleNames: []});
+    const [loggedUser, setLoggedUser] = useState<UserDetails>({
+        email: " ",
+        img: "",
+        firstName: " ",
+        lastName: " ",
+        mobile: " ",
+        permissionNames: [],
+        roleNames: []
+    });
     const [toastConfig, setToastConfig] = useState<ToastData>({open: false, message: "", type: "success"});
-    let time  = new Date().toLocaleTimeString();
-    const [currentTime,setCurrentTime] = useState(time)
+    let time = new Date().toLocaleTimeString();
+    const [currentTime, setCurrentTime] = useState(time)
     const updateTime = () => {
-        time =  new Date().toLocaleTimeString();
+        time = new Date().toLocaleTimeString();
         setCurrentTime(time);
     }
     setInterval(() => {
@@ -59,15 +67,16 @@ const Profile = () => {
             let updatedValue = value.replace("user_userManagement_", "");
             if (updatedValue === "Reset Password") return "Reset User Password"
             return updatedValue + " User";
-        }
-        else if (value.includes("user_roleManagement_")) {
-            let updatedValue =  value.replace("user_roleManagement_", "");
+        } else if (value.includes("user_roleManagement_")) {
+            let updatedValue = value.replace("user_roleManagement_", "");
             return updatedValue + " Role";
         }
         return value;
     }
 
-    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {return {...prevState, "open": state}});
+    const handleToastOnclose = (state: boolean) => setToastConfig((prevState: ToastData) => {
+        return {...prevState, "open": state}
+    });
 
     const getGreeting = () => {
         const currentTime = new Date();
@@ -87,7 +96,8 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        getLoggedUser().then(r => {});
+        getLoggedUser().then(r => {
+        });
     }, [])
 
     return (
@@ -149,8 +159,10 @@ const Profile = () => {
                                 </Avatar>
                             </Box>
                         </Box>
-                        <Typography pt={5} variant={"h6"} textAlign={"center"}>Name: {loggedUser.firstName} {loggedUser.lastName}</Typography>
-                        <Typography pl={1} pr={1} variant={"h6"} textAlign={"center"}>Email: {loggedUser.email}</Typography>
+                        <Typography pt={5} variant={"h6"}
+                                    textAlign={"center"}>Name: {loggedUser.firstName} {loggedUser.lastName}</Typography>
+                        <Typography pl={1} pr={1} variant={"h6"}
+                                    textAlign={"center"}>Email: {loggedUser.email}</Typography>
                         <Typography pb={5} variant={"h6"} textAlign={"center"}>Mobile: {loggedUser.mobile}</Typography>
                     </Box>
                 </Grid>
@@ -162,12 +174,15 @@ const Profile = () => {
                         borderRadius={2}
                         bgcolor={colorConfigs.secondBg}
                     >
-                        <Typography pl={1} pt={2} variant={"h6"} textAlign={"left"}>You logged in to the system as: </Typography>
-                        <Typography pl={5} pb={3} variant={"h6"} textAlign={"left"}>{loggedUser.roleNames.join(", ")}</Typography>
+                        <Typography pl={1} pt={2} variant={"h6"} textAlign={"left"}>You logged in to the system
+                            as: </Typography>
+                        <Typography pl={5} pb={3} variant={"h6"}
+                                    textAlign={"left"}>{loggedUser.roleNames.join(", ")}</Typography>
                         <Typography pl={1} variant={"h6"} textAlign={"left"}>You have permissions to: </Typography>
                         {
                             loggedUser.permissionNames.map((value, index) => {
-                                return <Typography pl={5} key={index} variant={"h6"} textAlign={"left"}>{filterPermissions(value)}</Typography>
+                                return <Typography pl={5} key={index} variant={"h6"}
+                                                   textAlign={"left"}>{filterPermissions(value)}</Typography>
                             })
                         }
                         <Box pb={2}></Box>
@@ -197,7 +212,7 @@ const Profile = () => {
                                 width={330}
                             >
                                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                    <DateCalendar views={['day']} />
+                                    <DateCalendar views={['day']}/>
                                 </LocalizationProvider>
                             </Box>
                             <Box

@@ -476,8 +476,10 @@ const RoleManagement = () => {
                         mode={RoleMode.VIEW}
                         action={{
                             setIsDrawerOpen: setOpenViewRole,
-                            onCreateRole: () => {},
-                            onUpdateRole: () => {}
+                            onCreateRole: () => {
+                            },
+                            onUpdateRole: () => {
+                            }
                         }}
                     />
                 </Box>

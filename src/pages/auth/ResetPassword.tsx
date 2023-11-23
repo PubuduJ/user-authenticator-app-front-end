@@ -153,7 +153,8 @@ const ResetPassword = () => {
                                     }}
                                 />
                             </Box>
-                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                            <Typography fontWeight={"bold"} color={"white"}
+                                        variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
                         </Box>
                         :
                         <Box
@@ -170,7 +171,8 @@ const ResetPassword = () => {
                                     }}
                                 />
                             </Box>
-                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                            <Typography fontWeight={"bold"} color={"white"}
+                                        variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
                         </Box>
                 }
                 <Box maxWidth={"470px"} bottom={0} right={0} position={"absolute"} padding={4}>

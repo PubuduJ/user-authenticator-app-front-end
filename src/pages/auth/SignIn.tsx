@@ -138,7 +138,8 @@ const SignIn = () => {
                                     }}
                                 />
                             </Box>
-                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                            <Typography fontWeight={"bold"} color={"white"}
+                                        variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
                         </Box>
                         :
                         <Box
@@ -155,7 +156,8 @@ const SignIn = () => {
                                     }}
                                 />
                             </Box>
-                            <Typography fontWeight={"bold"} color={"white"} variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
+                            <Typography fontWeight={"bold"} color={"white"}
+                                        variant={(window.innerWidth < 1200) ? "h2" : "h1"}>Auth App</Typography>
                         </Box>
                 }
                 <Box
