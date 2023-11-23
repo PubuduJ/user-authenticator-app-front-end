@@ -1,6 +1,6 @@
 # Use Authenticator Application Front End <img src="public/favicon.png" alt="header-logo" width="27px"/>
 
-This application is a **mobile-responsive web-based user authentication system.** 
+This is a **mobile-responsive web-based user authentication system.** 
 Upon registration, users gain access to the system where their **assigned roles and permissions** dictate the functionalities available to them. 
 For instance, a guest user is restricted from performing operations within the system and is limited to viewing details exclusively.
 
