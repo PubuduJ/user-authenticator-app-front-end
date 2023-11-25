@@ -48,6 +48,10 @@ Click [**here**](https://github.com/PubuduJ/image-uploader) to view a demo of **
 
 
 
+https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/0135e593-63ba-4cb6-a875-ffb0e4efcb7f
+
+
+
 #### Mobile View Demo Video
 
 
