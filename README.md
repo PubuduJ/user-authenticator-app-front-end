@@ -52,6 +52,10 @@ Click [**here**](https://github.com/PubuduJ/image-uploader) to view a demo of **
 
 
 
+https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/60bcc4ab-93bd-4e08-800c-bfb337db9b05
+
+
+
 ## Used Technologies
 
 - React
