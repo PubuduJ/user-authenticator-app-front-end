@@ -69,6 +69,7 @@ https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/60b
 - Axios
 - TypeScript
 - CSS
+- HTML
 - JWT
 
 #### Used Integrated Development Environment
