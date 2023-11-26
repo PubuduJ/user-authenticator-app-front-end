@@ -16,7 +16,7 @@ For instance, a guest user is restricted from performing operations within the s
 
 **Back End** of the project can be visited by clicking [**here.**](https://github.com/PubuduJ/user-authenticator-app-back-end)<br>
 The **low-level design** of the project's **dashboard** can be visited by clicking [**here.**](https://github.com/PubuduJ/responsive-dashboard-design-layout)<br>
-Click [**here**](https://github.com/PubuduJ/image-uploader) to view a demo of **user profile image uploader.**
+Click [**here**](https://github.com/PubuduJ/image-uploader) to view a sample project of **user profile image uploader.**
 
 #### User Interfaces
 
