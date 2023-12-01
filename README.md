@@ -66,6 +66,7 @@ https://github.com/PubuduJ/user-authenticator-app-front-end/assets/109058596/60b
 - MUI
 - Ant Design
 - Redux Toolkit
+- React Router
 - Axios
 - TypeScript
 - CSS
